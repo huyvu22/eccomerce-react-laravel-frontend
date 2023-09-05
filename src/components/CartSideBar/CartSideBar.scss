@@ -1,0 +1,234 @@
+.cart-sidebar {
+  position: fixed;
+  right: -450px;
+  top: 0;
+  width: 400px;
+  height: 100vh;
+  z-index: 5;
+  background-color: #fff;
+  box-shadow: -15px 0px 25px 0px rgb(0 0 0 / 15%);
+  transition: all linear .3s;
+
+  .cart-header {
+    padding: 18px 25px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+
+    .cart-total {
+      color: var(--text-primary);
+
+      span:first-child {
+        font-size: 22px;
+        padding-right: 8px;
+      }
+
+      span:last-child {
+        font-weight: 600;
+      }
+    }
+
+    .cart-close {
+      position: absolute;
+      left: -18px;
+      top: 14px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      transition: all linear .2s;
+
+      &:hover {
+        background-color: var(--text-primary);
+        color: #fff;
+      }
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .cart-list {
+    height: 75%;
+    padding: 0 15px;
+    max-height: calc(100vh - 210px);
+    overflow-y: scroll;
+
+    .cart-item {
+      display: flex;
+      gap: 30px;
+      padding: 15px 0px;
+      border-bottom: 1px solid var(--boder);
+      margin-bottom: 20px;
+
+      &:hover {
+        .cart-media {
+          .cart-delete {
+            transform: scale(1);
+          }
+        }
+      }
+
+      .cart-media {
+        position: relative;
+        margin-right: 25px;
+
+        img {
+          width: 100px;
+          border-radius: 8px;
+        }
+
+        .cart-delete {
+          position: absolute;
+          color: red;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          line-height: 62px;
+          border-radius: 8px;
+          background: rgba(0, 0, 0, 0.2);
+          transform: scale(0);
+          transition: all linear .2s;
+
+          span {
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            line-height: 32px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all linear .2s;
+
+            &:hover {
+              background-color: red;
+              color: #fff;
+            }
+          }
+        }
+
+      }
+
+      .cart-info-group {
+        width: 100%;
+        .cart-info {
+          margin-bottom: 13px;
+
+          p {
+            font-size: 14px;
+          }
+        }
+
+        .cart-action-group {
+          display: flex;
+          align-items: center;
+
+          input {
+            height: 35px;
+          }
+
+          h6 {
+            color: var(--text-primary) !important;
+            margin-left: 20px;
+            font-size: 17px !important;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .cart-footer {
+    padding: 20px 15px 0;
+    text-align: center;
+    box-shadow: 0px -3px 7px 0px rgb(0 0 0 / 8%);
+
+    .coupon-btn {
+      background-color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .coupon-form {
+      display: flex;
+      align-items: center;
+      padding: 3px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      box-shadow: 0 7px 13px 0 rgb(0 0 0 / 10%);
+      border: 1px solid #ccc;
+
+      &:focus-within {
+        border-color: var(--text-primary);
+      }
+
+      input {
+        width: 100%;
+        height: 38px;
+        padding: 0 15px;
+
+        //&:focus {
+        //  border: 2px solid blue;
+        //}
+      }
+
+
+      button {
+        span {
+          width: 100px;
+          height: 38px;
+          line-height: 38px;
+          font-size: 14px;
+          display: block;
+          text-align: center;
+          border-radius: 8px;
+          color: #fff;
+          background: var(--text-primary);
+        }
+      }
+    }
+
+    .cart-checkout-btn {
+      display: block;
+      padding: 10px 0;
+      border-radius: 8px;
+      background: var(--text-primary);
+      align-items: center;
+      transition: all linear .3s;
+
+      &:hover {
+        background-color: var(--text-hover);
+      }
+
+      .checkout-label {
+        font-size: 15px;
+        line-height: 30px;
+        letter-spacing: 0.3px;
+        text-align: center;
+        color: #fff;
+        padding: 0 60px;
+
+      }
+
+      .checkout-price {
+        width: 50%;
+        letter-spacing: 0.3px;
+        padding: 0 25px;
+        color: #fff;
+        border-left: 1px solid var(--boder);
+
+      }
+    }
+  }
+
+}
+
+.active-cart {
+  right: 0;
+}

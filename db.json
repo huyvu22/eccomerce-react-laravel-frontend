@@ -1,0 +1,1376 @@
+{
+  "cart_data": [
+    {
+      "isClick": true,
+      "cartList": [
+        {
+          "id": 4,
+          "name": "Tabla",
+          "image": "/images/BestDeals/img1.jpg",
+          "currentPrice": 97.5,
+          "quantity": 3
+        },
+        {
+          "id": 3,
+          "name": "Upright Piano",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/955a1afefd5bb97fca35051738080e6b.png",
+          "currentPrice": 70,
+          "quantity": 3
+        }
+      ],
+      "wishList": [
+        {
+          "id": 1,
+          "name": "Acoustic Guitars",
+          "image": "/images/BestDeals/img1.jpg",
+          "currentPrice": 70,
+          "isLike": true,
+          "quantity": 1
+        },
+        {
+          "id": 2,
+          "name": "Electronic Drum Kits",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/18d454e2c083cb7f6f93547dd0d6f24a.jpg",
+          "currentPrice": 150,
+          "isLike": true,
+          "quantity": 1
+        }
+      ],
+      "compareList": [
+        {
+          "id": 3,
+          "name": "Upright Piano",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/955a1afefd5bb97fca35051738080e6b.png",
+          "isCompare": true,
+          "currentPrice": 70,
+          "originalPrice": 80,
+          "brand": "eCommerce Shop",
+          "availability": "In Stock",
+          "rating": 5,
+          "updated_at": "2023-02-12 06:00:30"
+        },
+        {
+          "id": 2,
+          "name": "Electronic Drum Kits",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/18d454e2c083cb7f6f93547dd0d6f24a.jpg",
+          "isCompare": true,
+          "currentPrice": 150,
+          "originalPrice": 200,
+          "brand": "eCommerce Shop",
+          "availability": "In Stock",
+          "rating": 4,
+          "updated_at": "2023-02-12 06:00:30"
+        }
+      ],
+      "email": "user@gmail.com",
+      "id": 1
+    },
+    {
+      "isClick": false,
+      "cartList": [
+        {
+          "id": 2,
+          "name": "Electronic Drum Kits",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/18d454e2c083cb7f6f93547dd0d6f24a.jpg",
+          "currentPrice": 150,
+          "quantity": 3
+        }
+      ],
+      "wishList": [],
+      "compareList": [],
+      "email": "quocanh1@gmail.com",
+      "id": 2
+    },
+    {
+      "isClick": false,
+      "cartList": [
+        {
+          "id": 3,
+          "name": "Upright Piano",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/955a1afefd5bb97fca35051738080e6b.png",
+          "currentPrice": 70,
+          "quantity": 4
+        }
+      ],
+      "wishList": [],
+      "compareList": [],
+      "email": "vuduchuy5@gmail.com",
+      "id": 3
+    },
+    {
+      "isClick": false,
+      "cartList": [
+        {
+          "id": 6,
+          "name": "Quality Euphonium 3V 2 Tone",
+          "image": "https://ready-music-store.itechscripts.com/assets/item_image/bc49b3a87abab63d6bb78b9111ceb1d2.jpg",
+          "currentPrice": 97.5,
+          "quantity": 3
+        }
+      ],
+      "wishList": [],
+      "compareList": [],
+      "email": "vuduchuydx@gmail.com",
+      "id": 4
+    }
+  ],
+  "users": [
+    {
+      "email": "user@gmail.com",
+      "password": "$2a$10$dKyQFtDFr4SznA2p/Z4Pb.puWUg7gIpSNPjaMHw9/9J7kTcvzm6YW",
+      "id": 3
+    },
+    {
+      "email": "quocanh1@gmail.com",
+      "password": "$2a$10$LENysOswNOrT/dbUDQRALeG7dmI2G4kUoWG1z5xB/pWcYJoAhj2.m",
+      "id": 4
+    },
+    {
+      "email": "userdemo@gmail.com",
+      "password": "$2a$10$opoZMovD5e6D1VuphhLpDOZ7IPAs3gCj4Adb1Dhz6toQu8iskoWDi",
+      "id": 5
+    },
+    {
+      "email": "vuduchuydx@gmail.com",
+      "password": "$2a$10$CAIXwDxHCYYbHz1YpS5nrObOAoAL2ljMBb2KJNpWZ3Ihj1n5goVtS",
+      "id": 6
+    },
+    {
+      "email": "vuduchuy5@gmail.com",
+      "password": "$2a$10$mklTqRm9xrNG8xB08HifU.7FOA7.lbX2ddiDskatBfNA5dk4UeV4u",
+      "id": 7
+    },
+    {
+      "email": "user1@gmail.com",
+      "password": "12345678",
+      "id": 8
+    }
+  ],
+  "best_deals": [
+    {
+      "id": 100,
+      "attributes": "featured",
+      "category": "chair",
+      "name": "High back chair",
+      "image": "/images/chairs/832794cdbf62d4690f123be780c24a0f.jpg",
+      "price": {
+        "original": "52.00",
+        "current": "49.40"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "rating": "4"
+    },
+    {
+      "id": 2,
+      "attributes": "deals",
+      "category": "chair",
+      "name": "Mid back chair",
+      "image": "/images/chairs/b29e25848cec55ac801cb2ead52d1de4.jpg",
+      "price": {
+        "original": "50.05",
+        "current": "39.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "4"
+    },
+    {
+      "id": 3,
+      "name": "Upright Piano",
+      "price": {
+        "original": 80,
+        "current": 70
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/955a1afefd5bb97fca35051738080e6b.png",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 4,
+      "name": "Tabla",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 3,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/e307edebc54d335222eae9ff160c864f.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 5,
+      "name": "Galaxy Foot Tambourine",
+      "price": {
+        "original": 80,
+        "current": 70
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/72d22d47e4d768eb09efcfa4095e02ff.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 6,
+      "name": "Quality Euphonium 3V 2 Tone",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 3,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/bc49b3a87abab63d6bb78b9111ceb1d2.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 7,
+      "name": "Professional Long Lasting Bongo",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 2,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/1643fa98afc2be55c0ad001a0fb973b3.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 8,
+      "name": "Studiomaster H5 Headphone",
+      "price": {
+        "original": 80,
+        "current": 70
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2ecbb6f6f02d08ba4101ac464af160a9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 9,
+      "name": "Bass Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/099855cb68ebf1e8ba131d90081d639f.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 10,
+      "name": "Electric Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 11,
+      "name": "Electric Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 12,
+      "name": "Electric Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 13,
+      "name": "Electric Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 14,
+      "name": "Electric Guitars",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 15,
+      "name": "Studiomaster H5 Headphone",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 1,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2ecbb6f6f02d08ba4101ac464af160a9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 16,
+      "name": "Studiomaster H5 Headphone",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 4,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2ecbb6f6f02d08ba4101ac464af160a9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 17,
+      "name": "Studiomaster H5 Headphone",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2ecbb6f6f02d08ba4101ac464af160a9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 18,
+      "name": "Studiomaster H5 Headphone",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Sale",
+      "brand": "eCommerce Shop",
+      "availability": "In Stock",
+      "rating": 5,
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2ecbb6f6f02d08ba4101ac464af160a9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 100,
+      "name": "clock",
+      "image": "C:\\fakepath\\windows-icon-png-5814-Windows.ico",
+      "price": {
+        "original": "99",
+        "current": "999"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "instock",
+      "rating": 4
+    },
+    {
+      "id": 101,
+      "name": "bed",
+      "image": "",
+      "price": {
+        "original": "30",
+        "current": "50"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "outofstock",
+      "rating": 4
+    }
+  ],
+  "featured_items": [
+    {
+      "id": 21,
+      "name": "Grand Piano",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/7a5fe30e3fc7d8b852f74565ddd72ee9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 22,
+      "name": "Harmonium",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/09e792b6079a4a5517bef2f0e882842b.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 23,
+      "name": "Accordion",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/addb5ca7094693e8c185383f2126e0bc.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 24,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 25,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 26,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "Featured",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    }
+  ],
+  "new_items": [
+    {
+      "id": 41,
+      "name": "Grand Piano",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/7a5fe30e3fc7d8b852f74565ddd72ee9.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 42,
+      "name": "Harmonium",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/09e792b6079a4a5517bef2f0e882842b.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 43,
+      "name": "Accordion",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/addb5ca7094693e8c185383f2126e0bc.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 44,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 45,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": 46,
+      "name": "Portable Audio Recorder",
+      "price": {
+        "original": 104,
+        "current": 97.5
+      },
+      "label": "New",
+      "image": "https://ready-music-store.itechscripts.com/assets/item_image/2e336999cc4fae24a536704d904ddbe1.jpg",
+      "created_at": "2023-02-12 06:00:30",
+      "updated_at": "2023-02-12 06:00:30"
+    },
+    {
+      "id": "d0064ef1-9684-46ec-b4a6-686a6acd91a5",
+      "category": "Table",
+      "name": "new table",
+      "image": "",
+      "price": {
+        "original": "89",
+        "current": "100"
+      },
+      "label": "new",
+      "brand": "eCommerce Shop",
+      "availability": "instock",
+      "rating": 4
+    },
+    {
+      "id": "c45858a8-a8bf-4958-9da4-58160b480d43",
+      "category": "Table",
+      "name": "hahaha",
+      "image": "blob:http://localhost:3000/8326ba4d-f7a6-46b0-a42a-10af4764037b",
+      "price": {
+        "original": "5454",
+        "current": "4545"
+      },
+      "label": "new",
+      "brand": "eCommerce Shop",
+      "availability": "instock",
+      "rating": 4
+    },
+    {
+      "id": "24dfc503-5352-4a9a-970f-ad62dcfa035b",
+      "category": "Chair",
+      "name": "test",
+      "image": "/images/BestDeals/d9f976d97c640295f284d667fa94893f.jpg",
+      "price": {
+        "original": "55",
+        "current": "56"
+      },
+      "label": "new",
+      "brand": "eCommerce Shop",
+      "availability": "instock",
+      "rating": 4
+    }
+  ],
+  "all_items": [
+    {
+      "id": "5228b1d0-8af9-4aad-ad31-2de4ba1ff139",
+      "attributes": "featured",
+      "category": "chair",
+      "name": "High back chair",
+      "image": "/images/chairs/832794cdbf62d4690f123be780c24a0f.jpg",
+      "price": {
+        "original": "52.00",
+        "current": "49.40"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "4"
+    },
+    {
+      "id": "14381869-e7ce-421b-bbc4-2024b488697a",
+      "attributes": "deals",
+      "category": "chair",
+      "name": "Mid back chair",
+      "image": "/images/chairs/b29e25848cec55ac801cb2ead52d1de4.jpg",
+      "price": {
+        "original": "50.05",
+        "current": "39.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "4"
+    },
+    {
+      "id": "17e2a99b-2883-4a99-8311-0f451ffa595f",
+      "attributes": "deals",
+      "category": "chair",
+      "name": "Leather Chair",
+      "image": "/images/chairs/c1a5332e316784f460f075064631867b.jpg",
+      "price": {
+        "original": "76.18",
+        "current": "71.50"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "5",
+      "rating": "5"
+    },
+    {
+      "id": "4ffe9d2a-3d38-4084-abe3-419a7dff6f76",
+      "attributes": "deals",
+      "category": "table",
+      "name": "Wooden office table",
+      "image": "/images/tables/c77110684cd1f3126e0553d89dba4e97.jpg",
+      "price": {
+        "original": "474.50",
+        "current": "468.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "5",
+      "rating": "4"
+    },
+    {
+      "id": "02a989a5-e7f1-45e8-9b4b-d556820123d2",
+      "attributes": "deals",
+      "category": "table",
+      "name": "Luxury table",
+      "image": "/images/tables/fcd00cc83b5301bdb65c41ac40eb77a6.jpg",
+      "price": {
+        "original": "325.00",
+        "current": "286.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "5",
+      "rating": "5"
+    },
+    {
+      "id": "6ca7d0a7-5b98-48e2-8621-35c59772cc2c",
+      "attributes": "deals",
+      "category": "table",
+      "name": "Table set for office",
+      "image": "/images/tables/fcd00cc83b5301bdb65c41ac40eb77a6.jpg",
+      "price": {
+        "original": "780.00",
+        "current": "715.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "5",
+      "rating": "3"
+    },
+    {
+      "id": "e6820c50-cc29-4440-b9e3-f8124fe739e5",
+      "attributes": "featured",
+      "category": "sofa",
+      "name": "Fabric Sofa Set for office",
+      "image": "/images/sofa/7b60dd87261087be18ac335a35643e2d.jpg",
+      "price": {
+        "original": "468.00",
+        "current": "429.00"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "7",
+      "rating": "4"
+    },
+    {
+      "id": "9c9f240f-d257-482d-9e91-9f9636049616",
+      "attributes": "deals",
+      "category": "sofa",
+      "name": "Modern design sofa set",
+      "image": "/images/sofa/971d4c1158200f151c6864eaec13a1d9.jpg",
+      "price": {
+        "original": "585.00",
+        "current": "546.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "3",
+      "rating": "5"
+    },
+    {
+      "id": "fa5b0a3f-f9f1-44f3-97e5-dc9c73876faa",
+      "attributes": "deals",
+      "category": "sofa",
+      "name": "Designer sofa set",
+      "image": "/images/sofa/3aa35dd279c4252073cc2691d8128ded.jpg",
+      "price": {
+        "original": "455.00",
+        "current": "429.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "1",
+      "rating": "2"
+    },
+    {
+      "id": "05fa5bbe-04e5-4fc8-9cf7-283d0a8229c0",
+      "attributes": "featured",
+      "category": "cabinet",
+      "name": "Wall mounted shelves",
+      "image": "/images//adb96208f452a2f010baa75463df1aa9.jpg",
+      "price": {
+        "original": "325.00",
+        "current": "286.00"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "5"
+    },
+    {
+      "id": "bcab3c71-8618-46ca-9f68-34fc29301594",
+      "attributes": "deals",
+      "category": "cabinet",
+      "name": "Storage shelves",
+      "image": "/images//adb96208f452a2f010baa75463df1aa9.jpg",
+      "price": {
+        "original": "325.00",
+        "current": "273.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "5"
+    },
+    {
+      "id": "93d03842-ea33-4e19-8cb0-a673f2ea05b1",
+      "attributes": "deals",
+      "category": "cabinet",
+      "name": "Book case for office",
+      "image": "/images//adb96208f452a2f010baa75463df1aa9.jpg",
+      "price": {
+        "original": "240.50",
+        "current": "227.50"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "10",
+      "rating": "5"
+    },
+    {
+      "id": "737148a0-0e8c-47a6-b47f-a2c205dbb909",
+      "attributes": "featured",
+      "category": "electronics",
+      "name": "Book case for office",
+      "image": "/images/electronics/95ddad10cda2681da07aabfc5c3560fd.jpg",
+      "price": {
+        "original": "520.00",
+        "current": "455.00"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "5"
+    },
+    {
+      "id": "ebb22844-9bbc-484f-b043-65e32ec0741b",
+      "attributes": "new",
+      "category": "electronics",
+      "name": "Computer set for office",
+      "image": "/images/electronics/1c548353a949268b737f3d7e5f05fbfa.jpg",
+      "price": {
+        "original": "520.00",
+        "current": "416.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "4"
+    },
+    {
+      "id": "73e4b7f2-7c76-43f6-9a7c-d9d4fad20594",
+      "attributes": "new",
+      "category": "electronics",
+      "name": "Multi functional printer",
+      "image": "/images/electronics/cfdb8bde2a463b10e5965cfae1408422.jpg",
+      "price": {
+        "original": "1,105.00",
+        "current": "1,066.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "8",
+      "rating": "4"
+    },
+    {
+      "id": "1d162fd9-f6e0-4fa7-a28c-01a059f80599",
+      "attributes": "deals",
+      "category": "electronics",
+      "name": "CCTV Camera",
+      "image": "/images/electronics/bc913f6b86e3c546ab05f3eea79a6f3a.jpg",
+      "price": {
+        "original": "650.00",
+        "current": "546.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "16",
+      "rating": "5"
+    },
+    {
+      "id": "41857036-5073-42f5-b76c-23f5cca625e6",
+      "attributes": "deals",
+      "category": "electronics",
+      "name": "Coffee machine",
+      "image": "/images/electronics/7d0a058204710a88f2279597d0cf4e44.jpg",
+      "price": {
+        "original": "845.00",
+        "current": "780.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "18",
+      "rating": "5"
+    },
+    {
+      "id": "df94b698-ccb2-42de-9cb3-d83a2f4daff9",
+      "attributes": "deals",
+      "category": "electronics",
+      "name": "Havells ceiling fan",
+      "image": "/images/electronics/2b41a1e80c6167f64a7953f9293199a9.jpg",
+      "price": {
+        "original": "41.60",
+        "current": "39.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "5",
+      "rating": "2"
+    },
+    {
+      "id": "7804154f-7edd-4e8b-9c3b-5a0713356053",
+      "attributes": "deals",
+      "category": "electronics",
+      "name": "Bajaj air cooler",
+      "image": "/images/electronics/101e30ff1dbc8938dcee9c6648b6c46c.jpg",
+      "price": {
+        "original": "214.50",
+        "current": "182.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "1",
+      "rating": "2"
+    },
+    {
+      "id": "909bb78e-47c0-408c-a56d-c0a1b9790099",
+      "attributes": "new",
+      "category": "",
+      "name": "Laptop bag",
+      "image": "/images//cc65e5efe0665d3b66d18b747b26d792.jpg",
+      "price": {
+        "original": "39.00",
+        "current": "26.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "12",
+      "rating": "4"
+    },
+    {
+      "id": "e2b67aff-61be-4af1-83fc-99940b8cd7a7",
+      "attributes": "deals",
+      "category": "",
+      "name": "Tiffin bag",
+      "image": "/images//9a3e389aa06053748124bc967f182e36.jpg",
+      "price": {
+        "original": "3.90",
+        "current": "3.64"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "12",
+      "rating": "5"
+    },
+    {
+      "id": "37b2620a-5293-450d-bb4f-617a7d71c244",
+      "attributes": "deals",
+      "category": "",
+      "name": "Waterproof office bag",
+      "image": "/images//923e59124086f50377d46aaceaa81ec2.jpg",
+      "price": {
+        "original": "15.60",
+        "current": "13.00"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "16",
+      "rating": "3"
+    },
+    {
+      "id": "d7ae7b3e-33d7-4ce5-af02-bbdfb7b49552",
+      "attributes": "deals",
+      "category": "",
+      "name": "Leather bag for office",
+      "image": "/images//181f66fbc7fad83bddc299518a2a492c.jpg",
+      "price": {
+        "original": "18.85",
+        "current": "16.25"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "2",
+      "rating": "2"
+    },
+    {
+      "id": "20d2c501-de0f-4320-8d56-00b7d5069f0c",
+      "attributes": "featured",
+      "category": "accessories",
+      "name": "Artificial Flower",
+      "image": "/images/accessories/2b139272d33e674ea425e31beb70640e.jpg",
+      "price": {
+        "original": "3.90",
+        "current": "3.58"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "11",
+      "rating": "5"
+    },
+    {
+      "id": "874fc5a2-a112-405e-a1b1-29a16ec7ca61",
+      "attributes": "featured",
+      "category": "accessories",
+      "name": "Wall Shelf for office",
+      "image": "/images/accessories/8102fa8e839477c0a7cc25f2c9013546.jpg",
+      "price": {
+        "original": "370.50",
+        "current": "325.00"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "13",
+      "rating": "3"
+    },
+    {
+      "id": "dcb3122f-9079-4e6a-9a0c-d98b712731b8",
+      "attributes": "new",
+      "category": "accessories",
+      "name": "Pen holder",
+      "image": "/images/accessories/3760b47c577b4b38d41aca130c7687fe.jpg",
+      "price": {
+        "original": "2.60",
+        "current": "2.28"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "4"
+    },
+    {
+      "id": "cdad5265-fc6b-440f-a980-efc7867f8e33",
+      "attributes": "deals",
+      "category": "accessories",
+      "name": "Curtain for office",
+      "image": "/images/accessories/807f77fc9ffeafe4f4769647931f3139.jpg",
+      "price": {
+        "original": "21.45",
+        "current": "19.50"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "2",
+      "rating": "3"
+    },
+    {
+      "id": "c2a65dbc-ceec-49d7-a1b2-53a33c33cf37",
+      "attributes": "deals",
+      "category": "accessories",
+      "name": "Paperweight",
+      "image": "/images/accessories/30e936f9ca4914e0d008a2cd29a2908c.jpg",
+      "price": {
+        "original": "1.56",
+        "current": "1.11"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "15",
+      "rating": "2"
+    },
+    {
+      "id": "cc852326-f5f8-4481-904b-03f1521b5298",
+      "attributes": "featured",
+      "category": "stationeries",
+      "name": "Document file set",
+      "image": "/images/stationeries/7a77066ee9c480759659c07629ca4fc3.jpg",
+      "price": {
+        "original": "2.93",
+        "current": "2.60"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "5"
+    },
+    {
+      "id": "e73ce6d9-66d9-41d7-81c2-6d880dd7f01f",
+      "attributes": "featured",
+      "category": "stationeries",
+      "name": "Office Folder",
+      "image": "/images/stationeries/82e42f1db20c1ec4ab3bcc96fbe8c315.jpg",
+      "price": {
+        "original": "1.63",
+        "current": "1.56"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "4"
+    },
+    {
+      "id": "81bfcefa-e5bb-4d15-b260-6da71a5ee213",
+      "attributes": "featured",
+      "category": "stationeries",
+      "name": "Sharpener set",
+      "image": "/images/stationeries/f880c0ea43695708d1c09967bcb8cd33.jpg",
+      "price": {
+        "original": "1.69",
+        "current": "1.63"
+      },
+      "label": "featured",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "4"
+    },
+    {
+      "id": "b2ca64e6-172c-4d6e-9fcd-c235558389ea",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Office notebook",
+      "image": "/images/stationeries/06e62c62d4324185f27d8ac4e30c8f72.jpg",
+      "price": {
+        "original": "2.86",
+        "current": "2.60"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "15",
+      "rating": "3"
+    },
+    {
+      "id": "3d268bee-911b-4232-b4f7-36f248f630e5",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Office Clipcoard",
+      "image": "/images/stationeries/860fd58593673706e62ea07956616a00.jpg",
+      "price": {
+        "original": "2.99",
+        "current": "2.73"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "17",
+      "rating": "4"
+    },
+    {
+      "id": "a65efb33-d2a1-454e-a1f0-b609f630ebf5",
+      "attributes": "new",
+      "category": "stationeries",
+      "name": "Gems clip",
+      "image": "/images/stationeries/6aa11556bd6743c55e117b2af4fd5cb2.jpg",
+      "price": {
+        "original": "1.30",
+        "current": "1.04"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "5"
+    },
+    {
+      "id": "0fa319a7-9414-42dc-a046-515516bc58bc",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Pin",
+      "image": "/images/stationeries/d03bbac164e13b2f774fa5d223aaa866.jpg",
+      "price": {
+        "original": "0.65",
+        "current": "0.52"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "2"
+    },
+    {
+      "id": "6e893998-00a5-47f9-b7f9-d64ede0961f4",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Pen set",
+      "image": "/images/stationeries/9af2fbd1df3d9c87b52e7bafc17ba925.jpg",
+      "price": {
+        "original": "1.59",
+        "current": "1.46"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "3"
+    },
+    {
+      "id": "a7a960d5-9815-4dd7-bede-833ff8bd8962",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Pencil set",
+      "image": "/images/stationeries/8c8fe3a19e4103fcd25277416e2ebba2.jpg",
+      "price": {
+        "original": "1.56",
+        "current": "1.30"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "3"
+    },
+    {
+      "id": "6fa4750b-e4b4-43eb-bcd1-7e7d9471da55",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Eraser Set",
+      "image": "/images/stationeries/386a70f5dd8258dd29a7d655f17841de.jpg",
+      "price": {
+        "original": "0.65",
+        "current": "0.52"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "2"
+    },
+    {
+      "id": "617e6574-bca8-4859-aa04-9390beec684d",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Board duster",
+      "image": "/images/stationeries/a7623b91027acdcefe5dc31b16d9e5d4.png",
+      "price": {
+        "original": "1.11",
+        "current": "0.85"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "13",
+      "rating": "1"
+    },
+    {
+      "id": "2ae5a22d-d5bf-4ce4-8d6d-c303fc615536",
+      "attributes": "deals",
+      "category": "stationeries",
+      "name": "Glue set",
+      "image": "/images/stationeries/724a7a606f357beca67b1e38f82ed9ba.jpg",
+      "price": {
+        "original": "3.25",
+        "current": "2.86"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "3",
+      "rating": "2"
+    },
+    {
+      "id": "f054ed6e-1812-4310-92d9-b9ceaaf8b519",
+      "attributes": "deals",
+      "category": "food",
+      "name": "Steel lunch box",
+      "image": "/images/foods/d25cf73bc20a63ced3dfbbc358dfd5ba.jpg",
+      "price": {
+        "original": "4.16",
+        "current": "3.25"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "5"
+    },
+    {
+      "id": "ecb53235-e3c3-41f1-805a-5f872bd41069",
+      "attributes": "new",
+      "category": "food",
+      "name": "4 layered lunch box",
+      "image": "/images/foods/2ceddb2f14c006a8282f9f9cc6711b4c.jpg",
+      "price": {
+        "original": "4.16",
+        "current": "3.90"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "20",
+      "rating": "5"
+    },
+    {
+      "id": "b1f89d52-11f3-451e-86d5-a7412e5458fb",
+      "attributes": "deals",
+      "category": "food",
+      "name": "Vacuum seal box",
+      "image": "/images/foods/5a7fc8313c3f109f6ae05f3a0383f14d.jpg",
+      "price": {
+        "original": "6.50",
+        "current": "6.31"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "19",
+      "rating": "4"
+    },
+    {
+      "id": "ca204f42-64b6-4d56-85e4-5f46817472ef",
+      "attributes": "deals",
+      "category": "food",
+      "name": "Sipper water bottle",
+      "image": "/images/foods/bf633434b79301ab3b206e720c4a7e1e.jpg",
+      "price": {
+        "original": "5.85",
+        "current": "5.20"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "12",
+      "rating": "3"
+    },
+    {
+      "id": "2688009f-45c1-442d-92ac-44eaed391641",
+      "attributes": "deals",
+      "category": "food",
+      "name": "Plastic water bottle",
+      "image": "/images/foods/2c9bc9bdc39673dd85565526b0b43237.jpg",
+      "price": {
+        "original": "2.60",
+        "current": "1.95"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "2",
+      "rating": "2"
+    },
+    {
+      "id": "30997994-ab38-40e6-aa2a-dd74c4f770ff",
+      "attributes": "deals",
+      "category": "food",
+      "name": "Coffee mug set",
+      "image": "/images/foods/a41c7aa4e8ec919af2efe7c1f2e5d265.jpg",
+      "price": {
+        "original": "6.50",
+        "current": "5.85"
+      },
+      "label": "sale",
+      "brand": "eCommerce Shop",
+      "availability": "in stock",
+      "stockCount": "4",
+      "rating": "1"
+    }
+  ]
+}

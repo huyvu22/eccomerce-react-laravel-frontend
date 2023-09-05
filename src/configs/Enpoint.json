@@ -1,0 +1,9 @@
+{
+  "best_deals": "best_deals",
+  "featured_items": "featured_items",
+  "new_items": "new_items",
+  "users": "users",
+  "cart_data": "cart_data",
+  "products": "products",
+  "product-detail": "products/{id}/{slug}"
+}

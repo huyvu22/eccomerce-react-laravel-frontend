@@ -1,0 +1,31 @@
+.scroll-top {
+  text-align: center;
+  position: fixed;
+  right: 10px;
+  bottom: 40px;
+  height: 40px;
+  width: 40px;
+  z-index: 3;
+  cursor: pointer;
+  background-color: var(--text-primary);
+  border-radius: 8px;
+  animation: move 2s infinite;
+  
+  span {
+    line-height: 40px;
+    color: #fff;
+    animation: move 1s infinite;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+
+  }
+
+}
+

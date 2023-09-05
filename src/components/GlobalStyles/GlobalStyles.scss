@@ -1,0 +1,275 @@
+:root {
+  --body: #F5F6F7;
+  --text: #555555;
+  --text-primary: #045387;
+  --text-secondary: hsla(0, 0%, 100%, 0.5);
+  --text-hover: #045387;
+  --text-placeholder: #dedede;
+  --background: #fff;
+  --navigation-text: #555555;
+  --navigation-bg-hover: #dedede;
+  --icon-color-hover: #fff;
+  --icon-background: #f5f5f5;
+  --icon-background-hover: #045387;
+  --boder: #e8e8e8;
+
+  --heading: #39404a;
+  --sub-heading: #565765;
+
+  --bodysize: 16px;
+  --pfamily: 'Rubik', sans-serif;
+  --bodyheight: 26px;
+
+
+  --header-height: 90px;
+  --footer-height: 90px;
+  --sidebar-height-mobile: 50px;
+  --sidebar-width: 240px;
+  --sidebar-popup-width: 70px;
+  --padding-section: 60px;
+
+  --dark-alpha-10: rgba(0, 0, 0, 0.1);
+  --dark-alpha-50: rgba(0, 0, 0, 0.5);
+  --dark-alpha-70: rgba(0, 0, 0, 0.7);
+  --dark-alpha-80: rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 740px) {
+    --footer-height: 50px;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+html {
+  font-family: Inter, sans-serif;
+  //font-size: 62.5%;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+body {
+  // prevent default scroll on IOS
+  color: var(--text) !important;
+  background: var(--body) !important;
+  font-size: var(--bodysize) !important;
+  font-family: var(--pfamily) !important;
+  line-height: var(--bodyheight) !important;
+  overflow-x: hidden !important;
+
+  @media (max-width: 740px) {
+    background-position: 25% 0;
+  }
+}
+
+body *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: transparent;
+  -webkit-box-shadow: inset 0 0 6px var(--scroll-thumb-bg);
+}
+
+body *::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: transparent;
+}
+
+body *::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+img {
+  height: auto;
+  width: 100%;
+}
+
+button,
+input,
+[tabindex] {
+  outline: none;
+  border: none;
+  font-family: Inter, sans-serif;
+}
+
+h2 {
+  font-size: 40px !important;
+  line-height: 48px !important;
+  text-transform: capitalize;
+  color: var(--heading) !important;
+  font-weight: 600 !important;
+}
+
+h6 {
+  font-size: 16px !important;
+  color: var(--sub-heading) !important;
+  font-weight: 600 !important;
+}
+
+section {
+  display: block;
+  margin-bottom: 40px;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+a[href] {
+  color: var(--navigation-text);
+  //font-size: 14px !important;
+  //font-weight: 400 !important;
+  text-decoration: none;
+  display: inline-block;
+}
+
+ul, li {
+  list-style: none;
+}
+
+p {
+  color: #555555 !important;
+  font-size: 15px !important;
+  margin-bottom: 5px !important;
+}
+
+.btn-inline {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  padding: 12px 30px !important;
+  border-radius: 6px !important;
+  border: 2px solid var(--text-primary) !important;
+  background-color: var(--text-primary) !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: #fff !important;
+    color: var(--text-primary) !important;
+  }
+
+  span:first-child {
+    display: inline-block;
+    transform: translateY(-2px);
+  }
+}
+
+.form-btn {
+  button {
+    width: 100%;
+    display: block;
+    margin: 20px 0;
+    padding: 8px 0;
+    border-radius: 8px;
+
+    &:first-child {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    &:last-child {
+      color: #fff;
+      background: #E60023;
+    }
+
+    span {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+  }
+}
+
+.register, .login {
+  background-color: #fff;
+  border-radius: 8px;
+
+  p {
+    padding: 12px 0;
+    text-align: center;
+
+    a {
+      color: #045387;
+      font-weight: 600;
+    }
+  }
+}
+
+
+// Custom toastify
+body {
+  .Toastify__toast {
+    background-color: #fff;
+    padding: 10px !important;
+    color: green;
+
+    .Toastify__zoom-enter {
+      display: none;
+    }
+
+    .content {
+      p {
+        color: #000 !important;
+        font-size: 13px;
+      }
+
+      .image {
+        margin-bottom: 10px;
+
+        img {
+          width: 30%;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+
+// Custom tippy
+.tippy {
+  font-size: 1.2rem;
+}
+
+// Custom slick slider
+body {
+  .slick-track {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .slick-list {
+    overflow: unset;
+  }
+
+  .slick-arrow {
+    display: none;
+  }
+}
+
+
+.loading {
+  text-align: center;
+  h3{
+    font-weight: bold;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 30px;
+    clip-path: inset(0 3ch 0 0);
+    animation: l 1s steps(4) infinite;
+  }
+}
+
+@keyframes l {
+  to {
+    clip-path: inset(0 -1ch 0 0);
+  }
+}

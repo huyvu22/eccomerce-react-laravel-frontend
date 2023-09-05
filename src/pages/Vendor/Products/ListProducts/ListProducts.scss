@@ -1,0 +1,159 @@
+.my-products {
+  .container {
+    .orderlist {
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background: #fff;
+      padding: 30px 30px;
+
+      .orderlist-head {
+        padding: 10px 0;
+        align-items: center;
+        cursor: pointer;
+
+        h5 {
+          font-weight: 600 !important;
+        }
+      }
+
+      .orderlist-body {
+        .table-scroll {
+          width: 100%;
+
+          .table-list {
+            width: 100%;
+
+
+            thead {
+              tr {
+                background: var(--text-primary);
+                text-align: center;
+
+
+                th {
+                  color: #fff;
+                  font-size: 17px;
+                  padding: 12px 20px;
+                  border-right: 1px solid #fff;
+
+                  &:first-child {
+                    border-radius: 6px 0 0 0;
+                  }
+
+                  &:last-child {
+                    border-radius: 0 6px 0 0;
+                  }
+                }
+
+              }
+            }
+
+            tbody {
+              tr {
+                border-radius: 5px;
+
+                td {
+                  padding: 12px 20px;
+                  text-align: center;
+                  border: 1px solid #e8e8e8;
+                  background: #f5f5f5;
+
+                  img {
+                    width: auto;
+                    height: 100px;
+                  }
+
+                  a {
+                    .edit {
+                      background: #fff !important;;
+                      color: green !important;
+
+                      &:hover {
+                        background: green !important;
+                        color: #fff !important;
+                      }
+                    }
+
+                    .bin {
+
+                    }
+                  }
+
+                  span {
+                    display: inline-block;
+                    font-size: 20px;
+                    margin-right: 5px;
+                    background: #f5f5f5;
+                    padding: 5px 7px;
+                    cursor: pointer;
+                    border-radius: 5px;
+
+                    &:first-child {
+                      color: green;
+
+                      &:hover {
+                        background: green;
+                        color: #fff;
+                      }
+                    }
+
+                    &:last-child {
+                      color: red;
+
+                      &:hover {
+                        background: red;
+                        color: #fff;
+                      }
+                    }
+
+
+                  }
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .bottom-paginate {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      ul {
+        display: flex;
+        gap: 10px;
+
+        li {
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          background: #fff;
+          border-radius: 50%;
+          cursor: pointer;
+
+          span {
+            font-size: 22px;
+
+            &:hover {
+              color: var(--icon-color-hover);
+            }
+          }
+
+          &:hover {
+            background: var(--text-primary);
+            color: var(--icon-color-hover);
+          }
+
+          &.active {
+            background: var(--text-primary);
+            color: var(--icon-color-hover);
+          }
+        }
+
+      }
+    }
+  }
+}

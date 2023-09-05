@@ -1,0 +1,44 @@
+.swiper-wrapper {
+  .swiper-slide {
+    position: relative;
+
+    span {
+      img {
+        height: 325px !important;
+        border-radius: 6px;
+      }
+    }
+
+
+    .banner-content {
+      position: absolute;
+      top: 0;
+      padding: 54px 54px;
+      width: 50%;
+
+      h2 {
+        font-size: 30px !important;
+        margin-bottom: 40px;
+        text-transform: capitalize;
+        color: #39404A;
+        font-weight: 500;
+
+      }
+
+      a {
+        span {
+          margin-right: 4px;
+        }
+      }
+
+    }
+  }
+}
+
+.swiper-pagination {
+  transform: translateY(-18px) !important;
+}
+
+
+
+

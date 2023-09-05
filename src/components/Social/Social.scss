@@ -1,0 +1,50 @@
+@mixin link-style {
+  color: white;
+  font-size: 20px !important;
+}
+
+.social-widgets {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  right: 0;
+  top: 40%;
+  z-index: 3;
+
+  .items {
+
+    .item {
+      width: 45px;
+      height: 45px;
+      text-align: center;
+      line-height: 45px;
+
+      &:first-child {
+        background: #3b5998;
+
+        a {
+          @include link-style;
+        }
+
+      }
+
+      &:nth-child(2) {
+        background-color: #07779a;
+
+        a {
+          @include link-style;
+        }
+      }
+
+      &:last-child {
+        background-color: #DA2723;
+
+        a {
+          @include link-style;
+        }
+      }
+
+    }
+  }
+}
+

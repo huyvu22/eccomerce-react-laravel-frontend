@@ -1,0 +1,50 @@
+.single-banner {
+  background: url("https://ready-music-store.itechscripts.com/assets/site_data/single-banner.jpg");
+  background-size: cover !important;
+  padding: 100px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 50px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(34, 13, 0, 0.6), rgba(134, 52, 1, 0.6));
+    z-index: -1;
+  }
+
+  .container {
+    h2 {
+      font-size: 38px;
+      margin-bottom: 15px;
+      color: #fff !important;
+    }
+
+    .breadcrumb {
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+
+      span {
+        padding-right: 10px;
+        color: #fff;
+
+        a {
+          color: #fff;
+
+          &:hover {
+            color: var(--text-hover);
+          }
+
+        }
+      }
+    }
+
+
+  }
+}

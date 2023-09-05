@@ -1,0 +1,3 @@
+json-server --watch db.json --port=3004
+email: sb-svoo426553341@personal.example.com 6&TVhR^F
+password:

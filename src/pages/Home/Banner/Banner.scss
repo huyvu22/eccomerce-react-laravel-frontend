@@ -1,0 +1,119 @@
+.banner-part {
+  padding-top: 25px;
+
+  .container {
+    .banner-category {
+      border-radius: 5px;
+      background-color: var(--background);
+
+      .banner-category-head {
+        padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        background-color: var(--text-primary);
+        color: #ffffff;
+        border-radius: 5px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+
+        span:first-child {
+          transform: translateY(-2px);
+        }
+
+      }
+
+      .banner-category-list {
+        padding: 0 20px 20px;
+
+        .banner-category-item {
+          padding: 10px 0;
+          position: relative;
+          cursor: pointer;
+          border-top: 1px solid var(--boder);
+
+          &:hover {
+            background-color: var(--navigation-bg-hover);
+            color: var(--text-hover);
+            transition: 0.2s;
+
+            .banner-category-dropdown {
+              z-index: 2;
+              opacity: 1;
+              visibility: visible;
+            }
+          }
+
+          span:last-child {
+            position: absolute;
+            right: 0;
+          }
+
+          a {
+            font-size: 15px;
+            padding: 0 8px;
+          }
+
+          .banner-category-dropdown {
+            position: absolute;
+            min-width: 200px;
+            z-index: 0;
+            opacity: 0;
+            visibility: hidden;
+            top: 0;
+            left: 235px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: var(--background);
+            box-shadow: 15px 15px 25px 0 rgb(0 0 0 / 8%);
+            transition: all linear 0.15s;
+
+            p {
+              text-transform: capitalize;
+              font-size: 20px !important;
+              font-weight: 600;
+              padding-left: 8px;
+              text-align: center;
+            }
+
+            .banner-sub-category {
+
+              ul {
+                padding-left: 0;
+
+                li {
+                  font-size: 15px;
+                  padding: 10px 0;
+                  border-top: 1px solid var(--boder);
+                  text-align: center;
+
+                  &:hover {
+                    background-color: var(--navigation-bg-hover);
+                    color: var(--text-hover);
+                    transition: 0.2s;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .banner-promo {
+
+      span {
+        display: block;
+        padding: 0 4px;
+
+        img {
+          border-radius: 6px;
+
+        }
+
+      }
+
+    }
+  }
+}
+

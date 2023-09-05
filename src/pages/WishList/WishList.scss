@@ -1,0 +1,108 @@
+.wishlist-part {
+  .container {
+    .account-card {
+      margin-bottom: 30px;
+      border-radius: 8px;
+      //background: #fff;
+      padding: 0 30px 30px;
+
+      .account-title {
+        margin-bottom: 40px;
+        padding: 18px 0;
+        border-bottom: 1px solid #ccc;
+        position: relative;
+
+        &:before {
+          content: '';
+          height: 3px;
+          width: 50px;
+          background-color: var(--text-primary);
+          position: absolute;
+          bottom: -2px;
+        }
+
+        h3 {
+          font-weight: 600;
+        }
+      }
+
+      .account-content {
+
+        .table-wrapper {
+          width: 100%;
+
+          table {
+            width: 100%;
+            border-radius: 5px;
+
+            thead {
+              tr {
+                background: var(--text-primary);
+                text-align: center;
+
+                th {
+                  color: #fff;
+                  font-size: 17px;
+                  padding: 12px 20px;
+                  border-right: 1px solid #fff;
+
+                  &:first-child {
+                    border-radius: 6px 0 0 6px;
+                  }
+
+                  &:last-child {
+                    border-radius: 0 6px 6px 0;
+                  }
+                }
+
+              }
+            }
+
+            tbody {
+              tr {
+                border-bottom: 1px solid #ccc;
+
+                td {
+                  color: #000;
+                  font-weight: bold;
+
+                  &:not(:last-child) {
+                    text-align: center;
+                    padding: 15px 25px;
+                    border-right: 1px solid #ccc;
+                  }
+
+                  img {
+                    width: 50%;
+                    height: 80px;
+                  }
+
+                  text-align: center;
+
+                  span {
+                    display: inline-block;
+                    font-size: 16px;
+                    margin-right: 5px;
+                    padding: 5px 7px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                  }
+
+                  .btn-remove {
+                    font-size: 20px;
+                    color: red;
+                    &:hover{
+                      background: red;
+                      color: #fff;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
