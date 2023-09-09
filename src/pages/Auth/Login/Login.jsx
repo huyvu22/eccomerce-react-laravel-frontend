@@ -6,16 +6,21 @@ import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {login, logout} from "../../../layouts/Header/HeaderSlice";
 import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
+import useClient from "../../../services/Hooks/useClient";
+import {generateRandomToken} from "../../../services/Helpers/Number/Number";
+import {getCookie, setCookie} from "../../../utils/dataHandler";
 
 const Login = () => {
+    const client = useClient();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({email: "", password: ""});
     const [token, setToken] = useState(false);
     const [validEmail, setValidEmail] = useState(true);
     const [validPassword, setValidPassword] = useState(true);
+    const [rememberMe, setRememberMe] = useState(false);
     const dispatch = useDispatch();
-    const tokenUserLogin = localStorage.getItem('userToken')
-    const tokenSellerLogin = localStorage.getItem('sellerToken')
+    const tokenUserLogin = getCookie('user_access_token');
+    const tokenSellerLogin = getCookie('seller_access_token');
     const location = useLocation();
 
     useEffect(() => {
@@ -44,6 +49,7 @@ const Login = () => {
 
 
     const handleLogin = async () => {
+
         const isValidEmail = validateEmail(formData.email);
         if (!isValidEmail) {
             setValidEmail(false);
@@ -62,35 +68,40 @@ const Login = () => {
         }
 
         if (isValidEmail && formData.password) {
-            let res = await fetch("http://buynow.test/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "accept": "application/json"
-                },
-                body: JSON.stringify({
-                    "email": formData.email,
-                    "password": formData.password
-                })
+
+            let res = await client.post('login', {
+                "email": formData.email,
+                "password": formData.password
             })
-            const data = await res.json();
-            if (res.ok) {
+            if (rememberMe) {
+                let rememberMeToken = generateRandomToken(32);
+                res = await client.post('login', {"email": formData.email, "password": formData.password}, {'remember_token': rememberMeToken})
+                setCookie('remember_token', rememberMeToken, 30)
+            }
+            const userData = await res.data.data;
+            if (res.response.ok === true) {
                 handleOldLogin();
-                let tokenLogin = data.data.token
+                let tokenLogin = userData.token
                 setToken(tokenLogin);
                 const storageItem = location.pathname.includes('/buyer/login')
-                    ? 'userToken'
-                    : 'sellerToken';
+                    ? 'user_access_token'
+                    : 'seller_access_token';
 
                 if (storageItem) {
-                    localStorage.setItem(storageItem, JSON.stringify({'token': tokenLogin}));
+                    if (rememberMe) {
+                        setCookie(storageItem, tokenLogin, 30)
+                    } else {
+                        setCookie(storageItem, tokenLogin)
+                    }
+
                     dispatch(login(storageItem));
                 }
                 toast('Login Successful');
                 navigate('/');
             } else {
-                toast(data.message);
+                toast(userData.message);
             }
+
         }
 
     };
@@ -146,7 +157,7 @@ const Login = () => {
                                             </div>
                                         </div>
                                         <div className="rememberMe">
-                                            <input type="checkbox" className=".form-check-input"/>
+                                            <input type="checkbox" className=".form-check-input" onChange={(e) => setRememberMe(e.target.checked)}/>
                                             <label htmlFor="">Remember Me</label>
                                         </div>
                                         <div className="form-btn">

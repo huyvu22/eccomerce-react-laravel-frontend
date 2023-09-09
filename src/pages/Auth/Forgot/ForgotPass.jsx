@@ -3,12 +3,14 @@ import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {AiOutlineGoogle} from "react-icons/ai";
 import {toast} from "react-toastify";
+import {getCookie} from "../../../utils/dataHandler";
 
 const ForgotPass = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({email: ""});
     const [validEmail, setValidEmail] = useState(true);
-    const tokenLogin = localStorage.getItem('userToken');
+    const tokenLogin = getCookie('user_access_token') || getCookie('seller_access_token');
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Navigate, Outlet, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {login} from "../layouts/Header/HeaderSlice";
+import {getCookie} from "../utils/dataHandler";
 
 export default function AuthMiddleware() {
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const location = useLocation();
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +16,7 @@ export default function AuthMiddleware() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken?.token}`
+                    'Authorization': `Bearer ${userToken}`
                 }
             });
 
@@ -31,7 +32,36 @@ export default function AuthMiddleware() {
         }
     };
 
+    const isRememberLogin = async () => {
+        const rememberToken = getCookie('remember_token');
+        try {
+            const res = await fetch(`http://buynow.test/api/check-remember?remember_token=${rememberToken}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await res.json();
+            if (data.valid === true) {
+                return data.valid;
+            }
+
+
+        } catch (error) {
+            console.error('Error checking token:', error);
+            return false;
+        }
+    }
+
+    const checkRememberLogin = async () => {
+        const loggedIn = await isRememberLogin();
+        setLoggedIn(loggedIn);
+        setIsLoading(false);
+    };
+
     useEffect(() => {
+        // checkRememberLogin();
         const checkLogin = async () => {
             const loggedIn = await isLoggedIn();
             setLoggedIn(loggedIn);

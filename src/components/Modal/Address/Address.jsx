@@ -4,10 +4,10 @@ import {Button, Form} from "react-bootstrap";
 import Select from 'react-select'
 import {toast} from "react-toastify";
 import useClient from "../../../services/Hooks/useClient";
+import {getCookie} from "../../../utils/dataHandler";
 
 const Address = (props) => {
     const client = useClient();
-
     const [isClearable, setIsClearable] = useState(true);
     const [isSearchable, setIsSearchable] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
@@ -56,7 +56,7 @@ const Address = (props) => {
     }, [province?.value, district?.value]);
 
     const handleStoreAddress = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
         if (userAddress.address !== '') {
             const formData = {
                 name: userAddress.name,
@@ -74,7 +74,7 @@ const Address = (props) => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userToken?.token}`
+                        'Authorization': `Bearer ${userToken}`
                     },
                     body: JSON.stringify(formData)
                 });

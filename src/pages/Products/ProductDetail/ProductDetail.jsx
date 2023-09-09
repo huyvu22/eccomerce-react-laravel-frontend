@@ -19,11 +19,11 @@ import {asset} from "../../../services/Helpers/Image/image";
 import useClient from "../../../services/Hooks/useClient";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import {showToast} from "../../../components/Toast/Toast";
-import {processFetchedData} from "../../../utils/dataHandler";
+import {getCookie, processFetchedData} from "../../../utils/dataHandler";
 import {toast} from "react-toastify";
 
 const ProductDetail = () => {
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const client = useClient();
     const [myCart] = useMyCart()
     const dispatch = useDispatch();
@@ -91,7 +91,7 @@ const ProductDetail = () => {
     }
 
     const getReViewProduct = async () => {
-        const res = await client.get(`product-review/${id}`, '', userToken.token);
+        const res = await client.get(`product-review/${id}`, '', userToken);
         if (res.response.ok === true) {
             const reviews = await res.data.data;
             setReview(reviews)
@@ -109,7 +109,7 @@ const ProductDetail = () => {
             'review': comment
         }
         if (rating || comment) {
-            const res = await client.post(`product-review`, data, '', userToken.token);
+            const res = await client.post(`product-review`, data, '', userToken);
             if (res.response.ok === true) {
                 const review = await res.data;
                 toast.success(review.message)

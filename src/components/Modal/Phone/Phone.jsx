@@ -3,13 +3,14 @@ import './Phone.scss';
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
+import {getCookie} from "../../../utils/dataHandler";
 
 const Phone = (props) => {
     const [phone, setPhone] = useState('');
     const {userAddress} = props;
 
     const handleStorePhone = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
         const formData = {
             name: userAddress.name,
@@ -27,7 +28,7 @@ const Phone = (props) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken?.token}`
+                    'Authorization': `Bearer ${userToken}`
                 },
                 body: JSON.stringify(formData)
             });

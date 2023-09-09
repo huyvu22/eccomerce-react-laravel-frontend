@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
+import {getCookie} from "../../utils/dataHandler";
 
 export const cartSlice = createSlice({
     name: "cartSidebar",
@@ -54,8 +55,8 @@ export const searchSlice = createSlice({
 export const loginSlice = createSlice({
     name: "auth",
     initialState: {
-        isUserAuthenticated: !!localStorage.getItem("userToken"),
-        isSellerAuthenticated: !!localStorage.getItem("sellerToken"),
+        isUserAuthenticated: !!getCookie('user_access_token'),
+        isSellerAuthenticated: !!getCookie('seller_access_token'),
     },
     reducers: {
         login: (state, action) => {

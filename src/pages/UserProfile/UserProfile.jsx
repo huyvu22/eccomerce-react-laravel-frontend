@@ -9,6 +9,7 @@ import Address from "../../components/Modal/Address/Address";
 import Note from "../../components/Modal/Note/Note";
 import ProfileInfo from "../../components/Modal/ProfileInfo/ProfileInfo";
 import ChangePassword from "../../components/Modal/ChangePassword/ChangePassword";
+import {getCookie} from "../../utils/dataHandler";
 
 const UserProfile = () => {
     const [userAddress, setUserAddress] = useState([]);
@@ -21,7 +22,7 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(false)
 
     const getUserAddress = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
         if (!userToken) {
             console.error('User token not found');
             return;
@@ -31,7 +32,7 @@ const UserProfile = () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userToken.token}`,
+                'Authorization': `Bearer ${userToken}`,
             }
         });
 

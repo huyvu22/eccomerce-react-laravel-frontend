@@ -24,6 +24,7 @@ const Home = () => {
         }
     }, [location.pathname, dispatch]);
 
+
     return (
         <>
             <Banner/>

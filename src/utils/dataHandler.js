@@ -76,6 +76,35 @@ export const shuffleData = (array) => {
     return array;
 };
 
+export const setCookie = (name, token, days = null) => {
+    if (days !== null) {
+        let expires = (new Date(Date.now() + 86400 * days * 1000)).toUTCString();
+        return document.cookie = `${name}=${token}; expires=${expires};path=/;`
+    }
+    return document.cookie = `${name}=${token};path=/;`
+}
+
+export const getCookie = (name) => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Check if the cookie starts with the name we are looking for
+        if (cookie.startsWith(name + '=')) {
+            // Extract and return the cookie value
+            return cookie.substring(name.length + 1);
+        }
+    }
+
+    // Return null if the cookie is not found
+    return null;
+}
+
+export const deleteCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
 
 
 

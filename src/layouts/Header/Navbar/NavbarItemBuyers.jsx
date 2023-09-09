@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import Swal from "sweetalert2";
 import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
+import {deleteCookie, getCookie} from "../../../utils/dataHandler";
 
 const NavbarItemBuyers = () => {
     const navigate = useNavigate();
@@ -13,19 +14,20 @@ const NavbarItemBuyers = () => {
         (state) => state.loginUser.isUserAuthenticated
     );
     const handleLogout = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken')) || JSON.parse(localStorage.getItem('sellerToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
         let res = await fetch("http://buynow.test/api/logout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
-                'Authorization': `Bearer ${userToken?.token}`
+                'Authorization': `Bearer ${userToken}`
             },
         })
         const data = await res.json();
         if (data.status === "success") {
             dispatch(logout());
             dispatch(resetCart());
+            deleteCookie('user_access_token');
             navigate('/');
             toast.success(data.message);
         } else {

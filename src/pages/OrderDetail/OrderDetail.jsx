@@ -7,6 +7,7 @@ import button from "bootstrap/js/src/button";
 import {BiEdit} from "react-icons/bi";
 import {Link, useParams} from "react-router-dom";
 import useClient from "../../services/Hooks/useClient";
+import {getCookie} from "../../utils/dataHandler";
 
 
 const OrderDetail = () => {
@@ -16,10 +17,11 @@ const OrderDetail = () => {
     const [order, setOrder] = useState([]);
     const [orderProducts, setOrderProducts] = useState([]);
     const [orderAddress, setOrderAddress] = useState([]);
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const [loading, setLoading] = useState(true);
+
     const getOrderDetail = async () => {
-        const res = await client.get(`orders/detail/${id}`, '', userToken.token);
+        const res = await client.get(`orders/detail/${id}`, '', userToken);
         if (res.response.ok === true) {
             const orderData = await res.data.data;
             setOrder(orderData[0]);

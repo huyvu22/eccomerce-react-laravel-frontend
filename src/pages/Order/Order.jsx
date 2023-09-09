@@ -5,14 +5,15 @@ import useClient from "../../services/Hooks/useClient";
 import moment from 'moment';
 import {FaLink} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import {getCookie} from "../../utils/dataHandler";
 
 const Order = () => {
     const client = useClient();
     const [orders, setOrders] = useState([]);
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const [loading, setLoading] = useState(true);
     const getAllOrders = async () => {
-        const res = await client.get('orders', '', userToken.token);
+        const res = await client.get('orders', '', userToken);
         if (res.response.ok === true) {
             const orderData = await res.data.data;
             setOrders(orderData);

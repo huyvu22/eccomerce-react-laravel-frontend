@@ -3,11 +3,12 @@ import useClient from "../../services/Hooks/useClient";
 import _ from "lodash";
 import {resetCart} from "../../components/ProductCard/ProductCardSlice";
 import {useDispatch} from "react-redux";
+import {getCookie} from "../../utils/dataHandler";
 
 const PaymentCodSuccess = () => {
     const client = useClient();
     const [loading, setLoading] = useState(false);
-    const userToken = JSON.parse(localStorage.getItem('userToken')) || JSON.parse(localStorage.getItem('sellerToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const dispatch = useDispatch();
     const storeOrder = async () => {
         setLoading(true);
@@ -27,7 +28,7 @@ const PaymentCodSuccess = () => {
             headers: {
                 'content-type': 'application/json',
                 'accept': 'application/json',
-                'Authorization': `Bearer ${userToken?.token}`,
+                'Authorization': `Bearer ${userToken}`,
             },
             body: formData
         })

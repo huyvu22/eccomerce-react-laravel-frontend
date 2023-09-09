@@ -8,6 +8,7 @@ import useClient from "../../../services/Hooks/useClient";
 import {asset} from "../../../services/Helpers/Image/image";
 import SingleBanner from "../../../components/SingleBanner/SingleBanner";
 import {toast} from "react-toastify";
+import {getCookie} from "../../../utils/dataHandler";
 
 const SellerOrderDetail = () => {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -16,7 +17,7 @@ const SellerOrderDetail = () => {
     const [order, setOrder] = useState([]);
     const [orderProducts, setOrderProducts] = useState([]);
     const [orderAddress, setOrderAddress] = useState([]);
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const [loading, setLoading] = useState(true);
     const getOrderDetail = async () => {
         const res = await client.get(`seller/orders/detail/${id}`, '', userToken.token);

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../HeaderSlice";
 import {toast} from "react-toastify";
 import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
+import {deleteCookie, getCookie} from "../../../utils/dataHandler";
 
 const NavbarItemVendor = () => {
     const dispatch = useDispatch();
@@ -11,21 +12,22 @@ const NavbarItemVendor = () => {
     const isSellerAuthenticated = useSelector(
         (state) => state.loginUser.isSellerAuthenticated
     );
+    const userToken = getCookie('seller_access_token');
 
     const handleLogout = async () => {
-        const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
         let res = await fetch("http://buynow.test/api/logout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
-                'Authorization': `Bearer ${sellerToken?.token}`
+                'Authorization': `Bearer ${userToken}`
             },
         })
         const data = await res.json();
         if (data.status === "success") {
             dispatch(logout());
             dispatch(resetCart());
+            deleteCookie('seller_access_token');
             navigate('/');
             toast.success(data.message);
         } else {
@@ -34,27 +36,6 @@ const NavbarItemVendor = () => {
 
     };
 
-    const fetchUserData = async (token) => {
-        const headers = {
-            "Content-Type": "application/json",
-        };
-
-        // Nếu có token xác thực, thêm vào header Authorization
-        if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-        }
-
-        try {
-            const response = await fetch("http://localhost:3000/users", {
-                method: "GET",
-                headers,
-            });
-            return response;
-        } catch (error) {
-            console.error(error);
-            // Xử lý lỗi tại đây nếu cần thiết
-        }
-    };
 
     return (
         <ul className="dropdown-position-list">

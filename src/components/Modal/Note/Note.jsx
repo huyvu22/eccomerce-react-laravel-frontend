@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
+import {getCookie} from "../../../utils/dataHandler";
 
 const Note = (props) => {
     const [note, setNote] = useState('');
     const {userAddress} = props;
     const handleStoreNote = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
         const formData = {
             name: userAddress.name,
@@ -25,7 +26,7 @@ const Note = (props) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken?.token}`
+                    'Authorization': `Bearer ${userToken}`
                 },
                 body: JSON.stringify(formData)
             });

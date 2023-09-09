@@ -4,11 +4,12 @@ import SingleBanner from "../../../components/SingleBanner/SingleBanner";
 import useClient from "../../../services/Hooks/useClient";
 import moment from "moment/moment";
 import {Link} from "react-router-dom";
+import {getCookie} from "../../../utils/dataHandler";
 
 const OrderedProducts = () => {
     const client = useClient();
     const [orderProduct, setOrderProduct] = useState([]);
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const getAllOrdered = async () => {
 
         if (!userToken) {
@@ -16,7 +17,7 @@ const OrderedProducts = () => {
             return;
         }
 
-        const res = await client.get('seller/ordered-products', '', userToken.token);
+        const res = await client.get('seller/ordered-products', '', userToken);
 
         if (res.response.ok === true) {
             const orderData = await res.data.data;
@@ -28,7 +29,7 @@ const OrderedProducts = () => {
     }, []);
 
     const handleOrderTypeChange = async (e) => {
-        const res = await client.get(`seller/orders/${e.target.value}`, '', userToken.token);
+        const res = await client.get(`seller/orders/${e.target.value}`, '', userToken);
         if (res.response.ok === true) {
             const orderData = await res.data.data;
             setOrderProduct(orderData)

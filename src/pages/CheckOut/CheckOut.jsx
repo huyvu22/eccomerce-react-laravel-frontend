@@ -19,10 +19,11 @@ import Note from "../../components/Modal/Note/Note";
 import {formatter} from "../../services/Helpers/Number/Number";
 import {useRawSubTotalPrice, useSubTotalPrice} from "../../services/Hooks/useTotalPrice";
 import {Link, useNavigate} from "react-router-dom";
+import {getCookie} from "../../utils/dataHandler";
 
 const CheckOut = () => {
     const [myCart] = useMyCart();
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = getCookie('access_token') || getCookie('seller_access_token');
     const client = useClient();
     const [idItem, setIdItem] = useState();
     const [modalPhoneShow, setModalPhoneShow] = useState(false);
@@ -41,8 +42,8 @@ const CheckOut = () => {
     const rawSubTotal = useRawSubTotalPrice();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     const getShippingFee = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
 
         if (!userToken) {
             console.error('User token not found');
@@ -54,7 +55,7 @@ const CheckOut = () => {
         const res = await fetch('http://buynow.test/api/shipping-fee', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${userToken.token}`,
+                'Authorization': `Bearer ${userToken}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
@@ -73,7 +74,6 @@ const CheckOut = () => {
     }, [rawSubTotal]);
 
     const getUserAddress = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
         if (!userToken) {
             console.error('User token not found');
             return;
@@ -81,7 +81,7 @@ const CheckOut = () => {
         const res = await fetch('http://buynow.test/api/address', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${userToken.token}`,
+                'Authorization': `Bearer ${userToken}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -130,66 +130,6 @@ const CheckOut = () => {
     const paymentMethodRef = useRef();
     const [termsChecked, setTermsChecked] = useState(true);
 
-    //
-    // const handleProceedToCheckout = async () => {
-    //     if (termsChecked && userAddress.phone && userAddress.note && userAddress.address) {
-    //         const selectedPaymentMethod = paymentMethodRef.current;
-    //
-    //         if (selectedPaymentMethod === 'paypal') {
-    //             const response = await fetch(`http://buynow.test/api/paypal/payment?total=${rawSubTotal + fee - discount}`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'accept': 'application/json',
-    //                     'Authorization': `Bearer ${userToken?.token}`
-    //                 },
-    //
-    //             });
-    //             const data = await response.json();
-    //             if (data.status === 'success') {
-    //                 setLoading(false)
-    //                 sessionStorage.setItem('payment_method', 'paypal');
-    //                 sessionStorage.setItem('order_address', JSON.stringify(userAddress));
-    //                 sessionStorage.setItem('sub_total', JSON.stringify(rawSubTotal));
-    //                 sessionStorage.setItem('amount', JSON.stringify(rawSubTotal + fee - discount));
-    //                 sessionStorage.setItem('my_cart', JSON.stringify(myCart));
-    //                 window.location.href = data.data.paypal_checkout_url;
-    //             } else {
-    //                 console.log('Payment error:', data.message);
-    //                 toast.error(data.message);
-    //             }
-    //             setLoading(true)
-    //
-    //         } else if (selectedPaymentMethod === 'cod') {
-    //             const response = await fetch(`http://buynow.test/api/cod/payment`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'accept': 'application/json',
-    //                     'Authorization': `Bearer ${userToken?.token}`
-    //                 },
-    //
-    //             });
-    //             const data = await response.json();
-    //             if (data.status === 'success') {
-    //                 setLoading(false)
-    //                 sessionStorage.setItem('payment_method', 'paypal');
-    //                 sessionStorage.setItem('order_address', JSON.stringify(userAddress));
-    //                 sessionStorage.setItem('sub_total', JSON.stringify(rawSubTotal));
-    //                 sessionStorage.setItem('amount', JSON.stringify(rawSubTotal + fee - discount));
-    //                 sessionStorage.setItem('my_cart', JSON.stringify(myCart));
-    //                 // window.location.href = data.data.paypal_checkout_url;
-    //             } else {
-    //                 console.log('Payment error:', data.message);
-    //                 toast.error(data.message);
-    //             }
-    //             setLoading(true)
-    //         }
-    //     } else {
-    //         toast('Please accept terms of service or fill all fields address above.');
-    //     }
-    // };
-
     const handleProceedToCheckout = async () => {
 
         if (termsChecked && userAddress.phone && userAddress.address) {
@@ -198,7 +138,8 @@ const CheckOut = () => {
             let paymentUrl = '';
             if (selectedPaymentMethod === 'paypal') {
                 paymentUrl = `http://buynow.test/api/paypal/payment?total=${rawSubTotal + fee - discount}`;
-            } else if (selectedPaymentMethod === 'cod') {
+            } else if (selectedPaymentMethod === 'cod'
+            ) {
                 paymentUrl = 'http://buynow.test/api/cod/payment';
             }
 
@@ -210,7 +151,7 @@ const CheckOut = () => {
                         headers: {
                             'Content-Type': 'application/json',
                             'accept': 'application/json',
-                            'Authorization': `Bearer ${userToken?.token}`
+                            'Authorization': `Bearer ${userToken}`
                         },
                     });
                     const data = await response.json();
