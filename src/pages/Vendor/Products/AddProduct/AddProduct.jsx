@@ -6,6 +6,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {EditorState, convertToRaw} from "draft-js";
 import {Editor} from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
+import {getCookie} from "../../../../utils/dataHandler";
 
 const AddProduct = () => {
 
@@ -68,7 +69,7 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
+        const sellerToken = getCookie('seller_access_token')
         const updatedData = {
             ...data,
             full_description: draftToHtml(convertToRaw(editorState.getCurrentContent())),
@@ -93,7 +94,7 @@ const AddProduct = () => {
         let res = await fetch("http://buynow.test/api/seller/products", {
             method: "POST",
             headers: {
-                'Authorization': `Bearer ${sellerToken?.token}`
+                'Authorization': `Bearer ${sellerToken}`
             },
             body: formData,
         })

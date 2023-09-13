@@ -78,10 +78,10 @@ const Login = () => {
                 res = await client.post('login', {"email": formData.email, "password": formData.password}, {'remember_token': rememberMeToken})
                 setCookie('remember_token', rememberMeToken, 30)
             }
-            const userData = await res.data.data;
+            const userData = await res.data;
             if (res.response.ok === true) {
                 handleOldLogin();
-                let tokenLogin = userData.token
+                let tokenLogin = userData.data.token
                 setToken(tokenLogin);
                 const storageItem = location.pathname.includes('/buyer/login')
                     ? 'user_access_token'

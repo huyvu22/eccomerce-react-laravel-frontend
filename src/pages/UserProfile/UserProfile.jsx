@@ -41,7 +41,6 @@ const UserProfile = () => {
             setUserAddress(data[0])
             setLoading(false)
         }
-
     }
 
     useEffect(() => {
@@ -51,8 +50,6 @@ const UserProfile = () => {
     const handleDivClick = (index) => {
         setActiveIndex(index);
     };
-
-    console.log(userAddress)
 
     return (
         <>

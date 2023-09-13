@@ -9,6 +9,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
+import {getCookie} from "../../../../utils/dataHandler";
 
 const ListProducts = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const ListProducts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [status, setStatus] = useState(false)
     let totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
-    const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
+    const sellerToken = getCookie('seller_access_token')
 
     const getMyProducts = async () => {
         if (!sellerToken) {
@@ -29,7 +30,7 @@ const ListProducts = () => {
         const res = await fetch(`http://buynow.test/api/seller/products?page=${currentPage}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${sellerToken.token}`,
+                'Authorization': `Bearer ${sellerToken}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -75,7 +76,7 @@ const ListProducts = () => {
         let res = await fetch(`http://buynow.test/api/seller/products`, {
             method: "POST",
             headers: {
-                'Authorization': `Bearer ${sellerToken?.token}`,
+                'Authorization': `Bearer ${sellerToken}`,
             },
             body: formData,
         })
@@ -102,7 +103,7 @@ const ListProducts = () => {
                 let res = await fetch(`http://buynow.test/api/seller/products/${product.id}`, {
                     method: "DELETE",
                     headers: {
-                        'Authorization': `Bearer ${sellerToken?.token}`,
+                        'Authorization': `Bearer ${sellerToken}`,
                     },
                 })
                 const response = await res.json();

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ProductDetail.scss';
 import SingleBanner from "../../../components/SingleBanner/SingleBanner";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
@@ -7,7 +7,6 @@ import {FiInstagram} from "react-icons/fi";
 import {BsFillDropletFill, BsTwitter} from "react-icons/bs";
 import {AiFillHeart} from "react-icons/ai";
 import {FaLink} from "react-icons/fa";
-import {TbStar} from "react-icons/tb";
 import {BsFillStarFill} from "react-icons/bs";
 import {useDispatch, useSelector} from "react-redux";
 import ProductActions from "../../../components/ProductActions/ProductActions";
@@ -21,6 +20,10 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 import {showToast} from "../../../components/Toast/Toast";
 import {getCookie, processFetchedData} from "../../../utils/dataHandler";
 import {toast} from "react-toastify";
+import moment from "moment";
+import ModalPreviewItem from "../../../components/ModalPreviewItem/ModalPreviewItem";
+import {MdNavigateBefore, MdNavigateNext} from "react-icons/md";
+import useFetchData from "../../../services/Hooks/useFetchData";
 
 const ProductDetail = () => {
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
@@ -37,9 +40,15 @@ const ProductDetail = () => {
     const compareItems = useSelector((state) => state.productCard.compareList);
     const userLogin = useSelector(state => state.loginUser.isUserAuthenticated)
     const [rating, setRating] = useState(5);
-    const [comment, setComment] = useState(null)
+    const [comment, setComment] = useState('')
     const [hover, setHover] = useState(0);
-    const [review, setReview] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [selectedImage, setSelectedImage] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
+    const [reviewImage, setReviewImage] = useState('')
+    const [currentPage, setCurrentPage] = useState(1);
+    const [paginate, setPaginate] = useState([])
+    // let totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
 
     const getProduct = async () => {
         const res = await client.get(`products/${id}/${slug}`);
@@ -91,35 +100,76 @@ const ProductDetail = () => {
     }
 
     const getReViewProduct = async () => {
-        const res = await client.get(`product-review/${id}`, '', userToken);
+        const res = await client.get(`product-review/${id}?page=${currentPage}`, '', userToken);
         if (res.response.ok === true) {
-            const reviews = await res.data.data;
-            setReview(reviews)
+            const objectData = await res.data;
+            const reviews = objectData.data;
+            console.log(objectData.meta)
+            setPaginate(objectData.meta)
+            setReviews(reviews)
         }
     }
 
     useEffect(() => {
         getReViewProduct()
-    }, [])
+    }, [id, currentPage])
+
 
     const handleSubmitReview = async () => {
         let data = {
             'product_id': id,
             'rating': rating,
-            'review': comment
+            'review': comment,
+            'images': selectedImage
         }
-        if (rating || comment) {
-            const res = await client.post(`product-review`, data, '', userToken);
-            if (res.response.ok === true) {
-                const review = await res.data;
-                toast.success(review.message)
+
+        const formData = new FormData();
+        for (let key in data) {
+            if (key === 'images') {
+                for (let i = 0; i < selectedImage.length; i++) {
+                    formData.append('images[]', selectedImage[i]);
+                }
+            } else {
+                formData.append(key, data[key]);
             }
+        }
+
+        if (comment !== '') {
+            // const res = await client.post(`product-review`, formData, '', userToken);
+            // if (res.response.ok === true) {
+            //     const review = await res.data;
+            //     setComment('')
+            //     toast.success(review.message)
+            // }
+            let res = await fetch(`http://buynow.test/api/product-review`, {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${userToken}`,
+                },
+                body: formData,
+            })
+
+            const response = await res.json();
+            if (response.status === 'success') {
+                setComment('')
+                setSelectedImage([])
+                toast.success(response.message)
+            }
+
         } else {
             toast.error('Please! Drop your review')
         }
 
     }
 
+    const handlePreviewImage = (image) => {
+        setModalShow(true);
+        setReviewImage(image);
+    }
+    const handlePage = (page) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 1500);
+    }
 
     const showData = processFetchedData(productRelated, favoriteItems, myCart, compareItems);
 
@@ -227,13 +277,18 @@ const ProductDetail = () => {
                                                             </span>
                                                             );
                                                         })}
-
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12">
                                                     <div className="form-group">
-                                                    <textarea name="comment" onChange={(e) => setComment(e.target.value)} id="" className="form-control p-3" rows={6}
-                                                              placeholder="Description"></textarea>
+                                                    <textarea name="comment" onChange={(e) => setComment(e.target.value)} id="" value={comment} className="form-control p-3"
+                                                              rows={6}
+                                                              placeholder="Description">
+                                                    </textarea>
+                                                        <br/>
+                                                        <label>Upload Images:</label>
+                                                        <input type="file" className="form form-control" value={selectedImage}
+                                                               onChange={(e) => setSelectedImage([...e.target.files])} multiple/>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12 form-btn">
@@ -241,8 +296,113 @@ const ProductDetail = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
+
+                                    {
+                                        reviews.length ?
+                                            <>
+                                                <div className="product-details-rating">
+                                                    <h4 className="mb-3"><b>All Review</b></h4>
+                                                    <div className="rating-wrapper">
+                                                        {
+                                                            reviews.length && reviews.map((review) => (
+                                                                <>
+                                                                    <div className="product-rating" key={review.id}>
+                                                                        <div className="row">
+                                                                            <div className="col-1">
+                                                                                <div className="user-avatar">
+                                                                                    <img
+                                                                                        src="https://images-na.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png"
+                                                                                        alt="img"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-11">
+                                                                                <div className="product-rating-main">
+                                                                                    <span className="product-rating-name">{review.user_name}</span>
+                                                                                    <br/>
+                                                                                    <span className="product-rating-time">{moment(review.created_at).format('MM/DD/YYYY')}</span>
+                                                                                    <div className="product-rating-star">
+                                                                                        {[...Array(5)].map((star, index) => {
+                                                                                            index += 1;
+                                                                                            return (
+                                                                                                <span
+                                                                                                    key={index}
+                                                                                                    className={index <= review.rating ? "on" : "off"}
+                                                                                                ><BsFillStarFill/>
+                                                                                    </span>
+                                                                                            );
+                                                                                        })}
+                                                                                    </div>
+
+                                                                                    <span className="product-comment">{review.comment}</span>
+                                                                                </div>
+                                                                                <div className="product-rating-image">
+                                                                                    {
+                                                                                        review.images.length
+                                                                                            ?
+                                                                                            review.images.map(item => (
+                                                                                                <span onClick={() => handlePreviewImage(item.image)}><img src={asset(item.image)}
+                                                                                                                                                          alt="img"/></span>
+                                                                                            ))
+                                                                                            :
+                                                                                            ''
+                                                                                    }
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <hr/>
+                                                                </>
+                                                            ))
+                                                        }
+
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div className="bottom-paginate">
+                                                                {
+                                                                    reviews?.length ?
+                                                                        <ul>
+                                                                            {currentPage > 1 && (
+                                                                                <li className="page-item" onClick={() => handlePage(currentPage - 1)}>
+                                                                                    <span><MdNavigateBefore/></span>
+                                                                                </li>
+                                                                            )}
+                                                                            {paginate?.links.map((page) => {
+                                                                                if (page.label === "&laquo; Previous" || page.label === "Next &raquo;") {
+                                                                                    return null;
+                                                                                }
+                                                                                return (
+                                                                                    <li
+                                                                                        key={page.label}
+                                                                                        className={page?.active ? 'active' : ''}
+                                                                                        onClick={() => handlePage(page.label)}
+                                                                                    >
+                                                                                        {page.label}
+                                                                                    </li>
+                                                                                );
+                                                                            })}
+                                                                            {currentPage < paginate?.last_page && (
+                                                                                <li className="page-item" onClick={() => handlePage(currentPage + 1)}>
+                                                                                    <span><MdNavigateNext/></span>
+                                                                                </li>
+                                                                            )}
+                                                                        </ul>
+
+                                                                        :
+                                                                        null
+                                                                }
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </> : ''
+                                    }
+
                                 </div>
                             </section>
                         }
@@ -299,6 +459,11 @@ const ProductDetail = () => {
                                 </div>
                             </div>
                         </section>
+                        <ModalPreviewItem
+                            show={modalShow}
+                            onHide={() => setModalShow(false)}
+                            reviewImage={reviewImage}
+                        />
                     </>
 
             }

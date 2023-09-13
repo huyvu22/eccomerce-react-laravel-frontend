@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Navigate, Outlet, useLocation} from 'react-router-dom';
+import {getCookie} from "../utils/dataHandler";
 
 export default function SellerMiddleware() {
-    const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
+    const sellerToken = getCookie('seller_access_token')
     const location = useLocation();
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +13,7 @@ export default function SellerMiddleware() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sellerToken?.token}`
+                    'Authorization': `Bearer ${sellerToken}`
                 }
             });
 

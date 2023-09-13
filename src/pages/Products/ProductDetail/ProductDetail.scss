@@ -184,4 +184,106 @@
       }
     }
   }
+
+  .product-details-rating {
+    padding: 50px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background: #fff;
+
+    h3 {
+      margin-bottom: 30px;
+    }
+
+    .rating-wrapper {
+      .product-rating {
+        .user-avatar {
+          padding: 5px 15px 15px 15px;
+
+          img {
+            border-radius: 50%;
+          }
+        }
+
+        .product-rating-main {
+          .product-rating-name {
+            font-weight: 600;
+            font-size: 13px;
+          }
+
+          .product-rating-time {
+            font-size: 13px;
+          }
+
+          .product-rating-star {
+            .on {
+              color: orange;
+            }
+
+            .off {
+              color: #ccc;
+            }
+          }
+
+          .product-comment {
+            color: #000;
+          }
+        }
+
+        .product-rating-image {
+          display: flex;
+          cursor: pointer;
+
+          span {
+            img {
+              width: 50px;
+              height: 50px;
+            }
+
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .bottom-paginate {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+
+      ul {
+        display: flex;
+        gap: 10px;
+
+        li {
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          background: #fff;
+          border-radius: 50%;
+          cursor: pointer;
+
+          span {
+            font-size: 22px;
+
+            &:hover {
+              color: var(--icon-color-hover);
+            }
+          }
+
+          &:hover {
+            background: var(--text-primary);
+            color: var(--icon-color-hover);
+          }
+
+          &.active {
+            background: var(--text-primary);
+            color: var(--icon-color-hover);
+            z-index: 1 !important;
+          }
+        }
+
+      }
+    }
+  }
 }

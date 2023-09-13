@@ -60,7 +60,7 @@ export const loginSlice = createSlice({
     },
     reducers: {
         login: (state, action) => {
-            if (action.payload === 'userToken') {
+            if (action.payload === 'user_access_token') {
                 state.isUserAuthenticated = true;
                 state.isSellerAuthenticated = false;
             } else {

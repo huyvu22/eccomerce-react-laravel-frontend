@@ -28,6 +28,7 @@ const NavbarItemBuyers = () => {
             dispatch(logout());
             dispatch(resetCart());
             deleteCookie('user_access_token');
+            deleteCookie('remember_token');
             navigate('/');
             toast.success(data.message);
         } else {

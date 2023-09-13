@@ -6,6 +6,8 @@ import PageNotFound from "../pages/404/PageNotFound";
 import ListProducts from "../pages/Vendor/Products/ListProducts/ListProducts";
 import FaqQuestion from "../pages/FaqQuestion/FaqQuestion";
 import Contact from "../pages/Contact/Contact";
+import ModalPreviewItem from "../components/ModalPreviewItem/ModalPreviewItem";
+import React from "react";
 
 export const publicRoutes = (
     <>

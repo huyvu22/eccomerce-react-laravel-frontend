@@ -24,6 +24,11 @@ const CategoryItem = () => {
     const handleShowProductsByCategory = ($slug) => {
         navigate(`products/category/${$slug}`)
     }
+    const handleShowProductBySubCategory = (e, $slug) => {
+        e.stopPropagation();
+        navigate(`products/sub-category/${$slug}`)
+    }
+
     return (
         <>
             <div className="col-lg-3">
@@ -34,7 +39,6 @@ const CategoryItem = () => {
                     </div>
                     <ul className="banner-category-list">
                         {categories.map(({category, subCategory}) => (
-                            // <Link to={`products/category/${category.slug}`}>
                             <li className="banner-category-item" onClick={() => {
                                 handleShowProductsByCategory(category.slug)
                             }}>
@@ -44,7 +48,7 @@ const CategoryItem = () => {
                                         <ul>
                                             {
                                                 subCategory.map((item) => (
-                                                    <li><a href=""></a>{item.name}</li>
+                                                    <li onClick={(e) => handleShowProductBySubCategory(e, item.slug)}><a href=""></a>{item.name}</li>
                                                 ))
                                             }
                                         </ul>
@@ -54,7 +58,6 @@ const CategoryItem = () => {
                                              </span><a href=""></a>{category.name}
                                 <span><MdKeyboardArrowRight size={"1.3em"}/></span>
                             </li>
-                            // </Link>
 
                         ))}
 
