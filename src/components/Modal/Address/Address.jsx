@@ -21,7 +21,7 @@ const Address = (props) => {
     const [ward, setWard] = useState(null);
     const [address, setAddress] = useState('');
 
-    const {userAddress} = props;
+    const {userInfo, setUserInfo} = props;
 
     const getProvince = async () => {
         const res = await client.get('province');
@@ -57,16 +57,16 @@ const Address = (props) => {
 
     const handleStoreAddress = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
-        if (userAddress.address !== '') {
+        if (userInfo.address !== '') {
             const formData = {
-                name: userAddress.name,
-                email: userAddress.email,
-                phone: userAddress.phone,
-                province: province ? JSON.stringify(province) : userAddress.province,
-                district: district ? JSON.stringify(district) : userAddress.district,
-                ward: ward ? JSON.stringify(ward) : userAddress.ward,
+                name: userInfo.name,
+                email: userInfo.email,
+                phone: userInfo.phone,
+                province: province ? JSON.stringify(province) : userInfo.province,
+                district: district ? JSON.stringify(district) : userInfo.district,
+                ward: ward ? JSON.stringify(ward) : userInfo.ward,
                 address: address,
-                note: userAddress.note
+                note: userInfo.note
             };
 
             try {
@@ -80,7 +80,11 @@ const Address = (props) => {
                 });
 
                 const data = await response.json();
-                toast('Address stored successfully');
+                if (data.status === 'success') {
+                    setUserInfo(data.data);
+                    toast('Address stored successfully');
+                }
+
             } catch (error) {
                 console.error('Error storing address:', error);
             }
@@ -118,7 +122,7 @@ const Address = (props) => {
                             <Select
                                 className="basic-single"
                                 classNamePrefix="select"
-                                defaultValue={userAddress?.province ? JSON.parse(userAddress.province) : ''}
+                                defaultValue={userInfo?.province ? JSON.parse(userInfo.province) : ''}
                                 isDisabled={isDisabled}
                                 isLoading={isLoading}
                                 isClearable={isClearable}
@@ -137,7 +141,7 @@ const Address = (props) => {
                             <Select
                                 className="basic-single"
                                 classNamePrefix="select"
-                                defaultValue={userAddress?.district ? JSON.parse(userAddress.district) : ''}
+                                defaultValue={userInfo?.district ? JSON.parse(userInfo.district) : ''}
                                 isDisabled={isDisabled}
                                 isLoading={isLoading}
                                 isClearable={isClearable}
@@ -157,7 +161,7 @@ const Address = (props) => {
                             <Select
                                 className="basic-single"
                                 classNamePrefix="select"
-                                defaultValue={userAddress?.ward ? JSON.parse(userAddress.ward) : ''}
+                                defaultValue={userInfo?.ward ? JSON.parse(userInfo.ward) : ''}
                                 isDisabled={isDisabled}
                                 isLoading={isLoading}
                                 isClearable={isClearable}
@@ -177,7 +181,7 @@ const Address = (props) => {
                             controlId="exampleForm.ControlTextarea1"
                         >
                             <Form.Control as="textarea" rows={3}
-                                          defaultValue={userAddress.address}
+                                          defaultValue={userInfo?.address}
                                           onChange={(e) => setAddress(e.target.value)}/>
                         </Form.Group>
                     </Form>

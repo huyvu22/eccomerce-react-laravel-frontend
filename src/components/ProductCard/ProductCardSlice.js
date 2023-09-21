@@ -124,7 +124,7 @@ export const productCardSlice = createSlice({
             state.wishList = [];
             state.compareList = [];
             state.isResetCart = true;
-            // window.location.reload();
+            window.location.reload();
             localStorage.removeItem('myList');
         }
     },

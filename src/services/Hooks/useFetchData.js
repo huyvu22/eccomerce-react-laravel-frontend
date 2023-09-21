@@ -8,6 +8,9 @@ const useFetchData = (endpoint, attributes = '', currentPage = 1) => {
     const [data, setData] = useState();
     const [paginate, setPaginate] = useState([]);
     const [loading, setLoading] = useState(true);
+    const isResetCart = useSelector(
+        (state) => state.productCard.isResetCart
+    );
 
     const getData = async () => {
         let url = '';
@@ -33,7 +36,7 @@ const useFetchData = (endpoint, attributes = '', currentPage = 1) => {
 
     useEffect(() => {
         getData();
-    }, [currentPage, attributes]);
+    }, [currentPage, attributes, isResetCart]);
 
     return {data, loading, paginate};
 };

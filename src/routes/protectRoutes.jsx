@@ -14,6 +14,7 @@ import SellerOrderDetail from "../pages/Vendor/OrderDetail/SellerOrderDetail";
 import SellerMiddleware from "../middlewares/SellerMiddleware";
 import ListProducts from "../pages/Vendor/Products/ListProducts/ListProducts";
 import PaymentCODSuccess from "../pages/PaymentStatus/PaymentCODSuccess";
+import PaymentVnPaySuccess from "../pages/PaymentStatus/PaymentVnPaySuccess";
 
 
 export const protectRoutes = (
@@ -31,6 +32,7 @@ export const protectRoutes = (
         <Route path="payment/" element={<AuthMiddleware/>}>
             <Route path="paypal/success" element={<PaymentPayPalSuccess/>}/>
             <Route path="cod/success" element={<PaymentCODSuccess/>}/>
+            <Route path="vnpay/success" element={<PaymentVnPaySuccess/>}/>
         </Route>
         <Route path="buyer/order" element={<AuthMiddleware/>}>
             <Route index element={<Order/>}/>

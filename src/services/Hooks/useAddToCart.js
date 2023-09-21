@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useRef, useEffect, useState} from "react";
 import {showToast} from "../../components/Toast/Toast";
 import {
@@ -10,6 +10,9 @@ import {
     removeFromCompare,
 } from "../../components/ProductCard/ProductCardSlice";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import useClient from "./useClient";
+import {getCookie} from "../../utils/dataHandler";
 
 const useAddToCart = ({
                           id, name,
@@ -28,6 +31,10 @@ const useAddToCart = ({
     const likeRef = useRef();
     const compareRef = useRef();
     const [count, setCount] = useState(0);
+    const authenticated = useSelector(state => state.loginUser.isUserAuthenticated);
+    const navigate = useNavigate();
+    const client = useClient();
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
     const addItemToCart = () => {
         const item = {
@@ -47,25 +54,46 @@ const useAddToCart = ({
         dispatch(removeItem(id));
     };
 
-    const toggleWishlistItem = () => {
-        likeRef.current.classList.toggle("active-like");
-        const item = {
-            id: id,
-            name,
-            thumb_image,
-            offer_price,
-            availability,
-            isLike: !isLike,
-            quantity: 1,
-        };
 
-        if (isLike) {
-            dispatch(unWishItem(id));
-            showToast(thumb_image, `${name} removed from Wishlist!`, false);
+    const toggleWishlistItem = async () => {
+        if (authenticated) {
+            likeRef.current.classList.toggle("active-like");
+            const item = {
+                id: id,
+                name,
+                thumb_image,
+                offer_price,
+                availability,
+                isLike: !isLike,
+                quantity: 1,
+            };
+
+            if (isLike) {
+                dispatch(unWishItem(id));
+                const res = await client.delete(`wishlist/${item.id}`, '', userToken)
+                if (res.response.ok === true) {
+                    const data = await res.data;
+                    if (data.status === 'success') {
+                        console.log(data)
+                        showToast(thumb_image, `${name} removed from Wishlist!`, false);
+                    }
+                }
+
+            } else {
+                dispatch(wishItem(item));
+                const res = await client.post('wishlist', {'product_id': id}, '', userToken)
+                if (res.response.ok === true) {
+                    const data = await res.data;
+                    if (data.status === 'success') {
+                        showToast(thumb_image, `${name} added to Wishlist!`);
+                    }
+                }
+
+            }
         } else {
-            dispatch(wishItem(item));
-            showToast(thumb_image, `${name} added to Wishlist!`);
+            navigate('buyer/login');
         }
+
     };
 
     const handleActiveCompareChange = () => {
@@ -118,19 +146,5 @@ const useAddToCart = ({
         toggleCompare,
     };
 };
-
-// useAddToCart.propTypes = {
-//     id: PropTypes.string
-//     image: PropTypes.string
-//     name: PropTypes.z
-// };
-//
-//
-// useAddToCart.defaultProps = {
-//     id: '',
-//     image: '',
-//     name: ''
-//     addCart: ()=>null
-// }
 
 export default useAddToCart;

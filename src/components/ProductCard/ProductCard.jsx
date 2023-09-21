@@ -10,7 +10,6 @@ import ProductActions from "../ProductActions/ProductActions";
 import useAddToCart from "../../services/Hooks/useAddToCart";
 import {Link} from "react-router-dom";
 import Tippy from '@tippyjs/react';
-import useUrl from "../../services/Hooks/useUrl";
 import {useDispatch} from "react-redux";
 import {showDetail} from "./ProductCardSlice";
 import {asset} from "../../services/Helpers/Image/image";
@@ -33,7 +32,6 @@ const ProductCard = ({item, setModalShow}) => {
         rating,
         updated_at
     });
-    const url = useUrl();
     const dispatch = useDispatch();
     const handleClickItem = (item) => {
         dispatch(showDetail(item))

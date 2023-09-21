@@ -31,6 +31,7 @@ const NavbarItemBuyers = () => {
             deleteCookie('remember_token');
             navigate('/');
             toast.success(data.message);
+            // window.location.reload();
         } else {
             toast.error('Something went wrong!');
         }

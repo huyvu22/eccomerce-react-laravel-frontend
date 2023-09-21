@@ -2,7 +2,7 @@ import _ from 'lodash'; // Import lodash library
 export const handleFavoriteItems = (data, favoriteItems) => {
     favoriteItems.forEach((favoriteItem) => {
         data?.forEach((item) => {
-            if (item.id === favoriteItem.id) {
+            if (item.name === favoriteItem.name) {
                 item.isLike = true;
             }
         });

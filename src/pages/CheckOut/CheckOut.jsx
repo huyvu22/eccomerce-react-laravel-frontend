@@ -22,26 +22,29 @@ import {Link, useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/dataHandler";
 
 const CheckOut = () => {
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const [myCart] = useMyCart();
-    const userToken = getCookie('access_token') || getCookie('seller_access_token');
     const client = useClient();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const total = useSubTotalPrice();
+    const rawSubTotal = useRawSubTotalPrice();
     const [idItem, setIdItem] = useState();
     const [modalPhoneShow, setModalPhoneShow] = useState(false);
     const [modalAddressShow, setModalAddressShow] = useState(false);
     const [modalNoteShow, setModalNoteShow] = useState(false);
-    const dispatch = useDispatch();
     const [showCoupon, setShowCoupon] = useState(false);
     const valueCoupon = sessionStorage.getItem('couponCode') || '';
     const discount = sessionStorage.getItem('discountValue') || '';
     const [couponCode, setCouponCode] = useState(valueCoupon);
     const [discountValue, setDiscountValue] = useState(discount);
     const [activeIndex, setActiveIndex] = useState(null);
-    const [userAddress, setUserAddress] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     const [fee, setFee] = useState('');
-    const total = useSubTotalPrice();
-    const rawSubTotal = useRawSubTotalPrice();
+    const [phone, setPhone] = useState('');
+    const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+
 
     const getShippingFee = async () => {
 
@@ -73,7 +76,7 @@ const CheckOut = () => {
         getShippingFee();
     }, [rawSubTotal]);
 
-    const getUserAddress = async () => {
+    const getUserInfo = async () => {
         if (!userToken) {
             console.error('User token not found');
             return;
@@ -88,12 +91,14 @@ const CheckOut = () => {
 
         let data = await res.json();
         if (data.length) {
-            setUserAddress(data[0])
+            setUserInfo(data[0])
+            setPhone(data[0].phone)
+            setNote(data[0].note)
         }
     }
 
     useEffect(() => {
-        getUserAddress();
+        getUserInfo();
     }, []);
 
     const handleSubmitCoupon = async () => {
@@ -132,22 +137,23 @@ const CheckOut = () => {
 
     const handleProceedToCheckout = async () => {
 
-        if (termsChecked && userAddress.phone && userAddress.address) {
+        if (termsChecked && userInfo.phone && userInfo.address) {
             const selectedPaymentMethod = paymentMethodRef.current;
 
             let paymentUrl = '';
             if (selectedPaymentMethod === 'paypal') {
                 paymentUrl = `http://buynow.test/api/paypal/payment?total=${rawSubTotal + fee - discount}`;
-            } else if (selectedPaymentMethod === 'cod'
-            ) {
+            } else if (selectedPaymentMethod === 'cod') {
                 paymentUrl = 'http://buynow.test/api/cod/payment';
+            } else if (selectedPaymentMethod === 'vnpay') {
+                paymentUrl = `http://buynow.test/api/vnpay/payment?total=${(rawSubTotal + fee - discount) * 24231}`;
             }
 
             if (paymentUrl) {
                 try {
                     setLoading(true);
                     const response = await fetch(paymentUrl, {
-                        method: 'GET',
+                        method: selectedPaymentMethod === 'vnpay' ? 'POST' : 'GET',
                         headers: {
                             'Content-Type': 'application/json',
                             'accept': 'application/json',
@@ -156,16 +162,19 @@ const CheckOut = () => {
                     });
                     const data = await response.json();
 
-                    if (data.status === 'success') {
+                    if (data.status === 'success' || data.code === '00') {
                         setLoading(false);
                         sessionStorage.setItem('payment_method', selectedPaymentMethod);
-                        sessionStorage.setItem('order_address', JSON.stringify(userAddress));
+                        sessionStorage.setItem('order_address', JSON.stringify(userInfo));
                         sessionStorage.setItem('order_method', JSON.stringify(selectedPaymentMethod));
                         sessionStorage.setItem('sub_total', JSON.stringify(rawSubTotal));
                         sessionStorage.setItem('amount', JSON.stringify(rawSubTotal + fee - discount));
                         sessionStorage.setItem('my_cart', JSON.stringify(myCart));
+
                         if (selectedPaymentMethod === 'paypal') {
                             window.location.href = data.data.paypal_checkout_url;
+                        } else if (selectedPaymentMethod === 'vnpay') {
+                            window.location.href = data.data;
                         } else {
                             navigate('/payment/cod/success')
                         }
@@ -237,7 +246,7 @@ const CheckOut = () => {
                                                         </tr>
                                                     ))
                                                     :
-                                                    <span></span>
+                                                    ''
                                             }
                                             </tbody>
                                         </table>
@@ -283,7 +292,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                 <h3>Phone</h3>
-                                                <p>{userAddress?.phone ? userAddress?.phone : '-'}</p>
+                                                <p>{phone ? phone : '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalPhoneShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -296,13 +305,13 @@ const CheckOut = () => {
                                             <div className={`profile-card contact ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleDivClick(1)}>
                                                 <h3>Address</h3>
                                                 {
-                                                    userAddress?.address
+                                                    userInfo?.address
                                                         ?
                                                         <p>
-                                                            {userAddress?.address},
-                                                            {userAddress?.ward && ` ${JSON.parse(userAddress?.ward)?.label}`},
-                                                            {userAddress?.district && ` ${JSON.parse(userAddress?.district)?.label}`},
-                                                            {userAddress?.province && ` ${JSON.parse(userAddress?.province)?.label}`}
+                                                            {userInfo?.address},
+                                                            {userInfo?.ward && ` ${JSON.parse(userInfo?.ward)?.label}`},
+                                                            {userInfo?.district && ` ${JSON.parse(userInfo?.district)?.label}`},
+                                                            {userInfo?.province && ` ${JSON.parse(userInfo?.province)?.label}`}
                                                         </p>
                                                         :
                                                         '-'
@@ -319,7 +328,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                 <h3>Note</h3>
-                                                <p>{userAddress?.note ? userAddress?.note : '-'}</p>
+                                                <p>{note ? note : '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalNoteShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -349,6 +358,16 @@ const CheckOut = () => {
                                                                ref={paymentMethodRef}
                                                                onChange={() => (paymentMethodRef.current = 'paypal')}/>
                                                         <label htmlFor="paypal">PayPal</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="form-check">
+                                                        <input type="radio"
+                                                               name="paymentMethod"
+                                                               id='vnpay'
+                                                               ref={paymentMethodRef}
+                                                               onChange={() => (paymentMethodRef.current = 'vnpay')}/>
+                                                        <label htmlFor="vnpay">VnPay</label>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -389,11 +408,11 @@ const CheckOut = () => {
                         </div>
                     </div>
                     <Phone show={modalPhoneShow}
-                           onHide={() => setModalPhoneShow(false)} userAddress={userAddress}/>
+                           onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setPhone={setPhone}/>
                     <Address show={modalAddressShow}
-                             onHide={() => setModalAddressShow(false)} userAddress={userAddress}/>
+                             onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                     <Note show={modalNoteShow}
-                          onHide={() => setModalNoteShow(false)} userAddress={userAddress}/>
+                          onHide={() => setModalNoteShow(false)} userInfo={userInfo} setNote={setNote}/>
                 </div>
             </section>
         </>

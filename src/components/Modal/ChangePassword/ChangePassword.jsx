@@ -3,16 +3,15 @@ import './ChangePassword.scss';
 import {toast} from "react-toastify";
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
+import {getCookie} from "../../../utils/dataHandler";
 
 const ChangePassword = (props) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-    const {userAddress} = props;
-
     const handleStorePassword = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
         let formData = {
             'current_password': currentPassword,
             'password': newPassword,
@@ -24,7 +23,7 @@ const ChangePassword = (props) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken?.token}`
+                    'Authorization': `Bearer ${userToken}`
                 },
                 body: JSON.stringify(formData)
             });

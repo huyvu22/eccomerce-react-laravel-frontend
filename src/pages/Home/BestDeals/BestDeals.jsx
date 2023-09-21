@@ -10,7 +10,6 @@ import useMyCart from "../../../services/Hooks/useMyCart";
 
 const BestDeals = (props) => {
     const {data, loading} = useFetchData("products", "product-type/best_product");
-    const favoriteItems = useSelector((state) => state.productCard.wishList);
     const compareItems = useSelector((state) => state.productCard.compareList);
     const [myCart] = useMyCart();
 
@@ -18,7 +17,7 @@ const BestDeals = (props) => {
         return null
     }
 
-    const showData = processFetchedData(data, favoriteItems, myCart, compareItems);
+    const showData = processFetchedData(data, props?.wishList, myCart, compareItems);
 
     return (
         <section className="deals-part">

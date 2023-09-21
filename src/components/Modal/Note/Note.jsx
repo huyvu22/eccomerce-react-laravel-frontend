@@ -5,20 +5,20 @@ import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
 
 const Note = (props) => {
-    const [note, setNote] = useState('');
-    const {userAddress} = props;
+    const [editNote, setEditNote] = useState('');
+    const {userInfo, setNote} = props;
     const handleStoreNote = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
         const formData = {
-            name: userAddress.name,
-            email: userAddress.email,
-            phone: userAddress.phone,
-            province: userAddress.province,
-            district: userAddress.district,
-            ward: userAddress.ward,
-            address: userAddress.address,
-            note: note
+            name: userInfo.name,
+            email: userInfo.email,
+            phone: userInfo.phone,
+            province: userInfo.province,
+            district: userInfo.district,
+            ward: userInfo.ward,
+            address: userInfo.address,
+            note: editNote
         };
 
         try {
@@ -32,7 +32,11 @@ const Note = (props) => {
             });
 
             const data = await response.json();
-            toast('Address stored successfully');
+            if (data.status === 'success') {
+                setNote(editNote)
+                toast('Address stored successfully');
+            }
+
         } catch (error) {
             console.error('Error storing address:', error);
         }
@@ -57,7 +61,7 @@ const Note = (props) => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Control as="textarea" rows={3} type="note" onChange={(e) => setNote(e.target.value)} defaultValue={userAddress.note}/>
+                            <Form.Control as="textarea" rows={3} type="note" onChange={(e) => setEditNote(e.target.value)} defaultValue={editNote ? editNote : userInfo?.note}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

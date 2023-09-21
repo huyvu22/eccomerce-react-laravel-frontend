@@ -6,21 +6,20 @@ import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
 
 const Phone = (props) => {
-    const [phone, setPhone] = useState('');
-    const {userAddress} = props;
+    const [editPhone, setEditPhone] = useState('');
+    const {userInfo, setPhone} = props;
 
     const handleStorePhone = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
-
         const formData = {
-            name: userAddress.name,
-            email: userAddress.email,
-            phone: phone,
-            province: userAddress.province,
-            district: userAddress.district,
-            ward: userAddress.ward,
-            address: userAddress.address,
-            note: userAddress.note
+            name: userInfo.name,
+            email: userInfo.email,
+            phone: editPhone,
+            province: userInfo.province,
+            district: userInfo.district,
+            ward: userInfo.ward,
+            address: userInfo.address,
+            note: userInfo.note
         };
 
         try {
@@ -34,12 +33,19 @@ const Phone = (props) => {
             });
 
             const data = await response.json();
-            toast('Address stored successfully');
+            if (data.status === 'success') {
+                setPhone(editPhone)
+                toast('Address stored successfully');
+            }
+
         } catch (error) {
             console.error('Error storing address:', error);
         }
 
     }
+    useEffect(() => {
+        handleStorePhone();
+    }, [])
 
     return (
         <>
@@ -60,8 +66,8 @@ const Phone = (props) => {
                             <Form.Control
                                 type="phone"
                                 autoFocus
-                                defaultValue={props.userAddress?.phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                defaultValue={editPhone ? editPhone : userInfo?.phone}
+                                onChange={(e) => setEditPhone(e.target.value)}
                             />
                         </Form.Group>
                     </Form>
@@ -71,7 +77,6 @@ const Phone = (props) => {
                         SAVE PHONE NUMBER
                     </Button>
                 </Modal.Footer>
-
             </Modal>
         </>
     );

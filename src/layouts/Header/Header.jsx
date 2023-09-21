@@ -16,6 +16,8 @@ import {debounce} from "lodash";
 import {asset} from "../../services/Helpers/Image/image";
 import button from "bootstrap/js/src/button";
 import {useSubTotalPrice} from "../../services/Hooks/useTotalPrice";
+import {getCookie} from "../../utils/dataHandler";
+import useClient from "../../services/Hooks/useClient";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -23,11 +25,12 @@ const Header = () => {
     const [offset, setOffset] = useState(0);
     const [myCart] = useMyCart();
     const favoriteItems = useSelector((state) => state.productCard.wishList);
-    let keywords = useSelector((state) => state.searchProducts.keywords);
+    const [wishList, setWishList] = useState([])
     const [inputValue, setInputValue] = useState("");
     const navigate = useNavigate();
+    const client = useClient();
     const total = useSubTotalPrice();
-    const isLoggedIn = !!localStorage.getItem('userData');
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
     useEffect(() => {
         const onScroll = () => setOffset(window.scrollY);
@@ -36,6 +39,18 @@ const Header = () => {
         window.addEventListener("scroll", onScroll, {passive: true});
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
+
+    const getWishList = async () => {
+        const res = await client.get('wishlist', '', userToken);
+        if (res.response.ok === true) {
+            const dataObj = await res.data;
+            setWishList(dataObj.data)
+        }
+    }
+
+    useEffect(() => {
+        getWishList()
+    }, [favoriteItems]);
 
     const handleShowCart = () => {
         dispatch(showCart(true));
@@ -84,7 +99,7 @@ const Header = () => {
                         </form>
                         <div className="header-widget-group">
                             {
-                                isLoggedIn &&
+                                userToken &&
                                 <div className="home-cart">
                                     <Tippy content={<span style={{fontSize: "12px"}}>Thông báo</span>}>
                                         <span><MdNotifications size={"1.2em"}/></span>
@@ -95,12 +110,12 @@ const Header = () => {
 
                             <div className="home-cart heart-icon">
                                 <span><BsFillSuitHeartFill size={"1em"}/></span>
-                                <span>{favoriteItems?.length ? favoriteItems?.length : "0"}</span>
+                                <span>{wishList?.length ? wishList?.length : "0"}</span>
                                 <ul className="dropdown-position-list favorite">
                                     <p>Your WishList :</p>
-                                    {favoriteItems?.length ? (
+                                    {wishList?.length ? (
                                         <>
-                                            {favoriteItems.map((item) => (
+                                            {wishList.map((item) => (
                                                 <li key={item.id}>
                                                     <img src={asset(item.thumb_image)} alt="img"/>
                                                     <p>{item.name}</p>

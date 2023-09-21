@@ -12,13 +12,15 @@ import ChangePassword from "../../components/Modal/ChangePassword/ChangePassword
 import {getCookie} from "../../utils/dataHandler";
 
 const UserProfile = () => {
-    const [userAddress, setUserAddress] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     const [modalPhoneShow, setModalPhoneShow] = useState(false);
     const [modalAddressShow, setModalAddressShow] = useState(false);
     const [modalNoteShow, setModalNoteShow] = useState(false);
     const [modalChangePasswordShow, setModalChangePasswordShow] = useState(false);
     const [modalEditProfileShow, setModalEditProfileShow] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
+    const [phone, setPhone] = useState('');
+    const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false)
 
     const getUserAddress = async () => {
@@ -38,7 +40,9 @@ const UserProfile = () => {
 
         let data = await res.json();
         if (data.length) {
-            setUserAddress(data[0])
+            setUserInfo(data[0])
+            setPhone(data[0].phone)
+            setNote(data[0].note)
             setLoading(false)
         }
     }
@@ -50,6 +54,7 @@ const UserProfile = () => {
     const handleDivClick = (index) => {
         setActiveIndex(index);
     };
+
 
     return (
         <>
@@ -77,14 +82,14 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-5">
                                                     <div className="form-group">
                                                         <label>Name</label>
-                                                        <input type="text" className="form-control" value={userAddress.name} placeholder="Update your name..."/>
+                                                        <input type="text" className="form-control" value={userInfo?.name} placeholder="Update your name..."/>
                                                     </div>
 
                                                 </div>
                                                 <div className="col-md-6 col-lg-5">
                                                     <div className="form-group">
                                                         <label>Email</label>
-                                                        <input type="text" className="form-control" value={userAddress.email} placeholder="Update your email..."/>
+                                                        <input type="text" className="form-control" value={userInfo?.email} placeholder="Update your email..."/>
                                                     </div>
 
                                                 </div>
@@ -107,7 +112,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                         <h3>Phone</h3>
-                                                        <p>{userAddress?.phone ? userAddress?.phone : '-'}</p>
+                                                        <p>{phone ? phone : '-'}</p>
                                                         <ul>
                                                             <li onClick={() => setModalPhoneShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -119,14 +124,13 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleDivClick(1)}>
                                                         <h3>Address</h3>
-                                                        {userAddress?.address
+                                                        {userInfo
                                                             ?
-
                                                             <p>
-                                                                {userAddress?.address},
-                                                                {userAddress?.ward && ` ${JSON.parse(userAddress?.ward)?.label}`},
-                                                                {userAddress?.district && ` ${JSON.parse(userAddress?.district)?.label}`},
-                                                                {userAddress?.province && ` ${JSON.parse(userAddress?.province)?.label}`}
+                                                                {userInfo?.address},
+                                                                {userInfo?.ward && ` ${JSON.parse(userInfo?.ward)?.label}`},
+                                                                {userInfo?.district && ` ${JSON.parse(userInfo?.district)?.label}`},
+                                                                {userInfo?.province && ` ${JSON.parse(userInfo?.province)?.label}`}
                                                             </p>
                                                             :
                                                             '-'
@@ -143,7 +147,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                         <h3>Note</h3>
-                                                        <p>{userAddress?.note ? userAddress?.note : '-'}</p>
+                                                        <p>{note ? note : '-'}</p>
                                                         <ul>
                                                             <li onClick={() => setModalNoteShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -159,15 +163,15 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <Phone show={modalPhoneShow}
-                                   onHide={() => setModalPhoneShow(false)} userAddress={userAddress}/>
+                                   onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setPhone={setPhone}/>
                             <Address show={modalAddressShow}
-                                     onHide={() => setModalAddressShow(false)} userAddress={userAddress}/>
+                                     onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <Note show={modalNoteShow}
-                                  onHide={() => setModalNoteShow(false)} userAddress={userAddress}/>
+                                  onHide={() => setModalNoteShow(false)} userInfo={userInfo} setNote={setNote}/>
                             <ProfileInfo show={modalEditProfileShow}
-                                         onHide={() => setModalEditProfileShow(false)} userAddress={userAddress}/>
+                                         onHide={() => setModalEditProfileShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <ChangePassword show={modalChangePasswordShow}
-                                            onHide={() => setModalChangePasswordShow(false)} userAddress={userAddress}/>
+                                            onHide={() => setModalChangePasswordShow(false)} userInfo={userInfo}/>
                         </div>
 
                     </section>

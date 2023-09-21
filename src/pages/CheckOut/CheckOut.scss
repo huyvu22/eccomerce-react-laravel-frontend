@@ -211,6 +211,7 @@
           }
 
           &.active {
+            z-index:1;
             background: #ddffd5;
             border: 1px solid var(--text-primary);
           }

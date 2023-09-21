@@ -34,7 +34,6 @@ const Contact = () => {
         setLoading(true)
         e.preventDefault();
         const res = await client.post('contact', formData);
-        console.log(await res.data)
         const data = await res.data;
         if (data.status === 'success') {
             toast.success(data.message)

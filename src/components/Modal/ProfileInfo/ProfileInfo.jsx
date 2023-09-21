@@ -3,24 +3,25 @@ import './ProfileInfo.scss'
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
+import {getCookie} from "../../../utils/dataHandler";
 
 const ProfileInfo = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
-    const {userAddress} = props;
+    const {userInfo, setUserInfo} = props;
 
     const handleStoreProfileInfo = async () => {
-        const userToken = JSON.parse(localStorage.getItem('userToken'));
+        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
         const formData = {
-            name: name !== '' ? name : userAddress.name,
-            email: email !== '' ? email : userAddress.email,
-            phone: userAddress.phone,
-            province: userAddress.province,
-            district: userAddress.district,
-            ward: userAddress.ward,
-            address: userAddress.address,
-            note: userAddress.note
+            name: name !== '' ? name : userInfo.name,
+            email: email !== '' ? email : userInfo.email,
+            phone: userInfo.phone,
+            province: userInfo.province,
+            district: userInfo.district,
+            ward: userInfo.ward,
+            address: userInfo.address,
+            note: userInfo.note
         };
 
         try {
@@ -29,14 +30,17 @@ const ProfileInfo = (props) => {
                 headers: {
                     'accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken?.token}`
+                    'Authorization': `Bearer ${userToken}`
                 },
                 body: JSON.stringify(formData)
             });
 
             const data = await response.json();
-            console.log(data)
-            toast('Address stored successfully');
+            if (data.status === 'success') {
+                setUserInfo(data.data)
+                toast('Address updated successfully');
+            }
+
         } catch (error) {
             console.error('Error storing address:');
         }
@@ -61,7 +65,7 @@ const ProfileInfo = (props) => {
                             <Form.Control
                                 type="text"
                                 autoFocus
-                                defaultValue={props.userAddress?.name}
+                                defaultValue={props.userInfo?.name}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </Form.Group>
@@ -72,8 +76,9 @@ const ProfileInfo = (props) => {
                             <Form.Label><b>Email:</b></Form.Label>
                             <Form.Control
                                 type="email"
-                                defaultValue={props.userAddress?.email}
+                                defaultValue={props.userInfo?.email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                disabled={true}
                             />
                         </Form.Group>
                     </Form>

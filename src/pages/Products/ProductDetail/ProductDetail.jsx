@@ -48,7 +48,6 @@ const ProductDetail = () => {
     const [reviewImage, setReviewImage] = useState('')
     const [currentPage, setCurrentPage] = useState(1);
     const [paginate, setPaginate] = useState([])
-    // let totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
 
     const getProduct = async () => {
         const res = await client.get(`products/${id}/${slug}`);

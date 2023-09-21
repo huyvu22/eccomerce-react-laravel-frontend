@@ -39,7 +39,7 @@ export default function useClient(serverApi = null) {
             }
             const res = await fetch(url, options);
             const data = await res.json();
-            
+
             if (res.status === 304) {
                 navigate('404')
             }
@@ -68,7 +68,7 @@ export default function useClient(serverApi = null) {
             return this.callApi(url, "PATCH", params, body, token);
         },
 
-        delete: function (url, params, token = null) {
+        delete: function (url, params, token = null, userToken) {
             return this.callApi(url, "DELETE", params, {}, token);
         },
     };
