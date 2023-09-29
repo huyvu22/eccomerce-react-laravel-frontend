@@ -53,7 +53,6 @@ const Order = () => {
                                                                 <th>Orders</th>
                                                                 <th>Amount</th>
                                                                 <th>Method</th>
-                                                                <th>TXN</th>
                                                                 <th>Status</th>
                                                                 <th>Date</th>
                                                             </tr>
@@ -66,9 +65,8 @@ const Order = () => {
                                                                         <tr>
                                                                             <td>{index + 1}</td>
                                                                             <td><Link to={`/buyer/order/${order.invoice}`}>{order.invoice}<i><FaLink size="0.8rem"/></i></Link></td>
-                                                                            <td>{order.amount}</td>
+                                                                            <td>{order.amount} $</td>
                                                                             <td>{order.payment_method}</td>
-                                                                            <td></td>
                                                                             <td>{order.payment_status === 1 ? 'Paid' : 'Incomplete'}</td>
                                                                             <td>{moment(order.created_at).format('Do MMMM, YYYY')}</td>
                                                                         </tr>

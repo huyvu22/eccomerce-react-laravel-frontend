@@ -10,10 +10,16 @@ const NavbarItemsCategory = (props) => {
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
     const getCategory = async () => {
-        const res = await fetch('http://buynow.test/api/category')
-        if (res.ok) {
-            const response = await res.json();
-            let categoryArr = response.data;
+        // const res = await fetch('http://buynow.test/api/category')
+        // if (res.ok) {
+        //     const response = await res.json();
+        //     let categoryArr = response.data;
+        //     setCategories(categoryArr);
+        // }
+
+        const res = await client.get('category');
+        if (res.response.ok) {
+            const categoryArr = await res.data.data;
             setCategories(categoryArr);
         }
     }

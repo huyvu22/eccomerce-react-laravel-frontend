@@ -23,21 +23,31 @@ const PaymentCodSuccess = () => {
             'amount': sessionStorage.getItem('amount'),
             'responseId': _.random(1000, 9999)
         })
-        const response = await fetch(`http://buynow.test/api/cart-list`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'accept': 'application/json',
-                'Authorization': `Bearer ${userToken}`,
-            },
-            body: formData
-        })
+        // const response = await fetch(`http://buynow.test/api/cart-list`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json',
+        //         'accept': 'application/json',
+        //         'Authorization': `Bearer ${userToken}`,
+        //     },
+        //     body: formData
+        // })
+        //
+        // const cartData = await response.json();
+        // if (cartData?.status === 'success') {
+        //     setLoading(false);
+        //     dispatch(resetCart());
+        //     sessionStorage.clear()
+        // }
 
-        const cartData = await response.json();
-        if (cartData?.status === 'success') {
-            setLoading(false);
-            dispatch(resetCart());
-            sessionStorage.clear()
+        const res = client.get('cart-list', '', userToken)
+        if (res.response.ok) {
+            const data = await res.data;
+            if (data.status === 'success') {
+                setLoading(false);
+                dispatch(resetCart());
+                sessionStorage.clear();
+            }
         }
     };
 

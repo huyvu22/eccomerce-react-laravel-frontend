@@ -3,30 +3,46 @@ import React, {useEffect, useState} from 'react';
 import {MdAlternateEmail} from "react-icons/md";
 import {toast} from "react-toastify";
 import {AiOutlineLoading3Quarters} from "react-icons/ai";
+import useClient from "../../../services/Hooks/useClient";
 
 const NewsLetter = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const client = useClient();
     const handleSubscribe = async (e) => {
         e.preventDefault();
         if (email) {
             setLoading(true)
-            const res = await fetch(`http://buynow.test/api/newsletter`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'accept': 'application/json'
-                },
-                body: JSON.stringify({email: email})
-            });
-            let data = await res.json();
-            if (data.status === 'success') {
-                setLoading(false)
-                setEmail('');
-                toast.success(data.message);
-            } else if (data.status === 'error') {
-                setLoading(false)
-                toast.error(data.message);
+            // const res = await fetch(`http://buynow.com/api/newsletter`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'accept': 'application/json'
+            //     },
+            //     body: JSON.stringify({email: email})
+            // });
+            // let data = await res.json();
+            // if (data.status === 'success') {
+            //     setLoading(false)
+            //     setEmail('');
+            //     toast.success(data.message);
+            // } else if (data.status === 'error') {
+            //     setLoading(false)
+            //     toast.error(data.message);
+            // }
+
+            const res = await client.post('newsletter', {'email': email})
+            if (res.response.ok) {
+                const data = await res.data;
+                console.log(data)
+                if (data.status === 'success') {
+                    setLoading(false)
+                    setEmail('');
+                    toast.success(data.message);
+                } else if (data.status === 'error') {
+                    setLoading(false)
+                    toast.error(data.message);
+                }
             }
         } else {
             toast.error('Please provide a valid email')

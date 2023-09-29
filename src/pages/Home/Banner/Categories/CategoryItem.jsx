@@ -3,16 +3,23 @@ import {HiOutlineViewList} from "react-icons/hi";
 import {FaArrowRight} from "react-icons/fa";
 import {MdKeyboardArrowRight} from "react-icons/md";
 import {Link, useNavigate} from "react-router-dom";
+import useClient from "../../../../services/Hooks/useClient";
 
 const CategoryItem = () => {
 
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
+    const client = useClient();
     const getCategory = async () => {
-        const res = await fetch('http://buynow.test/api/category')
-        if (res.ok) {
-            const response = await res.json();
-            let categoryArr = response.data;
+        // const res = await fetch('http://buynow.test/api/category')
+        // if (res.ok) {
+        //     const response = await res.json();
+        //     let categoryArr = response.data;
+        //     setCategories(categoryArr.slice(0, 10));
+        // }
+        const res = await client.get('category');
+        if (res.response.ok) {
+            const categoryArr = await res.data.data;
             setCategories(categoryArr.slice(0, 10));
         }
     }

@@ -15,7 +15,7 @@ import useClient from "./useClient";
 import {getCookie} from "../../utils/dataHandler";
 
 const useAddToCart = ({
-                          id, name,
+                          id, name, slug,
                           thumb_image,
                           price,
                           offer_price,
@@ -40,6 +40,7 @@ const useAddToCart = ({
         const item = {
             id,
             name,
+            slug,
             thumb_image,
             price,
             offer_price,
@@ -65,7 +66,7 @@ const useAddToCart = ({
                 offer_price,
                 availability,
                 isLike: !isLike,
-                quantity: 1,
+                quantity: quantity,
             };
 
             if (isLike) {
@@ -74,7 +75,6 @@ const useAddToCart = ({
                 if (res.response.ok === true) {
                     const data = await res.data;
                     if (data.status === 'success') {
-                        console.log(data)
                         showToast(thumb_image, `${name} removed from Wishlist!`, false);
                     }
                 }

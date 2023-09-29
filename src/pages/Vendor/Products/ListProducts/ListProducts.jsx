@@ -10,16 +10,17 @@ import {toast} from "react-toastify";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
 import {getCookie} from "../../../../utils/dataHandler";
+import useClient from "../../../../services/Hooks/useClient";
 
 const ListProducts = () => {
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [paginate, setPaginate] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [status, setStatus] = useState(false)
-    let totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
+    const totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
     const sellerToken = getCookie('seller_access_token')
+    const navigate = useNavigate();
+    const client = useClient();
 
     const getMyProducts = async () => {
         if (!sellerToken) {
@@ -27,20 +28,30 @@ const ListProducts = () => {
             return;
         }
 
-        const res = await fetch(`http://buynow.test/api/seller/products?page=${currentPage}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${sellerToken}`,
-                'Content-Type': 'application/json'
+        // const res = await fetch(`http://buynow.com/api/seller/products?page=${currentPage}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Bearer ${sellerToken}`,
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
+        //
+        // let products = await res.json();
+        // if (products?.status === 'success') {
+        //     setProducts(products.data.data);
+        //     setPaginate(products.data);
+        //     setLoading(false);
+        //     window.scrollTo(0, 400);
+        // }
+        const res = await client.get('seller/products', `page=${currentPage}`, sellerToken);
+        if (res.response.ok) {
+            const dataObj = await res.data;
+            if (dataObj?.status === 'success') {
+                setProducts(dataObj.data.data);
+                setPaginate(dataObj);
+                setLoading(false);
+                window.scrollTo(0, 400);
             }
-        });
-
-        let products = await res.json();
-        if (products?.status === 'success') {
-            setProducts(products.data.data);
-            setPaginate(products.data);
-            setLoading(false);
-            window.scrollTo(0, 400);
         }
 
     }
@@ -73,7 +84,7 @@ const ListProducts = () => {
         formData.append("status", newStatus);
         formData.append("product_id", product.id);
 
-        let res = await fetch(`http://buynow.test/api/seller/products`, {
+        let res = await fetch(`http://buynow.com/api/seller/products`, {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${sellerToken}`,
@@ -87,6 +98,16 @@ const ListProducts = () => {
         } else {
             toast(response.message);
         }
+
+        // const res = await client.post('seller/products', formData, '', sellerToken, true);
+        // console.log(res)
+        // const data = await res.data;
+        // if (res.response.ok) {
+        //
+        //     toast(data.message);
+        // } else {
+        //     toast(data.message);
+        // }
     }
 
     const handleDeleteProduct = async (product) => {
@@ -100,13 +121,16 @@ const ListProducts = () => {
             confirmButtonText: 'Yes'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                let res = await fetch(`http://buynow.test/api/seller/products/${product.id}`, {
-                    method: "DELETE",
-                    headers: {
-                        'Authorization': `Bearer ${sellerToken}`,
-                    },
-                })
-                const response = await res.json();
+                // let res = await fetch(`http://buynow.test/api/seller/products/${product.id}`, {
+                //     method: "DELETE",
+                //     headers: {
+                //         'Authorization': `Bearer ${sellerToken}`,
+                //     },
+                // })
+                // const response = await res.json();
+
+                const res = await client.delete(`seller/products/${product.id}`, '', sellerToken);
+                const response = res.data;
                 if (res.ok) {
                     Swal.fire(
                         'Deleted!',

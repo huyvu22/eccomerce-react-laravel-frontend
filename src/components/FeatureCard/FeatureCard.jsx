@@ -18,7 +18,7 @@ const FeatureCard = ({item}) => {
         removeItemFromCart,
         toggleWishlistItem,
         likeRef
-    } = useAddToCart({id, name, thumb_image, offer_price, isLike, quantity});
+    } = useAddToCart({id, name, slug, thumb_image, offer_price, isLike, quantity});
     return (
         <div className="col">
             <div className="feature-card">

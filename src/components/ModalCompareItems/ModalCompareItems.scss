@@ -3,12 +3,39 @@
   width: 100%; /* đặt chiều rộng của Modal là 100% để tận dụng không gian */
 }
 
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: 200px;
+}
+
+.on {
+  color: orange;
+}
+
+.off {
+  color: #ccc;
+}
+
+del {
+  color: red;
+}
+
+.action-td {
+  width: 100px; /* Adjust the width as needed */
+}
+
+
 .product-add {
   width: 100%;
   padding: 5px 10px;
   border-radius: 8px;
   background-color: #07779a;
   color: #fff;
+  margin-bottom: 0 !important;
 
   span {
     margin-right: 5px;
@@ -21,7 +48,6 @@
 }
 
 .product-action {
-  margin-bottom: 5px;
   .action-input {
     width: 100% !important;
     height: 36px !important;
@@ -35,6 +61,8 @@
 .product-remove {
   @extend .product-add;
   background-color: #dc3545;
+  color: #fff;
+  margin-top: 6px;
 
   &:hover {
     background-color: #bb2d3b;

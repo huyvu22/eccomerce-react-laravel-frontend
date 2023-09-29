@@ -11,9 +11,11 @@ export const cartSlice = createSlice({
     reducers: {
         showCart: (state, action) => {
             state.isShow = true;
+            document.querySelector('.back-drop').style.zIndex = 14
         },
         hideCart: (state, action) => {
             state.isShow = false;
+            document.querySelector('.back-drop').style.zIndex = 10
         },
     },
 });
@@ -24,8 +26,12 @@ export const searchSlice = createSlice({
         keywords: "",
         priceSpread: [],
         rating: "",
+        inputSearchFocus: false,
     },
     reducers: {
+        onFocus: (state, action) => {
+            state.inputSearchFocus = action.payload;
+        },
         updateKeywords: (state, action) => {
             state.keywords = action.payload;
         },
@@ -71,13 +77,13 @@ export const loginSlice = createSlice({
         logout: (state, action) => {
             state.isSellerAuthenticated = false;
             state.isUserAuthenticated = false;
-            localStorage.removeItem('userToken');
-            localStorage.removeItem('sellerToken');
+            sessionStorage.removeItem('buyer-google-login');
         },
     },
 });
 export const {showCart, hideCart} = cartSlice.actions;
 export const {
+    onFocus,
     updateKeywords,
     clearKeywords,
     filterPrice,

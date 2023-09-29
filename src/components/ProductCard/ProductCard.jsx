@@ -13,6 +13,7 @@ import Tippy from '@tippyjs/react';
 import {useDispatch} from "react-redux";
 import {showDetail} from "./ProductCardSlice";
 import {asset} from "../../services/Helpers/Image/image";
+import {roundedNumber} from "../../services/Helpers/Number/Number";
 
 const ProductCard = ({item, setModalShow}) => {
 
@@ -21,6 +22,7 @@ const ProductCard = ({item, setModalShow}) => {
     const {addItemToCart, removeItemFromCart, toggleWishlistItem, toggleCompare, likeRef, compareRef} = useAddToCart({
         id,
         name,
+        slug,
         thumb_image,
         price,
         offer_price,
@@ -44,7 +46,7 @@ const ProductCard = ({item, setModalShow}) => {
                 <div className="product-card">
                     <div className="product-media">
                         <div className="grid-image">
-                             <span className="product-label">
+                             <span className={clsx("product-label", product_type === 'sale' ? 'red' : (product_type === 'new' ? 'green' : 'purple'))}>
                                 <label className="label-sale off">{product_type}</label>
                              </span>
                             <Tippy content={<span style={{fontSize: '10px'}}>Add to Wish List</span>}>
@@ -75,7 +77,7 @@ const ProductCard = ({item, setModalShow}) => {
                                     {index <= rating ? <AiFillStar/> : <AiOutlineStar/>}
                                 </span>
                             ))}
-                            <span>({rating || 0})</span>
+                            <span>({roundedNumber(+rating) || 0})</span>
                         </div>
                         <div className="product-name">
                             <h6>{name}</h6>

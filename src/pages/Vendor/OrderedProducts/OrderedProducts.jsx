@@ -9,15 +9,15 @@ import {getCookie} from "../../../utils/dataHandler";
 const OrderedProducts = () => {
     const client = useClient();
     const [orderProduct, setOrderProduct] = useState([]);
-    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
+    const sellerToken = getCookie('seller_access_token');
     const getAllOrdered = async () => {
 
-        if (!userToken) {
+        if (!sellerToken) {
             console.error('User token not found');
             return;
         }
 
-        const res = await client.get('seller/ordered-products', '', userToken);
+        const res = await client.get('seller/ordered-products', '', sellerToken);
 
         if (res.response.ok === true) {
             const orderData = await res.data.data;
@@ -29,7 +29,7 @@ const OrderedProducts = () => {
     }, []);
 
     const handleOrderTypeChange = async (e) => {
-        const res = await client.get(`seller/orders/${e.target.value}`, '', userToken);
+        const res = await client.get(`seller/orders/${e.target.value}`, '', sellerToken);
         if (res.response.ok === true) {
             const orderData = await res.data.data;
             setOrderProduct(orderData)

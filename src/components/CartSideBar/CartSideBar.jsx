@@ -16,7 +16,6 @@ import {useSubTotalPrice} from "../../services/Hooks/useTotalPrice";
 const CartSideBar = () => {
     const dispatch = useDispatch();
     const client = useClient();
-    const navigate = useNavigate();
     const isShowCart = useSelector((state) => state.cartItems.isShow);
     const [show, setShow] = useState(false);
     const [myCart] = useMyCart();
@@ -47,7 +46,6 @@ const CartSideBar = () => {
                     sessionStorage.setItem('couponCode', res.data.coupon.code);
                     sessionStorage.setItem('discountValue', res.data.coupon.discount);
 
-                    // console.log(res.data.coupon.discount)
                 } else {
                     toast(res.data.message);
                 }

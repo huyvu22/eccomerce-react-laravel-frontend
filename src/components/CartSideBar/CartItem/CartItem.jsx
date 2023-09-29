@@ -10,13 +10,13 @@ import {asset} from "../../../services/Helpers/Image/image";
 import Swal from "sweetalert2";
 
 const CartItem = ({item}) => {
-    const {id, name, thumb_image, offer_price, isLike, quantity} = item;
+    const {id, name, slug, thumb_image, offer_price, isLike, quantity} = item;
 
     const dispatch = useDispatch();
     const {
         addItemToCart,
         removeItemFromCart,
-    } = useAddToCart({id, name, thumb_image, offer_price, isLike, quantity});
+    } = useAddToCart({id, name, slug, thumb_image, offer_price, isLike, quantity});
 
     const handleDeleteItem = () => {
         Swal.fire({
@@ -61,12 +61,12 @@ const CartItem = ({item}) => {
             <div className="cart-info-group">
                 <div className="cart-info">
                     <h6><a href="#">{name}</a></h6>
-                    <p>Unit Price - ₹{offer_price}</p>
+                    <p>Unit Price - ${offer_price}</p>
                 </div>
                 <div className="cart-action-group">
                     <ProductActions quantity={quantity} handleAddItem={addItemToCart}
                                     handleRemoveItem={removeItemFromCart}/>
-                    <h6>{formatter.format(quantity * parseInt((offer_price)))}</h6>
+                    <h6>{formatter.format(quantity * +offer_price)}</h6>
                 </div>
             </div>
         </li>

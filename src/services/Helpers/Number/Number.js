@@ -3,6 +3,10 @@ export const formatter = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 
+export function roundedNumber(number = 0) {
+    return Number(number.toFixed(1))
+}
+
 export function generateRandomToken(length) {
     // Define characters that can be used in the token
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

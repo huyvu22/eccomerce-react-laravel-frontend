@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
 import './ProductDetail.scss';
-import SingleBanner from "../../../components/SingleBanner/SingleBanner";
+import React, {useEffect, useRef, useState} from 'react';
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import {FaEye, FaFacebookF, FaShoppingBasket} from "react-icons/fa";
 import {FiInstagram} from "react-icons/fi";
@@ -9,36 +8,30 @@ import {AiFillHeart} from "react-icons/ai";
 import {FaLink} from "react-icons/fa";
 import {BsFillStarFill} from "react-icons/bs";
 import {useDispatch, useSelector} from "react-redux";
-import ProductActions from "../../../components/ProductActions/ProductActions";
-import button from "bootstrap/js/src/button";
-import useMyCart from "../../../services/Hooks/useMyCart";
 import {addItem, wishItem} from "../../../components/ProductCard/ProductCardSlice";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {asset} from "../../../services/Helpers/Image/image";
-import useClient from "../../../services/Hooks/useClient";
-import ProductCard from "../../../components/ProductCard/ProductCard";
 import {showToast} from "../../../components/Toast/Toast";
 import {getCookie, processFetchedData} from "../../../utils/dataHandler";
 import {toast} from "react-toastify";
+import {MdNavigateBefore, MdNavigateNext} from "react-icons/md";
+import SingleBanner from "../../../components/SingleBanner/SingleBanner";
+import ProductActions from "../../../components/ProductActions/ProductActions";
+import button from "bootstrap/js/src/button";
+import useMyCart from "../../../services/Hooks/useMyCart";
+import useClient from "../../../services/Hooks/useClient";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 import moment from "moment";
 import ModalPreviewItem from "../../../components/ModalPreviewItem/ModalPreviewItem";
-import {MdNavigateBefore, MdNavigateNext} from "react-icons/md";
-import useFetchData from "../../../services/Hooks/useFetchData";
+import clsx from "clsx";
 
 const ProductDetail = () => {
-    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
-    const client = useClient();
-    const [myCart] = useMyCart()
-    const dispatch = useDispatch();
-    const item = useSelector(state => state.productCard.itemDetails);
     const {id, slug} = useParams();
-    let product = myCart?.find(product => product.id === item.id)
+    const [myCart] = useMyCart()
     const [itemArr, setItemArr] = useState([]);
+    const [wishList, setWishList] = useState([])
     const [productRelated, setProductRelated] = useState([])
     const [loading, setLoading] = useState(true)
-    const favoriteItems = useSelector((state) => state.productCard.wishList);
-    const compareItems = useSelector((state) => state.productCard.compareList);
-    const userLogin = useSelector(state => state.loginUser.isUserAuthenticated)
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState('')
     const [hover, setHover] = useState(0);
@@ -47,7 +40,22 @@ const ProductDetail = () => {
     const [modalShow, setModalShow] = useState(false);
     const [reviewImage, setReviewImage] = useState('')
     const [currentPage, setCurrentPage] = useState(1);
-    const [paginate, setPaginate] = useState([])
+    const [paginate, setPaginate] = useState([]);
+    const navigate = useNavigate();
+    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
+    const favoriteItems = useSelector((state) => state.productCard.wishList);
+    const compareItems = useSelector((state) => state.productCard.compareList);
+    const userLogin = useSelector(state => state.loginUser.isUserAuthenticated);
+    const dispatch = useDispatch();
+    const item = useSelector(state => state.productCard.itemDetails);
+    let product = myCart?.find(product => product.slug === slug)
+    const client = useClient();
+
+
+    const scrollToTop = () => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+    };
 
     const getProduct = async () => {
         const res = await client.get(`products/${id}/${slug}`);
@@ -57,6 +65,26 @@ const ProductDetail = () => {
             setLoading(false);
         }
     }
+
+    const getWishList = async () => {
+        const res = await client.get('wishlist', '', userToken);
+        if (res.response.ok === true) {
+            const dataObj = await res.data;
+            setWishList(dataObj.data)
+        }
+
+    }
+    useEffect(() => {
+        if (userToken) {
+            getWishList();
+        }
+    }, []);
+
+
+    useEffect(() => {
+        getProduct();
+        scrollToTop();
+    }, [id]);
 
     const getRelatedProducts = async () => {
         if (itemArr?.category?.slug !== undefined) {
@@ -73,16 +101,6 @@ const ProductDetail = () => {
     };
 
     useEffect(() => {
-        getProduct();
-        const scrollToTop = () => {
-            const element = document.documentElement || document.body;
-            element.scrollIntoView({behavior: "smooth", block: "start"});
-        };
-
-        scrollToTop();
-    }, [item]);
-
-    useEffect(() => {
         if (itemArr?.category?.slug !== undefined) {
             getRelatedProducts();
         }
@@ -93,25 +111,39 @@ const ProductDetail = () => {
         dispatch(addItem(productWithQuantity));
     }
 
-    const handleAddToWishlist = (item) => {
-        dispatch(wishItem(item));
-        showToast(thumb_image, `${name} added to Wishlist!`);
-    }
+    const handleAddToWishlist = async (item) => {
+        if (userToken) {
+            const res = await client.post('wishlist', {'product_id': id}, '', userToken)
+            if (res.response.ok === true) {
+                const data = await res.data;
+                if (data.status === 'success') {
+                    dispatch(wishItem(item));
+                    showToast(thumb_image, `${name} added to Wishlist!`);
+                }
+            } else {
+                toast.error('Product has already been added to wishlist');
+            }
+
+        } else {
+            navigate('/buyer/login');
+        }
+    };
 
     const getReViewProduct = async () => {
-        const res = await client.get(`product-review/${id}?page=${currentPage}`, '', userToken);
-        if (res.response.ok === true) {
-            const objectData = await res.data;
-            const reviews = objectData.data;
-            console.log(objectData.meta)
-            setPaginate(objectData.meta)
-            setReviews(reviews)
+        if (userToken) {
+            const res = await client.get(`product-review/${id}?page=${currentPage}`, '', userToken);
+            if (res.response.ok === true) {
+                const objectData = await res.data;
+                const reviews = objectData.data;
+                setPaginate(objectData.meta)
+                setReviews(reviews)
+            }
         }
     }
 
     useEffect(() => {
         getReViewProduct()
-    }, [id, currentPage])
+    }, [])
 
 
     const handleSubmitReview = async () => {
@@ -134,25 +166,27 @@ const ProductDetail = () => {
         }
 
         if (comment !== '') {
-            // const res = await client.post(`product-review`, formData, '', userToken);
-            // if (res.response.ok === true) {
-            //     const review = await res.data;
+            // let res = await fetch(`http://buynow.test/api/product-review`, {
+            //     method: "POST",
+            //     headers: {
+            //         'Authorization': `Bearer ${userToken}`,
+            //     },
+            //     body: formData,
+            // })
+            //
+            // const response = await res.json();
+            // if (response.status === 'success') {
             //     setComment('')
-            //     toast.success(review.message)
+            //     setSelectedImage([])
+            //     toast.success(response.message)
             // }
-            let res = await fetch(`http://buynow.test/api/product-review`, {
-                method: "POST",
-                headers: {
-                    'Authorization': `Bearer ${userToken}`,
-                },
-                body: formData,
-            })
 
-            const response = await res.json();
-            if (response.status === 'success') {
+            const res = await client.post(`product-review`, formData, '', userToken);
+            if (res.response.ok === true) {
+                const review = await res.data;
                 setComment('')
                 setSelectedImage([])
-                toast.success(response.message)
+                toast.success(review.message)
             }
 
         } else {
@@ -170,9 +204,10 @@ const ProductDetail = () => {
         window.scrollTo(0, 1500);
     }
 
+
     const showData = processFetchedData(productRelated, favoriteItems, myCart, compareItems);
 
-    const {name, thumb_image, price, rating: productRating, offer_price, availability, vendor, sku} = itemArr;
+    const {name, thumb_image, price, rating: productRating, offer_price, availability, vendor, sku, product_type} = itemArr;
 
     return (
         <>
@@ -192,6 +227,9 @@ const ProductDetail = () => {
                                     <div className="col-lg-6">
                                         <div className="details-gallery-group">
                                             <div className="details-preview">
+                                                 <span className={clsx("product-label", product_type === 'sale' ? 'red' : (product_type === 'new' ? 'green' : 'purple'))}>
+                                <                   label className="label-sale off">{product_type}</label>
+                                                 </span>
                                                 <img src={asset(thumb_image)} alt="img"/>
                                             </div>
                                             <div className="details-thumb">
@@ -202,15 +240,16 @@ const ProductDetail = () => {
                                     <div className="col-lg-6">
                                         <div className="details-product">
                                             <div className="details-name">
-                                                <h3>{name}</h3>
+                                                <h4>{name}</h4>
                                             </div>
                                             <div className="details-meta">
                                                 <p>SKU: {sku}</p>
                                                 <p>Stock Left: {availability}</p>
-                                                <p>Seller: {vendor}</p>
+                                                <p>Seller: {vendor?.name}</p>
                                             </div>
                                             <div className="details-meta">
-                                                <p><a href="">Other products posted by {vendor} <span><FaLink size="0.8rem"/></span></a></p>
+                                                <p><Link to={`/item/products/seller/${vendor.id}/${vendor.slug}`}>Other products posted by {vendor?.name} <span><FaLink
+                                                    size="0.8rem"/></span></Link></p>
                                             </div>
                                             <div className="details-rating">
                                                 {[1, 2, 3, 4, 5].map((index) => (
@@ -241,11 +280,11 @@ const ProductDetail = () => {
                                                     <ProductActions quantity={product.quantity} item={product}/>
                                                     :
                                                     <button className="product-add" onClick={() => handleAddItem(item)}>
-                                                        <span><FaShoppingBasket/></span><span>Add</span>
+                                                        <span><FaShoppingBasket/></span><span>Add to Cart</span>
                                                     </button>
                                             }
                                             <button className="product-add wishlist mt-2" onClick={() => handleAddToWishlist(item)}>
-                                                <span><AiFillHeart size="1.7rem"/></span><span>Add To WishList</span>
+                                                <span><AiFillHeart size="1.1rem"/></span><span>Add To WishList</span>
                                             </button>
                                         </div>
                                     </div>
@@ -286,7 +325,7 @@ const ProductDetail = () => {
                                                     </textarea>
                                                         <br/>
                                                         <label>Upload Images:</label>
-                                                        <input type="file" className="form form-control" value={selectedImage}
+                                                        <input type="file" className="form form-control"
                                                                onChange={(e) => setSelectedImage([...e.target.files])} multiple/>
                                                     </div>
                                                 </div>
@@ -328,7 +367,7 @@ const ProductDetail = () => {
                                                                                                     key={index}
                                                                                                     className={index <= review.rating ? "on" : "off"}
                                                                                                 ><BsFillStarFill/>
-                                                                                    </span>
+                                                                                                </span>
                                                                                             );
                                                                                         })}
                                                                                     </div>

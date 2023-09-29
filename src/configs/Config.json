@@ -1,4 +1,5 @@
 {
-  "SERVER_API": "http://buynow.test/api/",
+  "SERVER": "http://buynow.com/",
+  "SERVER_API": "http://buynow.com/api/",
   "LIMIT_ITEM": 6
 }

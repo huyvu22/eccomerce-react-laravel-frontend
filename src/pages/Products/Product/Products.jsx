@@ -5,7 +5,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 const Products = () => {
-    const {slug, keyword} = useParams();
+    const {id, slug, keyword} = useParams();
     const location = useLocation();
     let pageName = '';
     let name = '';
@@ -60,9 +60,9 @@ const Products = () => {
         pageName = 'New Arrival';
         name = 'New Arrival';
     } else if (isSellerProduct) {
-        // attributes = searchParam ? `product-type/new_arrival?${searchParam}` : `product-type/new_arrival`;
-        // pageName = 'New Arrival';
-        // name = 'New Arrival';
+        attributes = searchParam ? `vendor-products/${id}?${searchParam}` : `vendor-products/${id}`;
+        pageName = slug;
+        name = slug;
     }
 
 

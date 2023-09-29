@@ -8,37 +8,55 @@ import Address from "../../../components/Modal/Address/Address";
 import Note from "../../../components/Modal/Note/Note";
 import ProfileInfo from "../../../components/Modal/ProfileInfo/ProfileInfo";
 import ChangePassword from "../../../components/Modal/ChangePassword/ChangePassword";
+import useClient from "../../../services/Hooks/useClient";
+import {getCookie} from "../../../utils/dataHandler";
+import AboutMe from "../../../components/Modal/AboutMe/AboutMe";
+import {asset} from "../../../services/Helpers/Image/image";
 
 
 const VendorProfile = () => {
-    const [userAddress, setUserAddress] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     const [modalPhoneShow, setModalPhoneShow] = useState(false);
     const [modalAddressShow, setModalAddressShow] = useState(false);
-    const [modalNoteShow, setModalNoteShow] = useState(false);
+    const [modalAboutMeShow, setModalAboutMeShow] = useState(false);
     const [modalChangePasswordShow, setModalChangePasswordShow] = useState(false);
     const [modalEditProfileShow, setModalEditProfileShow] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [phone, setPhone] = useState('');
+    const [name, setName] = useState('');
+    const client = useClient();
 
     const getUserAddress = async () => {
         setLoading(true);
-        const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
+        const sellerToken = getCookie('seller_access_token');
         if (!sellerToken) {
             console.error('User token not found');
             return;
         }
-        const res = await fetch('http://buynow.test/api/address', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sellerToken.token}`,
-            }
-        });
+        // const res = await fetch('http://buynow.test/api/address', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${sellerToken.token}`,
+        //     }
+        // });
+        //
+        // let data = await res.json();
+        // if (data.length) {
+        //     setUserInfo(data[0])
+        //     setLoading(false)
+        // }
 
-        let data = await res.json();
-        if (data.length) {
-            setUserAddress(data[0])
-            setLoading(false)
+        const res = await client.get('seller/address', '', sellerToken);
+        if (res.response.ok) {
+            const dataObj = await res.data;
+            if (dataObj.status === 'success') {
+                console.log(dataObj.data[0])
+                setUserInfo(dataObj.data[0])
+                setPhone(dataObj.data[0].phone)
+                setLoading(false)
+            }
         }
 
     }
@@ -73,17 +91,21 @@ const VendorProfile = () => {
                                         </div>
                                         <div className="account-content">
                                             <div className="row">
-                                                <div className="col-md-6 col-lg-5">
+                                                <div className="col-lg-2">
+                                                    <div className="profile-image"><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#show_photo"><img
+                                                        src={asset(userInfo?.banner)} alt='img'/></a></div>
+                                                </div>
+                                                <div className="col-md-6 col-lg-4">
                                                     <div className="form-group">
                                                         <label>Name</label>
-                                                        <input type="text" className="form-control" value={userAddress.name} placeholder="Update your name..."/>
+                                                        <input type="text" className="form-control" value={userInfo.shop_name} placeholder="Update your name..."/>
                                                     </div>
 
                                                 </div>
-                                                <div className="col-md-6 col-lg-5">
+                                                <div className="col-md-6 col-lg-4">
                                                     <div className="form-group">
                                                         <label>Email</label>
-                                                        <input type="text" className="form-control" value={userAddress.email} placeholder="Update your email..."/>
+                                                        <input type="text" className="form-control" disabled={true} value={userInfo.email} placeholder="Update your email..."/>
                                                     </div>
 
                                                 </div>
@@ -103,10 +125,10 @@ const VendorProfile = () => {
                                         </div>
                                         <div className="account-content">
                                             <div className="row">
-                                                <div className="col-md-6 col-lg-4">
+                                                <div className="col-md-6 col-lg-6">
                                                     <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                         <h3>Phone</h3>
-                                                        <p>{userAddress?.phone ? userAddress?.phone : '-'}</p>
+                                                        <p>{phone ? phone : '-'}</p>
                                                         <ul>
                                                             <li onClick={() => setModalPhoneShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -115,36 +137,19 @@ const VendorProfile = () => {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div className="col-md-6 col-lg-4">
+                                                <div className="col-md-6 col-lg-6">
                                                     <div className={`profile-card contact ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleDivClick(1)}>
                                                         <h3>Address</h3>
-                                                        {userAddress?.address
+                                                        {userInfo?.address
                                                             ?
-
                                                             <p>
-                                                                {/*{userAddress?.address},*/}
-                                                                {/*{userAddress?.ward && ` ${JSON.parse(userAddress?.ward)?.label}`},*/}
-                                                                {/*{userAddress?.district && ` ${JSON.parse(userAddress?.district)?.label}`},*/}
-                                                                {/*{userAddress?.province && ` ${JSON.parse(userAddress?.province)?.label}`}*/}
+                                                                {userInfo?.address},
                                                             </p>
                                                             :
                                                             '-'
                                                         }
-
                                                         <ul>
                                                             <li onClick={() => setModalAddressShow(true)}>
-                                                                <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
-                                                                    <span><BiEdit/></span></button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6 col-lg-4">
-                                                    <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
-                                                        <h3>Note</h3>
-                                                        <p>{userAddress?.note ? userAddress?.note : '-'}</p>
-                                                        <ul>
-                                                            <li onClick={() => setModalNoteShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
                                                                     <span><BiEdit/></span></button>
                                                             </li>
@@ -154,19 +159,40 @@ const VendorProfile = () => {
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="account-card">
+                                        <div className="account-title">
+                                            <h4>About Me</h4>
+                                        </div>
+                                        <div className="account-content">
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
+                                                        <p>{userInfo.description}</p>
+                                                        <ul>
+                                                            <li onClick={() => setModalAboutMeShow(true)}>
+                                                                <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#about-me-edit">
+                                                                    <span><BiEdit/></span></button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <Phone show={modalPhoneShow}
-                                   onHide={() => setModalPhoneShow(false)} userAddress={userAddress}/>
+                                   onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setPhone={setPhone}/>
                             <Address show={modalAddressShow}
-                                     onHide={() => setModalAddressShow(false)} userAddress={userAddress}/>
-                            <Note show={modalNoteShow}
-                                  onHide={() => setModalNoteShow(false)} userAddress={userAddress}/>
+                                     onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
+                            <AboutMe show={modalAboutMeShow}
+                                     onHide={() => setModalAboutMeShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <ProfileInfo show={modalEditProfileShow}
-                                         onHide={() => setModalEditProfileShow(false)} userAddress={userAddress}/>
+                                         onHide={() => setModalEditProfileShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <ChangePassword show={modalChangePasswordShow}
-                                            onHide={() => setModalChangePasswordShow(false)} userAddress={userAddress}/>
+                                            onHide={() => setModalChangePasswordShow(false)} userInfo={userInfo}/>
                         </div>
 
                     </section>

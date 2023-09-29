@@ -23,7 +23,7 @@ const NavbarTitle = (props) => {
                                 <li className="navbar-item">
                                     <Link to="/">Home</Link></li>
                                 <li className="navbar-item dropdown-mega-menu">
-                                    <Link to="/"
+                                    <Link to="javascript:void(0)"
                                           onMouseEnter={() => setHover(true)}
                                           onMouseLeave={() => setHover(false)}> Category</Link>
                                     <NavbarItemsCategory hover={hover}/>
@@ -49,7 +49,7 @@ const NavbarTitle = (props) => {
                                 <li className="navbar-item">
                                     <Link to="contact-us"> Contact Us</Link></li>
                                 {
-                                    isShowCompare?.length
+                                    isShowCompare?.length > 1
                                         ?
                                         <li className="navbar-compare" onClick={() => setModalShow(true)}>
                                             <Link to="/"> Compare Now</Link>

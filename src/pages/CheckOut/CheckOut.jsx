@@ -20,6 +20,8 @@ import {formatter} from "../../services/Helpers/Number/Number";
 import {useRawSubTotalPrice, useSubTotalPrice} from "../../services/Hooks/useTotalPrice";
 import {Link, useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/dataHandler";
+import config from "../../configs/Config.json";
+
 
 const CheckOut = () => {
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
@@ -29,6 +31,7 @@ const CheckOut = () => {
     const navigate = useNavigate();
     const total = useSubTotalPrice();
     const rawSubTotal = useRawSubTotalPrice();
+    const {SERVER_API} = config;
     const [idItem, setIdItem] = useState();
     const [modalPhoneShow, setModalPhoneShow] = useState(false);
     const [modalAddressShow, setModalAddressShow] = useState(false);
@@ -41,10 +44,9 @@ const CheckOut = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [userInfo, setUserInfo] = useState([]);
     const [fee, setFee] = useState('');
-    const [phone, setPhone] = useState('');
-    const [note, setNote] = useState('');
+    // const [phone, setPhone] = useState('');
+    // const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false);
-
 
     const getShippingFee = async () => {
 
@@ -55,19 +57,28 @@ const CheckOut = () => {
         const formData = {
             'sub_total': rawSubTotal
         }
-        const res = await fetch('http://buynow.test/api/shipping-fee', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${userToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
+        // const res = await fetch('http://buynow.test/api/shipping-fee', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Authorization': `Bearer ${userToken}`,
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(formData)
+        // });
+        //
+        // let data = await res.json();
+        // if (data.status === 'success') {
+        //     setFee(data.data)
+        //     sessionStorage.setItem('shipping_method', data.message)
+        // }
 
-        let data = await res.json();
-        if (data.status === 'success') {
-            setFee(data.data)
-            sessionStorage.setItem('shipping_method', data.message)
+        const res = await client.post('shipping-fee', formData, '', userToken)
+        if (res.response.ok) {
+            const data = await res.data;
+            if (data.status === 'success') {
+                setFee(data.data);
+                sessionStorage.setItem('shipping_method', data.message)
+            }
         }
     }
 
@@ -81,19 +92,28 @@ const CheckOut = () => {
             console.error('User token not found');
             return;
         }
-        const res = await fetch('http://buynow.test/api/address', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${userToken}`,
-                'Content-Type': 'application/json'
-            }
-        });
+        // const res = await fetch('http://buynow.test/api/address', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Bearer ${userToken}`,
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
+        //
+        // let data = await res.json();
+        // if (data.length) {
+        //     setUserInfo(data[0])
+        //     setPhone(data[0].phone)
+        //     setNote(data[0].note)
+        // }
 
-        let data = await res.json();
-        if (data.length) {
-            setUserInfo(data[0])
-            setPhone(data[0].phone)
-            setNote(data[0].note)
+        const res = await client.get('address', '', userToken)
+        if (res.response.ok) {
+            const data = await res.data;
+            setUserInfo(data.data[0])
+            // setPhone(data.data[0].phone)
+            // setNote(data.data[0].note)
+
         }
     }
 
@@ -136,17 +156,18 @@ const CheckOut = () => {
     const [termsChecked, setTermsChecked] = useState(true);
 
     const handleProceedToCheckout = async () => {
+        console.log(userInfo)
 
         if (termsChecked && userInfo.phone && userInfo.address) {
             const selectedPaymentMethod = paymentMethodRef.current;
 
             let paymentUrl = '';
             if (selectedPaymentMethod === 'paypal') {
-                paymentUrl = `http://buynow.test/api/paypal/payment?total=${rawSubTotal + fee - discount}`;
+                paymentUrl = `${SERVER_API}paypal/payment?total=${rawSubTotal + fee - discount}`;
             } else if (selectedPaymentMethod === 'cod') {
-                paymentUrl = 'http://buynow.test/api/cod/payment';
+                paymentUrl = `${SERVER_API}cod/payment`;
             } else if (selectedPaymentMethod === 'vnpay') {
-                paymentUrl = `http://buynow.test/api/vnpay/payment?total=${(rawSubTotal + fee - discount) * 24231}`;
+                paymentUrl = `${SERVER_API}vnpay/payment?total=${(rawSubTotal + fee - discount) * 24231}`;
             }
 
             if (paymentUrl) {
@@ -190,7 +211,7 @@ const CheckOut = () => {
                 }
             }
         } else {
-            toast('Please accept terms of service or fill all fields address above.');
+            toast.error('Please accept terms of service or fill all fields address above.');
         }
     };
 
@@ -227,7 +248,7 @@ const CheckOut = () => {
                                                                 src={asset(item.thumb_image)}
                                                                 alt="img"/></td>
                                                             <td><Link to={`/item/item_details/${item.id}/${item.slug}`}>{item.name}</Link></td>
-                                                            <td>{item.offer_price}</td>
+                                                            <td>{item.offer_price}$</td>
                                                             {
                                                                 idItem === item.id ?
                                                                     <td width="15%">
@@ -238,7 +259,7 @@ const CheckOut = () => {
                                                                     :
                                                                     <td width="10%">{item.quantity}</td>
                                                             }
-                                                            <td>{Number((item.offer_price * item.quantity).toFixed(1))}</td>
+                                                            <td>{Number((item.offer_price * item.quantity).toFixed(1))}$</td>
                                                             <td>
                                                                 <span onClick={() => setIdItem(item.id)}><FiEdit/></span>
                                                                 <span onClick={() => dispatch(deleteItem(item.id))}><RiDeleteBin6Line/></span>
@@ -292,7 +313,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                 <h3>Phone</h3>
-                                                <p>{phone ? phone : '-'}</p>
+                                                <p>{userInfo.phone ?? '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalPhoneShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -328,7 +349,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                 <h3>Note</h3>
-                                                <p>{note ? note : '-'}</p>
+                                                <p>{userInfo.note ?? '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalNoteShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -375,6 +396,7 @@ const CheckOut = () => {
                                                         <input type="radio"
                                                                name="paymentMethod"
                                                                id='cod'
+                                                               defaultChecked={true}
                                                                ref={paymentMethodRef}
                                                                onChange={() => (paymentMethodRef.current = 'cod')}/>
                                                         <label htmlFor="cod">COD</label>
@@ -408,11 +430,11 @@ const CheckOut = () => {
                         </div>
                     </div>
                     <Phone show={modalPhoneShow}
-                           onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setPhone={setPhone}/>
+                           onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                     <Address show={modalAddressShow}
                              onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                     <Note show={modalNoteShow}
-                          onHide={() => setModalNoteShow(false)} userInfo={userInfo} setNote={setNote}/>
+                          onHide={() => setModalNoteShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                 </div>
             </section>
         </>

@@ -7,10 +7,14 @@ import {Editor} from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import {useParams} from "react-router-dom";
 import {asset} from "../../../../services/Helpers/Image/image";
+import useClient from "../../../../services/Hooks/useClient";
+import {getCookie} from "../../../../utils/dataHandler";
+import {useRawSubTotalPrice} from "../../../../services/Hooks/useTotalPrice";
 
 const EditProduct = () => {
-    const sellerToken = JSON.parse(localStorage.getItem('sellerToken'));
+    const sellerToken = getCookie('seller_access_token');
     const {id, slug} = useParams();
+    const client = useClient();
     const [product, setProduct] = useState([]);
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -33,33 +37,56 @@ const EditProduct = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const getProduct = async () => {
-        let res = await fetch(`http://buynow.test/api/seller/products/${id}/edit`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${sellerToken?.token}`
-            },
-        })
+        // let res = await fetch(`http://buynow.test/api/seller/products/${id}/edit`, {
+        //     method: "GET",
+        //     headers: {
+        //         'Authorization': `Bearer ${sellerToken?.token}`
+        //     },
+        // })
+        //
+        // const response = await res.json();
+        // if (res.ok) {
+        //     setProduct(response?.data);
+        //     setFullDescription(response?.data.full_description);
+        //     setSubcategories(response?.data.category.subCategories);
+        //
+        //     setData({
+        //         name: response?.data.name,
+        //         image: response?.data.image,
+        //         category: response?.data.category.id,
+        //         sub_category: response?.data.subCategory.id,
+        //         sku: response?.data.sku,
+        //         price: response?.data.price,
+        //         offer_price: response?.data.offer_price,
+        //         stock_quantity: response?.data.availability,
+        //         short_description: response?.data.short_description,
+        //         full_description: response?.data.full_description,
+        //         product_type: response?.data.product_type,
+        //         status: response?.data.status,
+        //     });
+        // }
 
-        const response = await res.json();
-        if (res.ok) {
-            setProduct(response?.data);
-            setFullDescription(response?.data.full_description);
-            setSubcategories(response?.data.category.subCategories);
+        const res = await client.get(`products/${id}/edit`, '', sellerToken)
+        if (res.response.ok) {
+            const dataObj = await res.data;
+            setProduct(dataObj);
+            setFullDescription(dataObj.full_description);
+            setSubcategories(dataObj.category.subCategories);
 
             setData({
-                name: response?.data.name,
-                image: response?.data.image,
-                category: response?.data.category.id,
-                sub_category: response?.data.subCategory.id,
-                sku: response?.data.sku,
-                price: response?.data.price,
-                offer_price: response?.data.offer_price,
-                stock_quantity: response?.data.availability,
-                short_description: response?.data.short_description,
-                full_description: response?.data.full_description,
-                product_type: response?.data.product_type,
-                status: response?.data.status,
-            });
+                name: dataObj.name,
+                image: dataObj.image,
+                category: dataObj.category.id,
+                sub_category: dataObj.subCategory.id,
+                sku: dataObj.sku,
+                price: dataObj.price,
+                offer_price: dataObj.offer_price,
+                stock_quantity: dataObj.availability,
+                short_description: dataObj.short_description,
+                full_description: dataObj.full_description,
+                product_type: dataObj.product_type,
+                status: dataObj.status,
+            })
         }
     }
 
@@ -68,10 +95,17 @@ const EditProduct = () => {
     }, []);
 
     const getCategory = async () => {
-        const res = await fetch('http://buynow.test/api/category')
-        if (res.ok) {
-            const response = await res.json();
-            let categoryArr = response.data;
+        // const res = await fetch('http://buynow.test/api/category')
+        // if (res.ok) {
+        //     const response = await res.json();
+        //     let categoryArr = response.data;
+        //     setCategories(categoryArr);
+        // }
+
+        const res = await client.get('category');
+        console.log(res)
+        if (res.response.ok) {
+            const categoryArr = await res.data.data;
             setCategories(categoryArr);
         }
     }
@@ -131,20 +165,24 @@ const EditProduct = () => {
         formData.append("status", updatedData.status);
         formData.append("product_id", product.id);
 
-        let res = await fetch(`http://buynow.test/api/seller/products`, {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${sellerToken?.token}`,
-            },
-            body: formData,
-        })
+        // let res = await fetch(`http://buynow.test/api/seller/products`, {
+        //     method: "POST",
+        //     headers: {
+        //         'Authorization': `Bearer ${sellerToken?.token}`,
+        //     },
+        //     body: formData,
+        // })
+        //
+        // const response = await res.json();
+        // if (res.ok) {
+        //     toast(response.message);
+        // } else {
+        //     toast(response.message);
+        // }
 
-        const response = await res.json();
-        if (res.ok) {
-            toast(response.message);
-        } else {
-            toast(response.message);
-        }
+        const res = await client.post('seller/products', formData, '', sellerToken);
+        const data = await res.data;
+        toast(data.message);
     };
 
     useEffect(() => {

@@ -5,8 +5,9 @@ import {AiFillDelete} from "react-icons/ai";
 import {useSelector, useDispatch} from "react-redux";
 import {addItem, removeFromCompare} from "../../ProductCard/ProductCardSlice";
 import ProductActions from "../../ProductActions/ProductActions";
-import useAddToCart from "../../../services/Hooks/useAddToCart";
 import useMyCart from "../../../services/Hooks/useMyCart";
+import {asset} from "../../../services/Helpers/Image/image";
+import {BsFillStarFill} from "react-icons/bs";
 
 const TableItem = (props) => {
     const productsCompare = useSelector((state) => state.productCard.compareList);
@@ -25,7 +26,7 @@ const TableItem = (props) => {
     }
     return (
         <>
-            <table className="table table-bordered table-hover">
+            <table className="table table-bordered table-hover text-center">
                 <thead>
                 <tr>
                     <td colSpan="4">
@@ -47,45 +48,48 @@ const TableItem = (props) => {
                         <td key={product.id} className="text-center">
                             <img className="img-thumbnail"
                                  alt="img"
-                                 src={product.image}/>
+                                 src={asset(product.thumb_image)}
+                                 width={50}
+                                 height={50}
+                            />
                         </td>
                     ))}
                 </tr>
                 <tr>
-                    <td><b>Product Price</b></td>
+                    <td><b>Price</b></td>
                     {productsCompare?.map(product => (
                         <td key={product.id}>
-                            <span>{product.currentPrice}</span>
-                            <del>{product.originalPrice}</del>
+                            <span className="m-2"><b>${product.offer_price}</b></span>
+                            <del>${product.price}</del>
                         </td>
-                    ))}
-                </tr>
-                <tr>
-                    <td><b>Brand</b></td>
-                    {productsCompare?.map(product => (
-                        <td key={product.id}>{product.brand}</td>
-                    ))}
-                </tr>
-                <tr>
-                    <td><b>Availability</b></td>
-                    {productsCompare?.map(product => (
-                        <td key={product.id}>{product.availability}</td>
                     ))}
                 </tr>
                 <tr>
                     <td><b>Rating</b></td>
                     {productsCompare?.map(product => (
-                        <td key={product.id}>{product.rating}</td>
+                        <td key={product.id}>
+                            {/*{product.rating}*/}
+                            {[...Array(5)].map((star, index) => {
+                                index += 1;
+                                return (
+                                    <span
+                                        key={index}
+                                        className={(index <= product.rating ? "on" : "off")}
+                                    ><BsFillStarFill/>
+                                    </span>
+                                );
+                            })}
+                        </td>
                     ))}
                 </tr>
                 <tr>
                     <td>
-
+                        <b>Action</b>
                     </td>
                     {productsCompare?.map(product => {
                         const cartItem = myCart.find(item => item.id === product.id);
                         return (
-                            <td key={product.id}>
+                            <td key={product.id} className="action-td">
                                 {
                                     cartItem ?
                                         <ProductActions quantity={cartItem.quantity} item={cartItem}/>
@@ -100,8 +104,6 @@ const TableItem = (props) => {
                             </td>
                         );
                     })}
-
-
                 </tr>
                 </tbody>
             </table>

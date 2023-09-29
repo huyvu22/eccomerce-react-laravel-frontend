@@ -7,9 +7,12 @@ import {EditorState, convertToRaw} from "draft-js";
 import {Editor} from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import {getCookie} from "../../../../utils/dataHandler";
+import useClient from "../../../../services/Hooks/useClient";
+import config from "../../../../configs/Config.json";
 
 const AddProduct = () => {
-
+    const client = useClient();
+    const {SERVER_API} = config;
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [data, setData] = useState({
@@ -31,10 +34,17 @@ const AddProduct = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const getCategory = async () => {
-        const res = await fetch('http://buynow.test/api/category')
-        if (res.ok) {
-            const response = await res.json();
-            let categoryArr = response.data;
+        // const res = await fetch('http://buynow.test/api/category')
+        // if (res.ok) {
+        //     const response = await res.json();
+        //     let categoryArr = response.data;
+        //     setCategories(categoryArr);
+        // }
+
+        const res = await client.get('category');
+        if (res.response.ok) {
+            const dataObj = await res.data;
+            let categoryArr = dataObj.data;
             setCategories(categoryArr);
         }
     }
@@ -90,15 +100,13 @@ const AddProduct = () => {
         formData.append("product_type", updatedData.product_type);
         formData.append("status", updatedData.status);
 
-
-        let res = await fetch("http://buynow.test/api/seller/products", {
+        let res = await fetch(`${SERVER_API}seller/products`, {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${sellerToken}`
             },
             body: formData,
         })
-
         const response = await res.json();
         if (res.ok) {
             toast(response.message);

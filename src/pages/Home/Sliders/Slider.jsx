@@ -11,19 +11,27 @@ import {Pagination, Navigation, Autoplay} from "swiper";
 import "swiper/css/pagination";
 import {FaShoppingCart} from "react-icons/fa";
 import {asset} from "../../../services/Helpers/Image/image";
+import useClient from "../../../services/Hooks/useClient";
 
 const Slider = () => {
     const [sliders, setSliders] = useState([]);
+    const client = useClient();
     const getSlider = async () => {
-        const res = await fetch('http://buynow.test/api/sliders')
-        let response = await res.json();
-        setSliders(response.data);
+        // const res = await fetch('http://buynow.test/api/sliders')
+        // let response = await res.json();
+        // setSliders(response.data);
+
+        const res = await client.get('sliders');
+        if (res.response.ok) {
+            const data = await res.data.data;
+            setSliders(data);
+        }
 
     }
     useEffect(() => {
         getSlider();
     }, []);
-    
+
     useEffect(() => {
         AOS.init({
             duration: 2000

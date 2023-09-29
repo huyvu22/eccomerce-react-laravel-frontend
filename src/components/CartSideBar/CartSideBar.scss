@@ -4,7 +4,7 @@
   top: 0;
   width: 400px;
   height: 100vh;
-  z-index: 5;
+  z-index: 15;
   background-color: #fff;
   box-shadow: -15px 0px 25px 0px rgb(0 0 0 / 15%);
   transition: all linear .3s;
@@ -14,7 +14,6 @@
     text-align: center;
     position: relative;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
 
     .cart-total {
       color: var(--text-primary);
@@ -57,10 +56,8 @@
 
     .cart-item {
       display: flex;
-      gap: 30px;
-      padding: 15px 0px;
+      padding: 13px 0px;
       border-bottom: 1px solid var(--boder);
-      margin-bottom: 20px;
 
       &:hover {
         .cart-media {
@@ -111,6 +108,7 @@
 
       .cart-info-group {
         width: 100%;
+
         .cart-info {
           margin-bottom: 13px;
 
@@ -125,6 +123,10 @@
 
           input {
             height: 35px;
+          }
+
+          .product-action {
+            width: 114px;
           }
 
           h6 {

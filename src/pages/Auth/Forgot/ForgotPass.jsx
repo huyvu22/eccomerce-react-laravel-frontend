@@ -1,16 +1,19 @@
 import './ForgotPass.scss';
 import React, {useEffect, useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {AiOutlineGoogle} from "react-icons/ai";
 import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
+import useClient from "../../../services/Hooks/useClient";
+import logo from "../../../assets/images/logo.png";
 
 const ForgotPass = () => {
     const navigate = useNavigate();
+    const client = useClient();
+    const location = useLocation();
+    const tokenLogin = getCookie('user_access_token') || getCookie('seller_access_token');
     const [formData, setFormData] = useState({email: ""});
     const [validEmail, setValidEmail] = useState(true);
-    const tokenLogin = getCookie('user_access_token') || getCookie('seller_access_token');
-
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -42,19 +45,30 @@ const ForgotPass = () => {
 
         if (isValidEmail) {
             setLoading(true)
-            let res = await fetch("http://buynow.test/api/forgot", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "accept": "application/json"
-                },
-                body: JSON.stringify({
-                    "email": formData.email,
-                })
-            })
-            const data = await res.json();
-            if (res.ok) {
-                setLoading(false)
+            // let res = await fetch("http://buynow.test/api/forgot", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "accept": "application/json"
+            //     },
+            //     body: JSON.stringify({
+            //         "email": formData.email,
+            //     })
+            // })
+            // const data = await res.json();
+            // if (res.ok) {
+            //     setLoading(false)
+            //     toast.success(data.message);
+            //     navigate('/buyer/login');
+            // } else {
+            //     setLoading(false)
+            //     toast.error(data.message);
+            // }
+
+            const res = await client.post('forgot', {'email': formData.email});
+            const data = await res.data;
+            if (res.response.ok) {
+                setLoading(false);
                 toast.success(data.message);
                 navigate('/buyer/login');
             } else {
@@ -62,8 +76,17 @@ const ForgotPass = () => {
                 toast.error(data.message);
             }
         }
-
     };
+
+    const handleLoginByGoogle = async () => {
+        const res = await client.get('login/google');
+        if (res.response.ok === true) {
+            const data = await res.data;
+            location.pathname.includes('/buyer/login') ? sessionStorage.setItem('buyer-google-login', 'true') : sessionStorage.setItem('buyer-google-login', 'false');
+            window.location.href = data.url;
+        }
+
+    }
     return (
         <section>
             <div className="user-forgot">
@@ -73,7 +96,7 @@ const ForgotPass = () => {
                             <div className="login-logo">
                                 <Link to={"/"}>
                                     <img
-                                        src="https://ready-music-store.itechscripts.com/assets/site_data/logo.png"
+                                        src={logo}
                                         alt="logo"
                                     />
                                 </Link>
@@ -105,7 +128,7 @@ const ForgotPass = () => {
                                             <button type="button" onClick={handleLogin}>
                                                 Submit {loading && <span className="dots-1">...</span>}
                                             </button>
-                                            <button type="button"><span><AiOutlineGoogle/></span>
+                                            <button type="button" onClick={handleLoginByGoogle}><span><AiOutlineGoogle/></span>
                                                 Login With Google
                                             </button>
                                         </div>

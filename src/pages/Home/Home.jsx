@@ -13,7 +13,6 @@ import NewsLetter from "./NewsLetter/NewsLetter";
 import {getCookie} from "../../utils/dataHandler";
 import useClient from "../../services/Hooks/useClient";
 
-
 const Home = () => {
     const client = useClient();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');

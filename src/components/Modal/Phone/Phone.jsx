@@ -4,48 +4,68 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
+import useClient from "../../../services/Hooks/useClient";
+import {useLocation} from "react-router-dom";
 
 const Phone = (props) => {
     const [editPhone, setEditPhone] = useState('');
-    const {userInfo, setPhone} = props;
+    const {userInfo, setUserInfo} = props;
+    const client = useClient();
+    const location = useLocation();
+    const isBuyer = location.pathname.includes('/buyer/my-profile')
 
     const handleStorePhone = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
-        const formData = {
-            name: userInfo.name,
-            email: userInfo.email,
-            phone: editPhone,
-            province: userInfo.province,
-            district: userInfo.district,
-            ward: userInfo.ward,
-            address: userInfo.address,
-            note: userInfo.note
-        };
 
-        try {
-            const response = await fetch('http://buynow.test/api/address', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken}`
-                },
-                body: JSON.stringify(formData)
-            });
+        if (isBuyer) {
+            const formData = {
+                name: userInfo?.name,
+                email: userInfo?.email,
+                phone: editPhone,
+                province: userInfo?.province,
+                district: userInfo?.district,
+                ward: userInfo?.ward,
+                address: userInfo?.address,
+                note: userInfo?.note
+            };
+            try {
+                const res = await client.post('address', formData, '', userToken)
+                if (res.response.ok) {
+                    const data = await res.data;
+                    if (data.status === 'success') {
+                        setUserInfo(data.data)
+                        toast('Address stored successfully');
+                    }
+                }
 
-            const data = await response.json();
-            if (data.status === 'success') {
-                setPhone(editPhone)
-                toast('Address stored successfully');
+            } catch (error) {
+                console.error('Error storing address:', error);
             }
+        } else {
+            const formData = {
+                shop_name: userInfo?.shop_name,
+                email: userInfo?.email,
+                phone: editPhone ?? userInfo?.phone,
+                address: userInfo?.address,
+                banner: userInfo?.banner,
+                description: userInfo?.description
+            };
+            try {
+                const res = await client.post('seller/address', formData, '', userToken)
+                if (res.response.ok) {
+                    const data = await res.data;
+                    if (data.status === 'success') {
+                        toast('Address stored successfully');
+                        setUserInfo(data.data)
+                    }
+                }
 
-        } catch (error) {
-            console.error('Error storing address:', error);
+            } catch (error) {
+                console.error('Error storing address:', error);
+            }
         }
-
     }
-    useEffect(() => {
-        handleStorePhone();
-    }, [])
+
 
     return (
         <>
@@ -57,7 +77,7 @@ const Phone = (props) => {
                 dialogClassName="modal-phonenumber"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title><b>Edit Phone</b></Modal.Title>
+                    <Modal.Title>Edit Phone</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

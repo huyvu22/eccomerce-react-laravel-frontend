@@ -4,13 +4,15 @@ import {useDispatch} from "react-redux";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {resetCart} from "../../components/ProductCard/ProductCardSlice";
 import {toast} from "react-toastify";
+import useClient from "../../services/Hooks/useClient";
 
 const PaymentVnPaySuccess = () => {
     const navigate = useNavigate();
+    const client = useClient();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
     const vnp_TransactionNo = searchParams.get('vnp_TransactionNo');
+    const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(false);
     const [checkPaymentSuccess, setCheckPaymentSuccess] = useState(false)
 
@@ -28,18 +30,27 @@ const PaymentVnPaySuccess = () => {
                 'amount': sessionStorage.getItem('amount'),
                 'responseId': vnp_TransactionNo
             })
-            const response = await fetch(`http://buynow.test/api/cart-list`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    'accept': 'application/json',
-                    'Authorization': `Bearer ${userToken}`,
-                },
-                body: formData
-            })
+            // const response = await fetch(`http://buynow.test/api/cart-list`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'content-type': 'application/json',
+            //         'accept': 'application/json',
+            //         'Authorization': `Bearer ${userToken}`,
+            //     },
+            //     body: formData
+            // })
+            //
+            // const cartData = await response.json();
+            // if (cartData?.status === 'success') {
+            //     setLoading(false);
+            //     dispatch(resetCart());
+            //     toast('Payment successful')
+            //     setCheckPaymentSuccess(true)
+            // }
 
-            const cartData = await response.json();
-            if (cartData?.status === 'success') {
+            const res = await client.post('cart-list', formData, '', userToken);
+            const cartData = await res.data;
+            if (cartData.status === 'success') {
                 setLoading(false);
                 dispatch(resetCart());
                 toast('Payment successful')

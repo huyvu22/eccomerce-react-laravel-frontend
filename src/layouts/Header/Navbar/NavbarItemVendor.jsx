@@ -5,33 +5,50 @@ import {logout} from "../HeaderSlice";
 import {toast} from "react-toastify";
 import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
 import {deleteCookie, getCookie} from "../../../utils/dataHandler";
+import useClient from "../../../services/Hooks/useClient";
 
 const NavbarItemVendor = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const client = useClient();
     const isSellerAuthenticated = useSelector(
         (state) => state.loginUser.isSellerAuthenticated
     );
     const userToken = getCookie('seller_access_token');
 
     const handleLogout = async () => {
-        let res = await fetch("http://buynow.test/api/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "accept": "application/json",
-                'Authorization': `Bearer ${userToken}`
-            },
-        })
-        const data = await res.json();
-        if (data.status === "success") {
-            dispatch(logout());
-            dispatch(resetCart());
-            deleteCookie('seller_access_token');
-            navigate('/');
-            toast.success(data.message);
-        } else {
-            toast.error('Something went wrong!');
+        // let res = await fetch("http://buynow.test/api/logout", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "accept": "application/json",
+        //         'Authorization': `Bearer ${userToken}`
+        //     },
+        // })
+        // const data = await res.json();
+        // if (data.status === "success") {
+        //     dispatch(logout());
+        //     dispatch(resetCart());
+        //     deleteCookie('seller_access_token');
+        //     navigate('/');
+        //     toast.success(data.message);
+        // } else {
+        //     toast.error('Something went wrong!');
+        // }
+
+        const res = await client.post('logout', '', '', userToken);
+        console.log(res)
+        if (res.response.ok) {
+            const data = await res.data;
+            if (data.status === "success") {
+                dispatch(logout());
+                dispatch(resetCart());
+                deleteCookie('seller_access_token');
+                navigate('/');
+                toast.success(data.message);
+            } else {
+                toast.error('Something went wrong!');
+            }
         }
 
     };

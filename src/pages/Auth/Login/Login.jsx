@@ -9,8 +9,9 @@ import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
 import useClient from "../../../services/Hooks/useClient";
 import {generateRandomToken} from "../../../services/Helpers/Number/Number";
 import {getCookie, setCookie} from "../../../utils/dataHandler";
+import logo from "../../../assets/images/logo.png";
 
-const Login = () => {
+const Login = (key, value) => {
     const client = useClient();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({email: "", password: ""});
@@ -49,7 +50,7 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-
+        // Validate form
         const isValidEmail = validateEmail(formData.email);
         if (!isValidEmail) {
             setValidEmail(false);
@@ -67,12 +68,10 @@ const Login = () => {
             setValidPassword(true);
         }
 
-        if (isValidEmail && formData.password) {
-
-            let res = await client.post('login', {
-                "email": formData.email,
-                "password": formData.password
-            })
+        // Call Api
+        if (isValidEmail && formData?.password) {
+            console.log(formData)
+            let res = await client.post('login', formData)
             if (rememberMe) {
                 let rememberMeToken = generateRandomToken(32);
                 res = await client.post('login', {"email": formData.email, "password": formData.password}, {'remember_token': rememberMeToken})
@@ -101,10 +100,17 @@ const Login = () => {
             } else {
                 toast(userData.message);
             }
-
         }
-
     };
+
+    const handleLoginByGoogle = async () => {
+        const res = await client.get('login/google');
+        if (res.response.ok === true) {
+            const data = await res.data;
+            location.pathname.includes('/buyer/login') ? sessionStorage.setItem('buyer-google-login', 'true') : sessionStorage.setItem('buyer-google-login', 'false');
+            window.location.href = data.url;
+        }
+    }
 
     return (
         <section>
@@ -115,7 +121,7 @@ const Login = () => {
                             <div className="login-logo">
                                 <Link to={"/"}>
                                     <img
-                                        src="https://ready-music-store.itechscripts.com/assets/site_data/logo.png"
+                                        src={logo}
                                         alt="logo"
                                     />
                                 </Link>
@@ -164,7 +170,7 @@ const Login = () => {
                                             <button type="button" onClick={handleLogin}>
                                                 Login
                                             </button>
-                                            <button type="button"><span><AiOutlineGoogle/></span>
+                                            <button type="button" onClick={handleLoginByGoogle}><span><AiOutlineGoogle/></span>
                                                 Login With Google
                                             </button>
                                         </div>

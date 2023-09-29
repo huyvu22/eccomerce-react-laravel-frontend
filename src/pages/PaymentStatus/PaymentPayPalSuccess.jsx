@@ -3,15 +3,18 @@ import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {resetCart} from "../../components/ProductCard/ProductCardSlice";
 import {getCookie} from "../../utils/dataHandler";
+import config from "../../configs/Config.json";
+
 
 const PaymentPayPalSuccess = () => {
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const dispatch = useDispatch();
+    const {SERVER_API} = config;
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');
     const [loading, setLoading] = useState(false);
     const handlePaymentSuccess = async () => {
-        const response = await fetch(`http://buynow.test/api/paypal/success?token=${token}`, {
+        const response = await fetch(`${SERVER_API}paypal/success?token=${token}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${userToken}`
@@ -32,7 +35,7 @@ const PaymentPayPalSuccess = () => {
                 'amount': sessionStorage.getItem('amount'),
                 'responseId': payment.data
             })
-            const response = await fetch(`http://buynow.test/api/cart-list`, {
+            const response = await fetch(`${SERVER_API}cart-list`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

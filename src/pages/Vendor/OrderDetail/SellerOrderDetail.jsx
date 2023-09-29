@@ -17,10 +17,10 @@ const SellerOrderDetail = () => {
     const [order, setOrder] = useState([]);
     const [orderProducts, setOrderProducts] = useState([]);
     const [orderAddress, setOrderAddress] = useState([]);
-    const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
+    const sellerToken = getCookie('seller_access_token');
     const [loading, setLoading] = useState(true);
     const getOrderDetail = async () => {
-        const res = await client.get(`seller/orders/detail/${id}`, '', userToken.token);
+        const res = await client.get(`seller/orders/detail/${id}`, '', sellerToken);
         if (res.response.ok === true) {
             const orderData = await res.data.data;
             setOrder(orderData[0]);
@@ -38,7 +38,7 @@ const SellerOrderDetail = () => {
     };
 
     const handleOrderTypeChange = async (e) => {
-        const res = await client.post(`seller/set-order-status/${id}/${e.target.value}`, '', '', userToken.token);
+        const res = await client.post(`seller/set-order-status/${id}/${e.target.value}`, '', '', sellerToken.token);
         if (res.response.ok === true) {
             const orderData = await res.data;
             toast.success(orderData.message)

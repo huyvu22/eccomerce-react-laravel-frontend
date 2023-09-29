@@ -11,9 +11,11 @@ import useMyCart from "../../services/Hooks/useMyCart";
 import useClient from "../../services/Hooks/useClient";
 import {getCookie} from "../../utils/dataHandler";
 import {showToast} from "../../components/Toast/Toast";
+import {Link, useNavigate} from "react-router-dom";
 
 const WishList = () => {
     const client = useClient();
+    const navigate = useNavigate();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const [wishList, setWishList] = useState(favoriteItems);
@@ -46,7 +48,7 @@ const WishList = () => {
             const data = await res.data;
             if (data.status === 'success') {
                 getWishList()
-                showToast(item.image, `${item.name} removed from Wishlist!`, false);
+                showToast(item.thumb_image, `${item.name} removed from Wishlist!`, false);
             }
         }
     }
@@ -86,18 +88,19 @@ const WishList = () => {
                                                             return (
                                                                 <tr key={item.id}>
                                                                     <td>{index + 1}</td>
-                                                                    <td width="30%"><img
+                                                                    <td width="15%"><img
                                                                         src={asset(item.thumb_image)}
                                                                         alt="img"/></td>
-                                                                    <td><a href="">{item.name}</a></td>
-                                                                    <td>{item.offer_price}</td>
+                                                                    <td><Link to={`/item/item_details/${item.id}/${item.slug}`}>{item.name}</Link></td>
+                                                                    <td>{item.offer_price}$</td>
                                                                     <td className="text-danger">{item.stock}</td>
                                                                     <td width="17%">
                                                                         {
-                                                                            cartItem ?
+                                                                            cartItem
+                                                                                ?
                                                                                 <ProductActions quantity={cartItem.quantity} item={cartItem}/>
                                                                                 :
-                                                                                <button className="product-add mb-2" onClick={() => handleAddItem(item)}>
+                                                                                <button className="product-add" onClick={() => handleAddItem(item)}>
                                                                                     <span>Add To Cart</span>
                                                                                 </button>
                                                                         }
@@ -109,10 +112,14 @@ const WishList = () => {
                                                             )
                                                         })
                                                         :
-                                                        <tr>
-                                                            <td colSpan={7}><h3 className="bg bg-info p-3">Empty WishList</h3></td>
+                                                        <>
+                                                            <tr>
+                                                                <td colSpan={7}>
+                                                                    <h3 className="empty-wishlist">Your WishList is empty</h3>
+                                                                </td>
+                                                            </tr>
+                                                        </>
 
-                                                        </tr>
                                                 }
                                                 </tbody>
                                             </table>

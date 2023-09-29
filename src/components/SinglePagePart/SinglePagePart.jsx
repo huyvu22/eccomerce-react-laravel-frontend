@@ -6,18 +6,14 @@ import {RiDeleteBinLine} from "react-icons/ri";
 import {MdNavigateNext} from "react-icons/md";
 import {MdNavigateBefore} from "react-icons/md";
 import {useDispatch, useSelector} from "react-redux";
-import useFetchData from "../../services/Hooks/useFetchData";
-import useTotalPage from "../../services/Hooks/useToTalPage";
-import config from "../../configs/Config.json";
-import ProductCard from "../ProductCard/ProductCard";
-import {clearFilterPrice, clearFilterRating, clearKeywords, filterPrice, filterRating, updateKeywords} from "../../layouts/Header/HeaderSlice";
+import {clearFilterPrice, clearFilterRating, filterPrice, filterRating, updateKeywords} from "../../layouts/Header/HeaderSlice";
 import {useLocation, useNavigate} from "react-router-dom";
-import {handleCartItems, handleCompareItems, handleFavoriteItems, processFetchedData} from "../../utils/dataHandler";
+import {processFetchedData} from "../../utils/dataHandler";
+import useFetchData from "../../services/Hooks/useFetchData";
+import ProductCard from "../ProductCard/ProductCard";
 import useMyCart from "../../services/Hooks/useMyCart";
-import _ from "lodash";
 
-let showData = [];
-const SinglePagePart = ({pageName, attributes}) => {
+const SinglePagePart = ({attributes}) => {
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const compareItems = useSelector((state) => state.productCard.compareList);
     const [myCart] = useMyCart();
@@ -35,6 +31,7 @@ const SinglePagePart = ({pageName, attributes}) => {
     const isSearch = location.pathname.includes('/products/search/')
 
     const showData = processFetchedData(data, favoriteItems, myCart, compareItems);
+    console.log(attributes)
 
     const handlePage = (page) => {
         setCurrentPage(page);

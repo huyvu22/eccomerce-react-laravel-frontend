@@ -1,8 +1,10 @@
+
 .promo-part {
   margin-bottom: 115px;
+
   .container {
     .promo-content {
-      background: url("https://ready-music-store.itechscripts.com/assets/site_data/09.jpg") no-repeat center;
+      background: url('../../../assets/images/promo-bg.jpg') no-repeat center;
       background-size: cover !important;
       padding: 60px 0;
       border-radius: 8px;
@@ -10,7 +12,7 @@
       position: relative;
       z-index: 1;
 
-      &:before{
+      &:before {
         position: absolute;
         content: "";
         top: 0;
@@ -19,8 +21,9 @@
         height: 100%;
         z-index: -1;
         border-radius: 8px;
-        background: rgba(0,0,0,0.35);
+        background: rgba(0, 0, 0, 0.35);
       }
+
       h3 {
         font-size: 24px;
         color: #fff;

@@ -3,10 +3,12 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
+import useClient from "../../../services/Hooks/useClient";
 
 const Note = (props) => {
     const [editNote, setEditNote] = useState('');
-    const {userInfo, setNote} = props;
+    const {userInfo, setUserInfo} = props;
+    const client = useClient();
     const handleStoreNote = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
@@ -22,19 +24,28 @@ const Note = (props) => {
         };
 
         try {
-            const response = await fetch('http://buynow.test/api/address', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken}`
-                },
-                body: JSON.stringify(formData)
-            });
+            // const response = await fetch('http://buynow.test/api/address', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${userToken}`
+            //     },
+            //     body: JSON.stringify(formData)
+            // });
+            //
+            // const data = await response.json();
+            // if (data.status === 'success') {
+            //     setNote(editNote)
+            //     toast('Address stored successfully');
+            // }
 
-            const data = await response.json();
-            if (data.status === 'success') {
-                setNote(editNote)
-                toast('Address stored successfully');
+            const res = await client.post('address', formData, '', userToken)
+            if (res.response.ok) {
+                const data = await res.data;
+                if (data.status === 'success') {
+                    setUserInfo(data.data)
+                    toast('Address stored successfully');
+                }
             }
 
         } catch (error) {
@@ -53,7 +64,7 @@ const Note = (props) => {
                 dialogClassName="modal-note"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title><b>Note</b></Modal.Title>
+                    <Modal.Title>Edit Note</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

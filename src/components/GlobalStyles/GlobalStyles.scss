@@ -63,6 +63,7 @@ body {
   font-family: var(--pfamily) !important;
   line-height: var(--bodyheight) !important;
   overflow-x: hidden !important;
+  //overflow: hidden;
 
   @media (max-width: 740px) {
     background-position: 25% 0;
@@ -95,7 +96,7 @@ input,
 [tabindex] {
   outline: none;
   border: none;
-  font-family: Inter, sans-serif;
+  font-family: Rubik, sans-serif;
 }
 
 h2 {
@@ -123,8 +124,6 @@ section {
 
 a[href] {
   color: var(--navigation-text);
-  //font-size: 14px !important;
-  //font-weight: 400 !important;
   text-decoration: none;
   display: inline-block;
 }
@@ -258,7 +257,8 @@ body {
 
 .loading {
   text-align: center;
-  h3{
+
+  h3 {
     font-weight: bold;
     display: inline-block;
     font-family: monospace;

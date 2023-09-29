@@ -1,25 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import {Navigate, Outlet, useLocation} from 'react-router-dom';
 import {getCookie} from "../utils/dataHandler";
+import useClient from "../services/Hooks/useClient";
 
 export default function SellerMiddleware() {
     const sellerToken = getCookie('seller_access_token')
-    const location = useLocation();
+    const client = useClient();
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const isLoggedIn = async () => {
         try {
-            const res = await fetch('http://buynow.test/api/check-token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sellerToken}`
-                }
-            });
+            // const res = await fetch('http://buynow.com/api/check-token', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${sellerToken}`
+            //     }
+            // });
+            //
+            // const data = await res.json();
+            // if (data.valid === true) {
+            //     return data.valid;
+            // }
 
-            const data = await res.json();
-            if (data.valid === true) {
-                return data.valid;
+            const res = await client.post('check-token', '', '', sellerToken);
+            const resData = await res.data;
+            if (res.response.ok) {
+                return resData.valid;
             }
 
 

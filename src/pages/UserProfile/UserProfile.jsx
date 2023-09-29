@@ -10,6 +10,7 @@ import Note from "../../components/Modal/Note/Note";
 import ProfileInfo from "../../components/Modal/ProfileInfo/ProfileInfo";
 import ChangePassword from "../../components/Modal/ChangePassword/ChangePassword";
 import {getCookie} from "../../utils/dataHandler";
+import useClient from "../../services/Hooks/useClient";
 
 const UserProfile = () => {
     const [userInfo, setUserInfo] = useState([]);
@@ -22,6 +23,7 @@ const UserProfile = () => {
     const [phone, setPhone] = useState('');
     const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false)
+    const client = useClient();
 
     const getUserAddress = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
@@ -30,19 +32,27 @@ const UserProfile = () => {
             return;
         }
         setLoading(true)
-        const res = await fetch('http://buynow.test/api/address', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userToken}`,
-            }
-        });
+        // const res = await fetch('http://buynow.test/api/address', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${userToken}`,
+        //     }
+        // });
+        // let data = await res.json();
+        // if (data.length) {
+        //     setUserInfo(data[0])
+        //     setPhone(data[0].phone)
+        //     setNote(data[0].note)
+        //     setLoading(false)
+        // }
 
-        let data = await res.json();
-        if (data.length) {
-            setUserInfo(data[0])
-            setPhone(data[0].phone)
-            setNote(data[0].note)
+        const res = await client.get('address', '', userToken)
+        if (res.response.ok) {
+            const data = await res.data;
+            setUserInfo(data.data[0])
+            setPhone(data.data[0].phone)
+            setNote(data.data[0].note)
             setLoading(false)
         }
     }
@@ -89,7 +99,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-5">
                                                     <div className="form-group">
                                                         <label>Email</label>
-                                                        <input type="text" className="form-control" value={userInfo?.email} placeholder="Update your email..."/>
+                                                        <input type="text" disabled={true} className="form-control" value={userInfo?.email} placeholder="Update your email..."/>
                                                     </div>
 
                                                 </div>
@@ -112,7 +122,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                         <h3>Phone</h3>
-                                                        <p>{phone ? phone : '-'}</p>
+                                                        <p>{userInfo.phone ?? '-'}</p>
                                                         <ul>
                                                             <li onClick={() => setModalPhoneShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -124,7 +134,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleDivClick(1)}>
                                                         <h3>Address</h3>
-                                                        {userInfo
+                                                        {userInfo.address
                                                             ?
                                                             <p>
                                                                 {userInfo?.address},
@@ -147,7 +157,7 @@ const UserProfile = () => {
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                         <h3>Note</h3>
-                                                        <p>{note ? note : '-'}</p>
+                                                        <p>{userInfo.note ?? '-'}</p>
                                                         <ul>
                                                             <li onClick={() => setModalNoteShow(true)}>
                                                                 <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -163,11 +173,11 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <Phone show={modalPhoneShow}
-                                   onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setPhone={setPhone}/>
+                                   onHide={() => setModalPhoneShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <Address show={modalAddressShow}
                                      onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <Note show={modalNoteShow}
-                                  onHide={() => setModalNoteShow(false)} userInfo={userInfo} setNote={setNote}/>
+                                  onHide={() => setModalNoteShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <ProfileInfo show={modalEditProfileShow}
                                          onHide={() => setModalEditProfileShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                             <ChangePassword show={modalChangePasswordShow}

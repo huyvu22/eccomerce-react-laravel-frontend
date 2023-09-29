@@ -6,7 +6,7 @@ import {MdKeyboardArrowRight} from "react-icons/md";
 import CategoryItem from "./Categories/CategoryItem";
 // import Slider from "../../pages/Home/Sliders/Slider";
 import PromoImage1 from "../../../assets/images/banner01.jpg";
-import PromoImage2 from "../../../assets/images/banner01.jpg";
+import PromoImage2 from "../../../assets/images/banner02.jpg";
 import Slider from "../Sliders/Slider";
 
 const Banner = () => {

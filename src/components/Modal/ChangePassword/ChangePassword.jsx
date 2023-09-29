@@ -4,11 +4,13 @@ import {toast} from "react-toastify";
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {getCookie} from "../../../utils/dataHandler";
+import useClient from "../../../services/Hooks/useClient";
 
 const ChangePassword = (props) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const client = useClient();
 
     const handleStorePassword = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
@@ -19,30 +21,48 @@ const ChangePassword = (props) => {
         };
 
         try {
-            const response = await fetch('http://buynow.test/api/change-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken}`
-                },
-                body: JSON.stringify(formData)
-            });
+            // const response = await fetch('http://buynow.com/api/change-password', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${userToken}`
+            //     },
+            //     body: JSON.stringify(formData)
+            // });
+            //
+            // const data = await response.json();
+            // if (data.status === 'success') {
+            //     toast('Update password successful')
+            // } else {
+            //     if (data.message) {
+            //         const errorMessages = data.message;
+            //
+            //         Object.keys(errorMessages).forEach(field => {
+            //             const errorList = errorMessages[field];
+            //             const errorMessage = errorList.join(', ');
+            //
+            //             toast.error(`${errorMessage}`);
+            //         });
+            //     }
+            // }
 
-            const data = await response.json();
+            const res = await client.post('change-password', formData, '', userToken);
+            const data = await res.data;
+
             if (data.status === 'success') {
                 toast('Update password successful')
             } else {
                 if (data.message) {
                     const errorMessages = data.message;
-
                     Object.keys(errorMessages).forEach(field => {
                         const errorList = errorMessages[field];
                         const errorMessage = errorList.join(', ');
-
                         toast.error(`${errorMessage}`);
                     });
                 }
             }
+
+
         } catch (error) {
             console.error('Error storing address:');
         }
@@ -57,12 +77,12 @@ const ChangePassword = (props) => {
                 dialogClassName="modal-profile-info"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title><b>Change Password</b></Modal.Title>
+                    <Modal.Title>Change Password</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label><b>Current Password:</b></Form.Label>
+                            <Form.Label>Current Password:</Form.Label>
                             <Form.Control
                                 type="password"
                                 autoFocus
@@ -73,7 +93,7 @@ const ChangePassword = (props) => {
 
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                            <Form.Label><b>New Password:</b></Form.Label>
+                            <Form.Label>New Password:</Form.Label>
                             <Form.Control
                                 type="password"
                                 onChange={(e) => setNewPassword(e.target.value)}
@@ -83,7 +103,7 @@ const ChangePassword = (props) => {
 
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                            <Form.Label><b>Confirm Password:</b></Form.Label>
+                            <Form.Label>Confirm Password:</Form.Label>
                             <Form.Control
                                 type="password"
                                 onChange={(e) => setPasswordConfirmation(e.target.value)}

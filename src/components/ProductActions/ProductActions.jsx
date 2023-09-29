@@ -34,17 +34,17 @@ const ProductActions = ({quantity, handleRemoveItem, handleAddItem, item = []}) 
     };
 
     return (
-        <div className="product-action mb-2">
+        <div className="product-action">
             <button className="action-minus" disabled={quantity === 1 || isLoading} onClick={handleMinus}>
-        <span>
-          <CgMathMinus/>
-        </span>
+                <span>
+                  <CgMathMinus/>
+                </span>
             </button>
             <input className="action-input" type="text" value={quantity} readOnly/>
             <button className="action-plus" disabled={isLoading} onClick={handlePlus}>
-        <span>
-          <TbPlus/>
-        </span>
+                <span>
+                  <TbPlus/>
+                </span>
             </button>
         </div>
     );

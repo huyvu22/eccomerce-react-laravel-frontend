@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 
 const {SERVER_API} = config;
 
-
 export default function useClient(serverApi = null) {
     const navigate = useNavigate();
     serverApi = serverApi ?? SERVER_API;
@@ -16,7 +15,7 @@ export default function useClient(serverApi = null) {
             method,
             params = {},
             body = {},
-            token = null
+            token = null,
         ) {
             if (Object.keys(params).length) {
                 const searchQuery = new URLSearchParams(params).toString();
