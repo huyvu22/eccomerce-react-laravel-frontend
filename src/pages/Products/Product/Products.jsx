@@ -18,6 +18,7 @@ const Products = () => {
     const isSellerProduct = location.pathname.includes('/products/seller/')
     const keywords = useSelector((state) => state.searchProducts.keywords) ?? null;
     const priceSpread = useSelector((state) => state.searchProducts.priceSpread) ?? null;
+    const rating = useSelector((state) => state.searchProducts.rating);
 
     let attributes = "";
 
@@ -28,6 +29,10 @@ const Products = () => {
 
     if (priceSpread.length) {
         searchParam += (searchParam ? '&' : '') + `price-range=${priceSpread}`;
+    }
+
+    if (rating !== '') {
+        searchParam += (searchParam ? '&' : '') + `rating=${rating}`;
     }
 
     if (isCategory) {
@@ -42,6 +47,9 @@ const Products = () => {
 
     } else if (isSearch) {
         attributes = `search/${keyword}`;
+        if (priceSpread.length) {
+            attributes += `?${searchParam}`
+        }
         pageName = 'Search Result';
         name = 'Search Result';
 
@@ -64,7 +72,7 @@ const Products = () => {
         pageName = slug;
         name = slug;
     }
-
+    
 
     return (
         <>

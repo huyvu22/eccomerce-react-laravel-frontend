@@ -9,12 +9,19 @@
   display: flex;
   justify-content: flex-start;
 
+  @media (max-width: 575px) {
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+
   &:hover {
     transition: linear 0.2s;
     border: 1px solid var(--text-primary);
     box-shadow: 0 8px 15px 0 rgb(0 0 0 / 10%);
 
     .feature-content {
+
       .product-add {
         transition: linear 0.2s;
         background-color: var(--text-primary);
@@ -56,6 +63,10 @@
       img {
         width: 220px;
 
+        @media (max-width: 575px) {
+          width: 200px;
+          height: fit-content;
+        }
       }
 
     }
@@ -71,8 +82,22 @@
     margin-left: 25px;
     border-left: 1px solid var(--boder);
 
+    @media (max-width: 450px) {
+      padding-left: 12px;
+      margin-left: 12px;
+      font-size: 14px;
+      p {
+        display: none !important;
+      }
+    }
+
     .product-add {
       margin-top: 45px;
+
+      @media (max-width: 450px) {
+        margin-top: 0;
+      }
+
     }
 
     .product-action {

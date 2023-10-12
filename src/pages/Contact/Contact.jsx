@@ -38,6 +38,8 @@ const Contact = () => {
     }
 
     useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
         getContact();
     }, []);
 
@@ -95,7 +97,7 @@ const Contact = () => {
                                         <p>{info?.phone}</p>
                                     </div>
                                 </div>
-                                <div className="col-md-6 col-lg-4">
+                                <div className="col-md-12 col-lg-4">
                                     <div className="contact-card">
                                         <span> <GoMail/></span>
                                         <h4>E-Mail</h4>

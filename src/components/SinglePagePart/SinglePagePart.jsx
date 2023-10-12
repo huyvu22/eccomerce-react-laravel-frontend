@@ -29,9 +29,11 @@ const SinglePagePart = ({attributes}) => {
     const [selectedRating, setSelectedRating] = useState(null);
     let totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
     const isSearch = location.pathname.includes('/products/search/')
-
     const showData = processFetchedData(data, favoriteItems, myCart, compareItems);
-    console.log(attributes)
+
+    useEffect(() => {
+        window.scrollTo(0, 400);
+    }, [])
 
     const handlePage = (page) => {
         setCurrentPage(page);
@@ -46,10 +48,9 @@ const SinglePagePart = ({attributes}) => {
     const handleSubmitSearchForm = () => {
         const trimmedKeywords = keywords.trim();
         dispatch(updateKeywords(trimmedKeywords));
-        if (isSearch) {
+        if (isSearch && keywords !== '') {
             navigate(`/products/search/${trimmedKeywords}`)
         }
-
     };
 
     const handlePriceSearch = (e) => {
@@ -75,9 +76,7 @@ const SinglePagePart = ({attributes}) => {
         setSelectedRating(null);
         dispatch(clearFilterRating(''))
     }
-    useEffect(() => {
-        window.scrollTo(0, 400);
-    }, []);
+
 
     return (
         <section className="shop-part">

@@ -44,14 +44,6 @@ export const productCardSlice = createSlice({
         },
 
         removeItem: (state, action) => {
-            // let index = state.cartList
-            //   .map((item) => item.id)
-            //   .lastIndexOf(action.payload);
-            // if (index !== -1) {
-            //   state.cartList.splice(index, 1);
-            //   saveToLocalStorage(state);
-            //   state.isClick = !state.isClick;
-            // }
             const id = action.payload;
             let index = state.cartList.findIndex(
                 (item) => item.id === action.payload
@@ -124,7 +116,7 @@ export const productCardSlice = createSlice({
             state.wishList = [];
             state.compareList = [];
             state.isResetCart = true;
-            window.location.reload();
+            // window.location.reload();
             localStorage.removeItem('myList');
         }
     },

@@ -61,7 +61,7 @@ const CartItem = ({item}) => {
             <div className="cart-info-group">
                 <div className="cart-info">
                     <h6><a href="#">{name}</a></h6>
-                    <p>Unit Price - ${offer_price}</p>
+                    <p>Unit Price - {formatter.format(offer_price)}</p>
                 </div>
                 <div className="cart-action-group">
                     <ProductActions quantity={quantity} handleAddItem={addItemToCart}
@@ -69,6 +69,7 @@ const CartItem = ({item}) => {
                     <h6>{formatter.format(quantity * +offer_price)}</h6>
                 </div>
             </div>
+            <span className="cart-delete-mobile" onClick={handleDeleteItem}><RiDeleteBin6Line/></span>
         </li>
     );
 };

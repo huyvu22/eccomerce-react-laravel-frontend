@@ -8,8 +8,7 @@ const useMyCart = () => {
     const isResetCart = useSelector(
         (state) => state.productCard.isResetCart
     );
-
-
+    
     useEffect(() => {
         let storedData = localStorage.getItem("myList");
         if (isResetCart) {
@@ -20,7 +19,6 @@ const useMyCart = () => {
         if (storedData !== null) {
             let cartList = JSON.parse(storedData).cartList;
             let wishList = JSON.parse(storedData).wishList;
-            // const uniqueCartList = cartList.filter((item, index, self) => index === self.findIndex((t) => t.name === item.name));
             const uniqueCartList = [];
             for (let i = 0; i < cartList?.length; i++) {
                 let obj = cartList[i];

@@ -12,6 +12,7 @@ import CartItem from "./CartItem/CartItem";
 import {Link, useNavigate} from "react-router-dom";
 import useClient from "../../services/Hooks/useClient";
 import {useSubTotalPrice} from "../../services/Hooks/useTotalPrice";
+import {formatter} from "../../services/Helpers/Number/Number";
 
 const CartSideBar = () => {
     const dispatch = useDispatch();
@@ -56,23 +57,15 @@ const CartSideBar = () => {
 
     }
 
-    useEffect(() => {
-        handleSubmitCoupon()
-    }, []);
 
     return (
         <aside className={clsx("cart-sidebar", show && "active-cart")}>
             <div className="cart-header">
                 <div className="cart-subTotal">
-          <span>
-            <FaShoppingBasket/>
-          </span>
-                    <span>Total Item ({myCart.length})</span>
+                    <span><FaShoppingBasket/></span><span>Total Item ({myCart.length})</span>
                 </div>
                 <button className="cart-close" onClick={handleClose}>
-          <span>
-            <IoMdClose/>
-          </span>
+                    <span><IoMdClose/></span>
                 </button>
             </div>
             <ul className="cart-list">
@@ -100,9 +93,9 @@ const CartSideBar = () => {
                         </>
                 }
 
-                <Link to={myCart.length ? '/checkout' : "/"} className="cart-checkout-btn">
+                <Link to={myCart.length ? '/checkout' : "/"} className="cart-checkout-btn" onClick={myCart.length ? handleClose : null}>
                     <span className="checkout-label">Checkout Now</span>
-                    <span className="checkout-price">{subTotal}</span>
+                    <span className="checkout-price">{(subTotal)}</span>
                 </Link>
             </div>
         </aside>

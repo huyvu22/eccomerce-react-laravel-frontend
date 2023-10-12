@@ -6,6 +6,10 @@
       background: #fff;
       padding: 0 30px 30px;
 
+      @media (max-width: 575px) {
+        padding: 0 15px 15px !important;
+      }
+
       .account-title {
         margin-bottom: 40px;
         padding: 18px 0;
@@ -30,6 +34,9 @@
 
         .table-wrapper {
           width: 100%;
+          @media (max-width: 1199px) {
+            overflow-x: scroll;
+          }
 
           table {
             width: 100%;
@@ -45,6 +52,10 @@
                   font-size: 17px;
                   padding: 12px 20px;
                   border-right: 1px solid #fff;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:first-child {
                     border-radius: 6px 0 0 6px;
@@ -62,19 +73,41 @@
               tr {
                 border-bottom: 1px solid #ccc;
 
+                td:nth-child(2) {
+                  a {
+                    color: var(--text-primary);
+                  }
+                }
+
+                td:nth-child(3) {
+                  color: red;
+                }
+
                 td {
                   color: #000;
                   font-weight: bold;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
                     border-right: 1px solid #ccc;
+
+                    @media (max-width: 575px) {
+                      padding: 0 !important;
+                    }
                   }
 
                   img {
                     width: 50%;
                     height: 80px;
+
+                    @media (max-width: 575px) {
+                      width: 100%;
+                    }
                   }
 
                   text-align: center;
@@ -114,59 +147,13 @@
           }
         }
 
-        .checkout-coupon {
-          width: 600px;
-          margin: 45px auto 5px;
-          text-align: center;
-
-          h3 {
-            color: var(--text-primary) !important;
-            font-size: 15px;
-            font-weight: 600;
-
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-
-          .coupon-form {
-            padding: 3px;
-            border-radius: 8px;
-            margin-bottom: 18px;
-            box-shadow: 0px 7px 13px 0px rgba(0, 0, 0, 0.1);
-            display: flex;
-            position: relative;
-            border: 1px solid #ccc;
-
-            &:focus-within {
-              border-color: var(--text-primary);
-            }
-
-            input {
-              width: 100%;
-              border-radius: 5px;
-              background: #fff;
-              height: 40px;
-              padding: 5px 10px 0;
-
-            }
-
-            button {
-              border-radius: 5px;
-              background: var(--text-primary);
-              height: 38px;
-              color: #fff;
-              padding: 5px 25px;
-              position: absolute;
-              right: 4px;
-              bottom: 4px;
-            }
-          }
-        }
-
         .checkout-detail {
           width: 600px;
           margin: 20px auto 5px;
+
+          @media (max-width: 767px) {
+            width: 100% !important;
+          }
 
           ul {
             border-top: 2px solid var(--text-primary);
@@ -204,6 +191,7 @@
           border-radius: 8px;
           cursor: pointer;
           border: 1px solid #fff;
+          margin-bottom: 25px;
 
           &:hover ul {
             opacity: 1;
@@ -213,6 +201,7 @@
           &.active {
             background: #ddffd5;
             border: 1px solid var(--text-primary);
+            z-index: 1;
           }
 
           ul {

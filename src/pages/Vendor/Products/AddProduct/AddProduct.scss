@@ -7,6 +7,14 @@
       border-radius: 10px;
       background: #fff;
 
+      @media (max-width: 991px) {
+        padding: 20px;
+      }
+
+      @media (max-width: 575px) {
+        padding: 10px;
+      }
+
       .form-group {
         margin-bottom: 25px;
 

@@ -17,27 +17,7 @@ const NavbarItemBuyers = () => {
     );
     const client = useClient();
     const handleLogout = async () => {
-        // let res = await fetch("http://buynow.test/api/logout", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "accept": "application/json",
-        //         'Authorization': `Bearer ${userToken}`
-        //     },
-        // })
-        // const data = await res.json();
-        // if (data.status === "success") {
-        //     dispatch(logout());
-        //     dispatch(resetCart());
-        //     deleteCookie('user_access_token');
-        //     deleteCookie('remember_token');
-        //     navigate('/');
-        //     toast.success(data.message);
-        //     // window.location.reload();
-        // } else {
-        //     toast.error('Something went wrong!');
-        // }
-
+        
         const res = await client.post('logout', '', '', userToken);
         console.log(res)
         if (res.response.ok) {

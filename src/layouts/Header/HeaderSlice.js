@@ -7,6 +7,8 @@ export const cartSlice = createSlice({
     name: "cartSidebar",
     initialState: {
         isShow: false,
+        isShowCate: false,
+        isShowMenu: false,
     },
     reducers: {
         showCart: (state, action) => {
@@ -15,6 +17,23 @@ export const cartSlice = createSlice({
         },
         hideCart: (state, action) => {
             state.isShow = false;
+            document.querySelector('.back-drop').style.zIndex = 10
+        },
+        showCategory: (state, action) => {
+            state.isShowCate = true;
+            document.querySelector('.back-drop').style.zIndex = 14
+        },
+        hideCategory: (state, action) => {
+            state.isShowCate = false;
+            document.querySelector('.back-drop').style.zIndex = 10
+        },
+
+        showMenu: (state, action) => {
+            state.isShowMenu = true;
+            document.querySelector('.back-drop').style.zIndex = 14
+        },
+        hideMenu: (state, action) => {
+            state.isShowMenu = false;
             document.querySelector('.back-drop').style.zIndex = 10
         },
     },
@@ -81,7 +100,7 @@ export const loginSlice = createSlice({
         },
     },
 });
-export const {showCart, hideCart} = cartSlice.actions;
+export const {showCart, hideCart, showCategory, hideCategory, showMenu, hideMenu} = cartSlice.actions;
 export const {
     onFocus,
     updateKeywords,

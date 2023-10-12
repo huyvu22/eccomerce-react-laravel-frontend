@@ -13,7 +13,7 @@ const ProductActions = ({quantity, handleRemoveItem, handleAddItem, item = []}) 
         setIsLoading(true);
 
         if (Object.keys(item).length !== 0) {
-            dispatch(addItem(item)); // Dispatch the addItem Redux action
+            dispatch(addItem(item));
         } else {
             await handleAddItem();
         }
@@ -25,7 +25,7 @@ const ProductActions = ({quantity, handleRemoveItem, handleAddItem, item = []}) 
         setIsLoading(true);
 
         if (Object.keys(item).length !== 0) {
-            dispatch(removeItem(item.id)); // Dispatch the removeItem Redux action
+            dispatch(removeItem(item.id));
         } else {
             await handleRemoveItem();
         }

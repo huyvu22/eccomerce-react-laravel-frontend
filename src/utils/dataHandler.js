@@ -40,7 +40,6 @@ export const handleCompareItems = (data, listCompare) => {
     return data;
 };
 
-
 export const processFetchedData = (data, favoriteItems, myCart, compareItems) => {
     let processedData = _.cloneDeep(data);
 
@@ -90,14 +89,12 @@ export const getCookie = (name) => {
 
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
-        // Check if the cookie starts with the name we are looking for
+
         if (cookie.startsWith(name + '=')) {
-            // Extract and return the cookie value
             return cookie.substring(name.length + 1);
         }
     }
 
-    // Return null if the cookie is not found
     return null;
 }
 

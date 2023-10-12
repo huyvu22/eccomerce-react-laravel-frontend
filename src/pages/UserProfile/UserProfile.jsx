@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import './UserProfile.scss';
 import button from "bootstrap/js/src/button";
 import {BiEdit} from "react-icons/bi";
-import {useDispatch} from "react-redux";
 import SingleBanner from "../../components/SingleBanner/SingleBanner";
 import Phone from "../../components/Modal/Phone/Phone";
 import Address from "../../components/Modal/Address/Address";
@@ -20,39 +19,21 @@ const UserProfile = () => {
     const [modalChangePasswordShow, setModalChangePasswordShow] = useState(false);
     const [modalEditProfileShow, setModalEditProfileShow] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
-    const [phone, setPhone] = useState('');
-    const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false)
     const client = useClient();
 
     const getUserAddress = async () => {
-        const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
+        const userToken = getCookie('user_access_token');
         if (!userToken) {
             console.error('User token not found');
             return;
         }
         setLoading(true)
-        // const res = await fetch('http://buynow.test/api/address', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${userToken}`,
-        //     }
-        // });
-        // let data = await res.json();
-        // if (data.length) {
-        //     setUserInfo(data[0])
-        //     setPhone(data[0].phone)
-        //     setNote(data[0].note)
-        //     setLoading(false)
-        // }
 
         const res = await client.get('address', '', userToken)
         if (res.response.ok) {
             const data = await res.data;
             setUserInfo(data.data[0])
-            setPhone(data.data[0].phone)
-            setNote(data.data[0].note)
             setLoading(false)
         }
     }

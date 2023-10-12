@@ -20,6 +20,8 @@ const FaqQuestion = () => {
     }
 
     useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
         getFaqs();
     }, []);
     return (
@@ -54,9 +56,7 @@ const FaqQuestion = () => {
                             </div>
                         </div>
                     </section>
-
             }
-
         </>
 
     );

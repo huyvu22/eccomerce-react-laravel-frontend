@@ -39,19 +39,15 @@ export default function useClient(serverApi = null) {
             const res = await fetch(url, options);
             const data = await res.json();
 
-            if (res.status === 304) {
-                navigate('404')
-            }
+            // if (res.status === 304) {
+            //     window.location.href = "404";
+            // }
             return {
                 response: res,
                 data: data,
             };
         },
         get: function (url, params = {}, token = null) {
-            // if (Object.keys(params).length) {
-            //   const queryString = new URLSearchParams(params).toString();
-            //   url = url + '?' + queryString;
-            // }
             return this.callApi(url, "GET", params, {}, token);
         },
 

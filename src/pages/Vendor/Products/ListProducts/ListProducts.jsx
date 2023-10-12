@@ -11,11 +11,15 @@ import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
 import {getCookie} from "../../../../utils/dataHandler";
 import useClient from "../../../../services/Hooks/useClient";
+import config from "../../../../configs/Config.json";
+import {formatter} from "../../../../services/Helpers/Number/Number";
+import {textLimit} from "../../../../services/Helpers/string/String";
 
 const ListProducts = () => {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [paginate, setPaginate] = useState(null);
+    const {SERVER_API} = config;
     const [currentPage, setCurrentPage] = useState(1);
     const totalPageArr = Array.from({length: paginate?.last_page}, (_, i) => i + 1);
     const sellerToken = getCookie('seller_access_token')
@@ -28,32 +32,16 @@ const ListProducts = () => {
             return;
         }
 
-        // const res = await fetch(`http://buynow.com/api/seller/products?page=${currentPage}`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Authorization': `Bearer ${sellerToken}`,
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
-        //
-        // let products = await res.json();
-        // if (products?.status === 'success') {
-        //     setProducts(products.data.data);
-        //     setPaginate(products.data);
-        //     setLoading(false);
-        //     window.scrollTo(0, 400);
-        // }
         const res = await client.get('seller/products', `page=${currentPage}`, sellerToken);
         if (res.response.ok) {
             const dataObj = await res.data;
             if (dataObj?.status === 'success') {
                 setProducts(dataObj.data.data);
-                setPaginate(dataObj);
+                setPaginate(dataObj.data);
                 setLoading(false);
                 window.scrollTo(0, 400);
             }
         }
-
     }
 
     useEffect(() => {
@@ -84,7 +72,7 @@ const ListProducts = () => {
         formData.append("status", newStatus);
         formData.append("product_id", product.id);
 
-        let res = await fetch(`http://buynow.com/api/seller/products`, {
+        let res = await fetch(`${SERVER_API}seller/products`, {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${sellerToken}`,
@@ -99,15 +87,6 @@ const ListProducts = () => {
             toast(response.message);
         }
 
-        // const res = await client.post('seller/products', formData, '', sellerToken, true);
-        // console.log(res)
-        // const data = await res.data;
-        // if (res.response.ok) {
-        //
-        //     toast(data.message);
-        // } else {
-        //     toast(data.message);
-        // }
     }
 
     const handleDeleteProduct = async (product) => {
@@ -172,7 +151,7 @@ const ListProducts = () => {
                                                         <table className="table-list">
                                                             <thead>
                                                             <tr>
-                                                                <th scope="col">Serial</th>
+                                                                <th scope="col">No.</th>
                                                                 <th scope="col">Product</th>
                                                                 <th scope="col">Name</th>
                                                                 <th scope="col">Price</th>
@@ -192,10 +171,11 @@ const ListProducts = () => {
                                                                             <td className="table-image"><img
                                                                                 alt="img" src={asset(product.thumb_image)}/></td>
                                                                             <td className="table-name">
-                                                                                <h6><Link to={`/item/item_details/${product.id}/${product.slug}`}>{product.name}</Link></h6>
+                                                                                <h6><Link to={`/item/item_details/${product.id}/${product.slug}`}>{textLimit(product.name)}</Link>
+                                                                                </h6>
                                                                             </td>
                                                                             <td className="table-price">
-                                                                                <h6>${product.offer_price}</h6>
+                                                                                <h6>{formatter.format(product.offer_price)}</h6>
                                                                             </td>
                                                                             <td className="table-stock">
                                                                                 <h6 className="stock-in">{product.quantity}</h6>

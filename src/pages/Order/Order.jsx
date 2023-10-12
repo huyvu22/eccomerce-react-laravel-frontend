@@ -6,6 +6,7 @@ import moment from 'moment';
 import {FaLink} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import {getCookie} from "../../utils/dataHandler";
+import {formatter} from "../../services/Helpers/Number/Number";
 
 const Order = () => {
     const client = useClient();
@@ -40,7 +41,6 @@ const Order = () => {
                                 <div className="col-lg-12">
                                     <div className="orderlist">
                                         <div className="orderlist-header">
-
                                         </div>
                                         <div className="orderlist-body">
                                             <div className="row">
@@ -62,10 +62,11 @@ const Order = () => {
                                                             {
                                                                 orders?.length ?
                                                                     orders?.map((order, index) => (
-                                                                        <tr>
+                                                                        <tr key={index + 1}>
                                                                             <td>{index + 1}</td>
-                                                                            <td><Link to={`/buyer/order/${order.invoice}`}>{order.invoice}<i><FaLink size="0.8rem"/></i></Link></td>
-                                                                            <td>{order.amount} $</td>
+                                                                            <td><Link to={`/buyer/order/${order.invoice}`}>{order.invoice}<i><FaLink size="0.8rem"/></i></Link>
+                                                                            </td>
+                                                                            <td>{formatter.format(order.amount)}</td>
                                                                             <td>{order.payment_method}</td>
                                                                             <td>{order.payment_status === 1 ? 'Paid' : 'Incomplete'}</td>
                                                                             <td>{moment(order.created_at).format('Do MMMM, YYYY')}</td>
@@ -74,10 +75,7 @@ const Order = () => {
                                                                     <tr>
                                                                         <td colSpan={7}><h3 className="text-center mt-3">Empty Order</h3></td>
                                                                     </tr>
-
-
                                                             }
-
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -91,7 +89,6 @@ const Order = () => {
                         </div>
                     </section>
             }
-
         </>
     );
 };

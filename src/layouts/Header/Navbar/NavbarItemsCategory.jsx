@@ -5,17 +5,9 @@ import {Link, useNavigate} from "react-router-dom";
 const NavbarItemsCategory = (props) => {
     const client = useClient();
     const {hover} = props
-    //className={` mega-menu${hover ? 'show-mega-menu' : ''}`}
-
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
     const getCategory = async () => {
-        // const res = await fetch('http://buynow.test/api/category')
-        // if (res.ok) {
-        //     const response = await res.json();
-        //     let categoryArr = response.data;
-        //     setCategories(categoryArr);
-        // }
 
         const res = await client.get('category');
         if (res.response.ok) {
@@ -45,8 +37,8 @@ const NavbarItemsCategory = (props) => {
                                 <ul className="mega-menu-list">
                                     {
                                         subCategory.map((item) => (
-                                            <li key={item.id} onClick={() => handleShowProductsByCategory(item.slug)}><Link
-                                                to="">{item.name}</Link>
+                                            <li key={item.id} onClick={() => handleShowProductsByCategory(item.slug)}>
+                                                <Link to="">{item.name}</Link>
                                             </li>
                                         ))
                                     }

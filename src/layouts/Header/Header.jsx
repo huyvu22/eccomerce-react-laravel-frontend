@@ -5,6 +5,7 @@ import {BiSearch} from "react-icons/bi";
 import {BsFillSuitHeartFill} from "react-icons/bs";
 import {FaShoppingCart} from "react-icons/fa";
 import {MdNotifications} from "react-icons/md";
+import {MdClose} from "react-icons/md";
 import NavbarTitle from "./Navbar/NavbarTitle";
 import clsx from "clsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,6 +21,7 @@ import {getCookie} from "../../utils/dataHandler";
 import useClient from "../../services/Hooks/useClient";
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {showDetail} from "../../components/ProductCard/ProductCardSlice";
+import MobileMenu from "./Navbar/MobileMenu";
 
 const Header = ({searchRef, formRef, handleClose}) => {
     const dispatch = useDispatch();
@@ -27,12 +29,13 @@ const Header = ({searchRef, formRef, handleClose}) => {
     const [offset, setOffset] = useState(0);
     const [myCart] = useMyCart();
     const [wishList, setWishList] = useState([])
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState('');
     const [suggestionSearch, setSuggestionSearch] = useState([])
     const [passedPlaceholder, setPassedPlaceholder] = useState('Search products...')
     const [placeholder, setPlaceholder] = useState(passedPlaceholder.slice(0, 0));
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
     const [forward, setForward] = useState(true);
+    const [iconClose, setIconClose] = useState(true);
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const navigate = useNavigate();
@@ -41,9 +44,6 @@ const Header = ({searchRef, formRef, handleClose}) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (passedPlaceholder === "Search anything...") {
-
-            }
             if (forward) {
                 setPlaceholder(passedPlaceholder.slice(0, placeholderIndex + 1));
                 if (placeholderIndex + 1 >= passedPlaceholder.length) {
@@ -65,6 +65,7 @@ const Header = ({searchRef, formRef, handleClose}) => {
         return () => {
             clearInterval(interval);
         };
+
     }, [placeholder, forward, placeholderIndex]);
 
 
@@ -110,7 +111,6 @@ const Header = ({searchRef, formRef, handleClose}) => {
             if (res.response.ok) {
                 const dataObj = await res.data;
                 setSuggestionSearch(dataObj.data)
-                console.log(dataObj.data)
                 if (dataObj.data) {
                     searchRef.current.style.display = 'block';
                 }
@@ -122,7 +122,7 @@ const Header = ({searchRef, formRef, handleClose}) => {
 
 
     const debouncedHandleSuggestSearch = useMemo(() => {
-        return debounce(handleSuggestSearch, 500);
+        return debounce(handleSuggestSearch, 300);
     }, [handleSuggestSearch]);
 
     const handleInputChange = (event) => {
@@ -140,11 +140,13 @@ const Header = ({searchRef, formRef, handleClose}) => {
     const handleSubmitSearchForm = (e) => {
         e.preventDefault();
         const trimmedInputValue = inputValue.trim();
+        handleClose()
 
         if (trimmedInputValue !== "") {
-            setInputValue("");
-            dispatch(updateKeywords(inputValue));
-            navigate(`/products/search/${inputValue}`);
+            dispatch(updateKeywords(trimmedInputValue));
+            navigate(`/products/search/${trimmedInputValue}`);
+            handleClose()
+            setSuggestionSearch([])
         }
     };
 
@@ -153,22 +155,39 @@ const Header = ({searchRef, formRef, handleClose}) => {
         dispatch(showDetail(item));
         navigate(`/item/item_details/${item.id}/${item.slug}`)
         handleClose()
+        setSuggestionSearch([])
     }
+
+    const handleShowSearch = () => {
+        const form = formRef.current;
+
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block";
+            setIconClose(false)
+        } else {
+            form.style.display = "none";
+            setIconClose(true)
+        }
+    };
 
     return (
         <>
             <header className={clsx("header-part", offset > 120 ? "active" : "")}>
                 <div className="container">
                     <div className="header-content">
-                        <div className="header-logo" onClick={() => {
-                            navigate('/');
-                        }}>
-                            <img
-                                src={logo}
-                                alt="logo"
-                            />
+                        <div className="header-media-group">
+                            <div className="header-logo" onClick={() => {
+                                navigate('/');
+                            }}>
+                                <img
+                                    src={logo}
+                                    alt="logo"
+                                />
+                            </div>
+                            <div className="header-search" onClick={handleShowSearch}>
+                                <span className={clsx('', !iconClose ? 'active-close' : '')}>{!iconClose ? <MdClose/> : <BiSearch/>}</span>
+                            </div>
                         </div>
-
                         <form onSubmit={handleSubmitSearchForm} ref={formRef}>
                             <input
                                 className={clsx(offset > 120 ? "focus" : "")}
@@ -218,8 +237,6 @@ const Header = ({searchRef, formRef, handleClose}) => {
                                     </div>
                                 )}
                             </div>
-
-
                         </form>
                         <div className="header-widget-group">
                             {
@@ -234,7 +251,7 @@ const Header = ({searchRef, formRef, handleClose}) => {
 
                             <div className="home-cart heart-icon">
                                 <span><BsFillSuitHeartFill size={"1em"}/></span>
-                                <span>{wishList?.length ? wishList?.length : "0"}</span>
+                                <span>{wishList?.length ?? wishList.length}</span>
                                 <ul className="dropdown-position-list favorite">
                                     <p>Your WishList :</p>
                                     {wishList?.length ? (
@@ -263,7 +280,7 @@ const Header = ({searchRef, formRef, handleClose}) => {
                                     <span className={`text ${hover ? "hover" : ""}`}><FaShoppingCart
                                         size={"1em"}/></span>
                                 </Tippy>
-                                <span>{myCart?.length ? myCart?.length : 0}</span>
+                                <span>{myCart?.length ?? 0}</span>
                                 <div
                                     className="total-price"
                                     onMouseEnter={() => setHover(true)}
@@ -278,6 +295,7 @@ const Header = ({searchRef, formRef, handleClose}) => {
                 </div>
             </header>
             <NavbarTitle/>
+            <MobileMenu/>
         </>
     );
 };

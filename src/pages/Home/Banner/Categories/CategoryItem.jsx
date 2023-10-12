@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {HiOutlineViewList} from "react-icons/hi";
 import {FaArrowRight} from "react-icons/fa";
 import {MdKeyboardArrowRight} from "react-icons/md";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useClient from "../../../../services/Hooks/useClient";
+import {textLimit} from "../../../../services/Helpers/string/String";
 
 const CategoryItem = () => {
 
@@ -11,12 +12,6 @@ const CategoryItem = () => {
     const navigate = useNavigate();
     const client = useClient();
     const getCategory = async () => {
-        // const res = await fetch('http://buynow.test/api/category')
-        // if (res.ok) {
-        //     const response = await res.json();
-        //     let categoryArr = response.data;
-        //     setCategories(categoryArr.slice(0, 10));
-        // }
         const res = await client.get('category');
         if (res.response.ok) {
             const categoryArr = await res.data.data;
@@ -46,7 +41,7 @@ const CategoryItem = () => {
                     </div>
                     <ul className="banner-category-list">
                         {categories.map(({category, subCategory}) => (
-                            <li className="banner-category-item" onClick={() => {
+                            <li className="banner-category-item" key={category.id} onClick={() => {
                                 handleShowProductsByCategory(category.slug)
                             }}>
                                 <div className="banner-category-dropdown">
@@ -55,14 +50,14 @@ const CategoryItem = () => {
                                         <ul>
                                             {
                                                 subCategory.map((item) => (
-                                                    <li onClick={(e) => handleShowProductBySubCategory(e, item.slug)}><a href=""></a>{item.name}</li>
+                                                    <li key={item.id} onClick={(e) => handleShowProductBySubCategory(e, item.slug)}>{item.name}</li>
                                                 ))
                                             }
                                         </ul>
                                     </div>
                                 </div>
                                 <span><FaArrowRight size={"1.2em"}/>
-                                             </span><a href=""></a>{category.name}
+                                             </span><a href="#"></a>{textLimit(category.name, 18)}
                                 <span><MdKeyboardArrowRight size={"1.3em"}/></span>
                             </li>
 

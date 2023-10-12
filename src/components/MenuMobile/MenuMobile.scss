@@ -1,0 +1,131 @@
+.menu-sidebar {
+  position: fixed;
+  top: 0px;
+  left: -320px;
+  width: 280px;
+  height: 100vh;
+  z-index: 15;
+  background: #fff;
+  box-shadow: 15px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  transition: all linear .3s;
+
+  .menu-header {
+    padding: 15px 18px;
+    position: relative;
+    text-align: center;
+    border: 1px solid #ccc;
+
+    .menu-close {
+      position: absolute;
+      right: -18px;
+      top: 14px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      transition: all linear .2s;
+
+      &:hover {
+        background-color: var(--text-primary);
+        color: #fff;
+      }
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .menu-content {
+    width: 100%;
+    padding: 0 15px;
+    overflow-y: scroll;
+    height: calc(100vh - 130px);
+
+    .nav-list {
+      width: 100%;
+      padding-bottom: 10px;
+      padding-left: 15px;
+      border-bottom: 1px solid #ccc;
+
+      .nav-link {
+        width: 100%;
+        font-weight: 500;
+        padding: 12px 15px;
+        border-radius: 8px;
+        color: var(--text);
+        text-transform: capitalize;
+        transition: all linear .3s;
+        position: relative;
+
+        span:first-child {
+          margin-right: 10px;
+          font-size: 18px;
+        }
+
+        span:last-child {
+          position: absolute;
+          right: 10px;
+        }
+
+        .active-arrow {
+          top: 50%;
+          transform: translateY(-50%) rotate(90deg) !important;
+        }
+      }
+
+      .dropdown-list {
+        display: none;
+
+        li {
+          padding: 8px 0;
+        }
+      }
+
+      .show-list {
+        display: block
+      }
+
+      .active-menu {
+        background: #ccc;
+        color: var(--text-primary)
+      }
+    }
+
+    .nav-info-group {
+      padding: 5px 0px;
+      margin-top: 15px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #ccc;
+
+      .nav-info {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        small {
+          font-size: 15px;
+          text-transform: capitalize;
+        }
+
+        span:first-child {
+          font-size: 35px;
+          color: var(--text-primary);
+          padding-right: 10px;
+        }
+
+        span:last-child {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .nav-footer {
+      text-align: center;
+    }
+  }
+}
+
+.active {
+  left: 0;
+}

@@ -1,6 +1,11 @@
 .inner-section {
   margin-bottom: 100px;
-  .container{
 
+  .container {
+    @media (max-width: 991px) {
+      .accordion-button {
+        line-height: 30px;
+      }
+    }
   }
 }

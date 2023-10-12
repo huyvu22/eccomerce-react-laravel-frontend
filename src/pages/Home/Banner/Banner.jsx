@@ -1,10 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './Banner.scss';
-import {HiOutlineViewList} from "react-icons/hi";
-import {FaArrowRight} from "react-icons/fa";
-import {MdKeyboardArrowRight} from "react-icons/md";
 import CategoryItem from "./Categories/CategoryItem";
-// import Slider from "../../pages/Home/Sliders/Slider";
 import PromoImage1 from "../../../assets/images/banner01.jpg";
 import PromoImage2 from "../../../assets/images/banner02.jpg";
 import Slider from "../Sliders/Slider";
@@ -15,12 +11,13 @@ const Banner = () => {
         <section className="banner-part">
             <div className="container">
                 <div className="row">
+
                     <CategoryItem/>
 
                     <div className="col-lg-9">
                         <div className="row">
                             <div className="col-lg-12">
-                                <div className="slider mb-5">
+                                <div className="slide">
                                     <Slider/>
                                 </div>
                             </div>

@@ -6,6 +6,10 @@
       background: #fff;
       padding: 0 30px 30px;
 
+      @media (max-width: 991px) {
+        padding: 0 15px 15px;
+      }
+
       .account-title {
         margin-bottom: 40px;
         padding: 18px 0;
@@ -31,6 +35,10 @@
         .table-wrapper {
           width: 100%;
 
+          @media (max-width: 1199px) {
+            overflow-x: scroll;
+          }
+
           table {
             width: 100%;
             border-radius: 5px;
@@ -45,6 +53,10 @@
                   font-size: 17px;
                   padding: 12px 20px;
                   border-right: 1px solid #fff;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:first-child {
                     border-radius: 6px 0 0 6px;
@@ -62,19 +74,57 @@
               tr {
                 border-bottom: 1px solid #ccc;
 
+                .mobile-edit-btn {
+                  display: none;
+
+                  @media (max-width: 991px) {
+                    display: inline-block;
+                    color: green;
+                  }
+                }
+
+                td:nth-child(2) {
+                  width: 30%;
+
+                  a {
+                    color: #0d6efd;
+                  }
+                }
+
                 td {
                   color: #000;
-                  font-weight: bold;
+                  font-weight: 500;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
                     border-right: 1px solid #ccc;
+
+                    @media (max-width: 991px) {
+                      padding: 5px 10px;
+                    }
+
+                  }
+
+                  &:last-child {
+                    span:first-child {
+                      @media (max-width: 991px) {
+                        display: none;
+                      }
+                    }
                   }
 
                   img {
                     width: 50%;
                     height: 80px;
+
+                    @media (max-width: 991px) {
+                      width: 100%;
+                    }
                   }
 
                   text-align: center;
@@ -118,6 +168,10 @@
           width: 600px;
           margin: 45px auto 5px;
           text-align: center;
+
+          @media (max-width: 767px) {
+            width: 100%;
+          }
 
           h3 {
             color: var(--text-primary) !important;
@@ -168,6 +222,10 @@
           width: 600px;
           margin: 20px auto 5px;
 
+          @media (max-width: 767px) {
+            width: 100%;
+          }
+
           ul {
             border-top: 2px solid var(--text-primary);
             padding-left: 0;
@@ -204,6 +262,8 @@
           border-radius: 8px;
           cursor: pointer;
           border: 1px solid #fff;
+          margin-bottom: 25px;
+
 
           &:hover ul {
             opacity: 1;
@@ -211,7 +271,7 @@
           }
 
           &.active {
-            z-index:1;
+            z-index: 1;
             background: #ddffd5;
             border: 1px solid var(--text-primary);
           }
@@ -328,15 +388,21 @@
               background: #fff;
               color: var(--text-primary);
             }
+
             span svg {
               margin-right: 5px;
               animation: spin 1s linear infinite; /* Apply the animation to the loading spinner */
             }
           }
         }
+
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       }
     }

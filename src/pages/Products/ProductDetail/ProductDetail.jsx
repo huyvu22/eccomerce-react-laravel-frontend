@@ -24,6 +24,7 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 import moment from "moment";
 import ModalPreviewItem from "../../../components/ModalPreviewItem/ModalPreviewItem";
 import clsx from "clsx";
+import {formatter, roundedNumber} from "../../../services/Helpers/Number/Number";
 
 const ProductDetail = () => {
     const {id, slug} = useParams();
@@ -89,7 +90,7 @@ const ProductDetail = () => {
     const getRelatedProducts = async () => {
         if (itemArr?.category?.slug !== undefined) {
             try {
-                const res = await client.get(`products/category/${itemArr?.category?.slug}`);
+                const res = await client.get(`products/category/${itemArr?.category?.slug}?currentItem=${slug}`);
                 if (res.response.ok === true) {
                     const data = await res.data.data;
                     setProductRelated(data);
@@ -166,20 +167,6 @@ const ProductDetail = () => {
         }
 
         if (comment !== '') {
-            // let res = await fetch(`http://buynow.test/api/product-review`, {
-            //     method: "POST",
-            //     headers: {
-            //         'Authorization': `Bearer ${userToken}`,
-            //     },
-            //     body: formData,
-            // })
-            //
-            // const response = await res.json();
-            // if (response.status === 'success') {
-            //     setComment('')
-            //     setSelectedImage([])
-            //     toast.success(response.message)
-            // }
 
             const res = await client.post(`product-review`, formData, '', userToken);
             if (res.response.ok === true) {
@@ -245,7 +232,10 @@ const ProductDetail = () => {
                                             <div className="details-meta">
                                                 <p>SKU: {sku}</p>
                                                 <p>Stock Left: {availability}</p>
-                                                <p>Seller: {vendor?.name}</p>
+                                                <p>Seller:
+                                                    <Link to={`/seller/profile/${vendor.id}/${vendor.slug}`}>{vendor?.name} <span><FaLink
+                                                        size="0.8rem"/></span></Link>
+                                                </p>
                                             </div>
                                             <div className="details-meta">
                                                 <p><Link to={`/item/products/seller/${vendor.id}/${vendor.slug}`}>Other products posted by {vendor?.name} <span><FaLink
@@ -257,14 +247,13 @@ const ProductDetail = () => {
                                                         {index <= productRating ? <AiFillStar/> : <AiOutlineStar/>}
                                                     </span>
                                                 ))}
-                                                <span>({productRating || 0})</span>
+                                                <span>({roundedNumber(+productRating) || 0})</span>
                                             </div>
                                             <h3 className="details-price">
-                                                <del>{price}$</del>
-                                                <span>{offer_price}$</span>
+                                                <del>{formatter.format(price)}</del>
+                                                <span>{formatter.format(offer_price)}</span>
                                             </h3>
-                                            <p className="details-desc">Lorem ipsum dolor sit amet. In nobis Quis 33 iste
-                                                consequatur ut pariatur fugiat nam tempore quisquam est omnis mollitia.</p>
+                                            <p className="details-desc">{item.short_description}</p>
                                             <div className="details-list-group">
                                                 <label><b>Tags:</b></label>
                                                 <span>{name}</span>
@@ -444,7 +433,6 @@ const ProductDetail = () => {
                                 </div>
                             </section>
                         }
-
                         <section>
                             <div className="container">
                                 <div className="row">
@@ -452,19 +440,7 @@ const ProductDetail = () => {
                                         <div className="product-details-frame">
                                             <h3>description</h3>
                                             <div className="tab-descrip">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet. In nobis Quis 33 iste consequatur ut pariatur fugiat nam tempore quisquam est omnis mollitia. Eos
-                                                    quasi
-                                                    voluptatem aut cumque consequatur et totam exercitationem sed voluptatem porro. Cum minus eaque ea veritatis enim ab
-                                                    reprehenderit vitae cum
-                                                    vitae pariatur qui voluptatem iste est error velit id minus consequatur.
-                                                    Et possimus blanditiis sed quia quia ea consequatur saepe quo et corrupti dolores. Et excepturi nobis eum omnis neque ab nostrum
-                                                    repellat a
-                                                    explicabo quidem?
-                                                    Et culpa aliquam hic autem quae ea quia maiores et quae natus ut voluptatibus accusantium. Ea quaerat quia et rerum aperiam non
-                                                    voluptatem
-                                                    praesentium aut maxime exercitationem aut assumenda sapiente.
-                                                </p>
+                                                <p dangerouslySetInnerHTML={{__html: item.full_description}}></p>
                                             </div>
                                         </div>
                                     </div>
@@ -487,8 +463,8 @@ const ProductDetail = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <div className="view-all d-flex justify-content-center mt-3">
-                                            <Link to="/item/products/featured/" className="btn btn-inline">
+                                        <div className="view-all d-flex justify-content-center">
+                                            <Link to={`/products/category/${itemArr?.category?.slug}`} className="btn btn-inline">
                                                 <span className="me-2"><FaEye/></span>
                                                 <span>view all</span>
                                             </Link>

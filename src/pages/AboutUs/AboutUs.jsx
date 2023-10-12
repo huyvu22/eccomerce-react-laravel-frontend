@@ -15,6 +15,8 @@ const AboutUs = () => {
     }
 
     useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
         getAboutUs();
     }, []);
     return (

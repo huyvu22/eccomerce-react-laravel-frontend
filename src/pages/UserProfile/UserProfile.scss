@@ -96,6 +96,11 @@
         border-radius: 8px;
         cursor: pointer;
 
+        @media (max-width: 545px) {
+          padding: 15px;
+          margin-bottom: 10px;
+        }
+
         &:hover ul {
           opacity: 1;
           visibility: unset;

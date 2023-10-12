@@ -1,6 +1,5 @@
 import './OrderDetail.scss';
 import React, {useEffect, useState} from 'react';
-import {RiDeleteBin6Line} from "react-icons/ri";
 import button from "bootstrap/js/src/button";
 import {BiEdit} from "react-icons/bi";
 import {Link, useParams} from "react-router-dom";
@@ -9,6 +8,8 @@ import {asset} from "../../../services/Helpers/Image/image";
 import SingleBanner from "../../../components/SingleBanner/SingleBanner";
 import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
+import {formatter} from "../../../services/Helpers/Number/Number";
+import {textLimit} from "../../../services/Helpers/string/String";
 
 const SellerOrderDetail = () => {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -38,7 +39,8 @@ const SellerOrderDetail = () => {
     };
 
     const handleOrderTypeChange = async (e) => {
-        const res = await client.post(`seller/set-order-status/${id}/${e.target.value}`, '', '', sellerToken.token);
+        const res = await client.post(`seller/set-order-status/${id}/${e.target.value}`, '', '', sellerToken);
+        console.log(res)
         if (res.response.ok === true) {
             const orderData = await res.data;
             toast.success(orderData.message)
@@ -62,7 +64,7 @@ const SellerOrderDetail = () => {
                                         <div className="account-title">
                                             <h5>Order Details (ID: {id})</h5>
                                             <div className="filter-short">
-                                                <label htmlFor=""><b>Set Order Status:</b></label>
+                                                <label htmlFor=""><b>Change Order Status:</b></label>
                                                 <select className="form-select" onChange={(e) => handleOrderTypeChange(e)} name="order_type" id="order_type">
                                                     <option value="pending" selected={order.order_status === 'pending'}>pending</option>
                                                     <option value="process_and_ready_to_ship"
@@ -94,16 +96,11 @@ const SellerOrderDetail = () => {
                                                                 </td>
                                                                 <td>
                                                                     <Link to={`/item/item_details/${item.id}/${item.slug}`}>
-                                                                        {item.name}
+                                                                        {textLimit(item.name)}
                                                                     </Link>
                                                                 </td>
-                                                                <td>${item.price} x {item.quantity} = ${item.price * item.quantity}</td>
+                                                                <td>{formatter.format(item.price)} x {item.quantity} = {formatter.format(item.price * item.quantity)}</td>
                                                                 <td>{order.order_status}</td>
-                                                                {/*<td>*/}
-                                                                {/*    <span>*/}
-                                                                {/*      <RiDeleteBin6Line/>*/}
-                                                                {/*    </span>*/}
-                                                                {/*</td>*/}
                                                             </tr>
                                                         ))
                                                     }
@@ -113,10 +110,10 @@ const SellerOrderDetail = () => {
                                             </div>
                                             <div className="checkout-detail">
                                                 <ul>
-                                                    <li><span>Sub Total</span><span>${order.sub_total}</span></li>
-                                                    <li><span>Delivery Fee</span><span>{order.shipping_method === 'Free Ship' ? '$0' : '$5'}</span></li>
-                                                    <li><span>Discount</span><span>$0</span></li>
-                                                    <li><span>Grand Total</span><span>${order.amount}</span></li>
+                                                    <li><span>Sub Total</span><span>{formatter.format(order.sub_total)}</span></li>
+                                                    <li><span>Delivery Fee</span><span>{order.shipping_method === 'Free Ship' ? '$0' : '$5.00'}</span></li>
+                                                    <li><span>Discount</span><span>{order.discount ? formatter.format(order.discount) : '$0'}</span></li>
+                                                    <li><span>Grand Total</span><span>{formatter.format(order.amount)}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -130,7 +127,7 @@ const SellerOrderDetail = () => {
                                         </div>
                                         <div className="account-content">
                                             <div className="row">
-                                                <div className="col-md-6 col-lg-4">
+                                                <div className="col-md-12 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                         <h3>Phone</h3>
                                                         <p>{orderAddress.phone}</p>
@@ -142,7 +139,7 @@ const SellerOrderDetail = () => {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div className="col-md-6 col-lg-4">
+                                                <div className="col-md-12 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleDivClick(1)}>
                                                         <h3>Address</h3>
                                                         <p>
@@ -159,7 +156,7 @@ const SellerOrderDetail = () => {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div className="col-md-6 col-lg-4">
+                                                <div className="col-md-12 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                         <h3>Note</h3>
                                                         <p>{orderAddress.note}</p>

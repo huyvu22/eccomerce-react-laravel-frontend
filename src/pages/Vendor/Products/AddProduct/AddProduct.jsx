@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import './AddProduct.scss';
-
 import {toast} from "react-toastify";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {EditorState, convertToRaw} from "draft-js";
@@ -9,9 +8,11 @@ import draftToHtml from "draftjs-to-html";
 import {getCookie} from "../../../../utils/dataHandler";
 import useClient from "../../../../services/Hooks/useClient";
 import config from "../../../../configs/Config.json";
+import {useNavigate} from "react-router-dom";
 
 const AddProduct = () => {
     const client = useClient();
+    const navigate = useNavigate();
     const {SERVER_API} = config;
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -27,20 +28,13 @@ const AddProduct = () => {
         short_description: '',
         full_description: '',
         product_type: '',
-        status: '',
+        status: '1',
     });
     const [selectedImage, setSelectedImage] = useState(null);
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const getCategory = async () => {
-        // const res = await fetch('http://buynow.test/api/category')
-        // if (res.ok) {
-        //     const response = await res.json();
-        //     let categoryArr = response.data;
-        //     setCategories(categoryArr);
-        // }
-
         const res = await client.get('category');
         if (res.response.ok) {
             const dataObj = await res.data;
@@ -110,7 +104,7 @@ const AddProduct = () => {
         const response = await res.json();
         if (res.ok) {
             toast(response.message);
-            // navigate('seller/login')
+            navigate('/item/my-products')
         } else {
             toast(response.message);
         }

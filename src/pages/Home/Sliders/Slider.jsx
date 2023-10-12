@@ -17,10 +17,6 @@ const Slider = () => {
     const [sliders, setSliders] = useState([]);
     const client = useClient();
     const getSlider = async () => {
-        // const res = await fetch('http://buynow.test/api/sliders')
-        // let response = await res.json();
-        // setSliders(response.data);
-
         const res = await client.get('sliders');
         if (res.response.ok) {
             const data = await res.data.data;
@@ -34,7 +30,7 @@ const Slider = () => {
 
     useEffect(() => {
         AOS.init({
-            duration: 2000
+            duration: 100000
         });
     }, []);
     return (
@@ -53,7 +49,7 @@ const Slider = () => {
                             speed={500}
                             centeredSlides={true}
                             autoplay={{
-                                delay: 4000,
+                                delay: 1010101010,
                                 disableOnInteraction: false,
                             }}
                             // spaceBetween={30}

@@ -1,9 +1,9 @@
+import './WishList.scss';
 import React, {useEffect, useState} from 'react';
 import SingleBanner from "../../components/SingleBanner/SingleBanner";
 import {addItem, unWishItem} from "../../components/ProductCard/ProductCardSlice";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {useDispatch, useSelector} from "react-redux";
-import './WishList.scss';
 import {asset} from "../../services/Helpers/Image/image";
 import ProductActions from "../../components/ProductActions/ProductActions";
 import button from "bootstrap/js/src/button";
@@ -12,16 +12,24 @@ import useClient from "../../services/Hooks/useClient";
 import {getCookie} from "../../utils/dataHandler";
 import {showToast} from "../../components/Toast/Toast";
 import {Link, useNavigate} from "react-router-dom";
+import {formatter} from "../../services/Helpers/Number/Number";
+import EditQuantity from "../../components/Modal/EditQuantity/EditQuantity";
 
 const WishList = () => {
     const client = useClient();
-    const navigate = useNavigate();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const [wishList, setWishList] = useState(favoriteItems);
     const [loading, setLoading] = useState(false)
+    const [modalEditQuantity, setModalEditQuantity] = useState(false);
+    const [itemEditQty, setItemEditQty] = useState(false);
     const [myCart] = useMyCart()
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+    }, []);
 
     const handleAddItem = (product) => {
         let productWithQuantity = {...product, quantity: 1};
@@ -71,7 +79,7 @@ const WishList = () => {
                                             <table>
                                                 <thead>
                                                 <tr>
-                                                    <th>Serial</th>
+                                                    <th>No.</th>
                                                     <th>Product</th>
                                                     <th>Name</th>
                                                     <th>Price</th>
@@ -92,8 +100,8 @@ const WishList = () => {
                                                                         src={asset(item.thumb_image)}
                                                                         alt="img"/></td>
                                                                     <td><Link to={`/item/item_details/${item.id}/${item.slug}`}>{item.name}</Link></td>
-                                                                    <td>{item.offer_price}$</td>
-                                                                    <td className="text-danger">{item.stock}</td>
+                                                                    <td>{formatter.format(item.offer_price)}</td>
+                                                                    <td>{item.stock}</td>
                                                                     <td width="17%">
                                                                         {
                                                                             cartItem
@@ -101,9 +109,16 @@ const WishList = () => {
                                                                                 <ProductActions quantity={cartItem.quantity} item={cartItem}/>
                                                                                 :
                                                                                 <button className="product-add" onClick={() => handleAddItem(item)}>
-                                                                                    <span>Add To Cart</span>
+                                                                                    <span>Add to cart</span>
                                                                                 </button>
                                                                         }
+
+                                                                        <button className="product-add mobile-product-add" onClick={() => {
+                                                                            setModalEditQuantity(true);
+                                                                            setItemEditQty(item)
+                                                                        }}>
+                                                                            <span>Add</span>
+                                                                        </button>
                                                                     </td>
                                                                     <td>
                                                                         <span className='btn-remove' onClick={() => handleRemoveItem(item)}><RiDeleteBin6Line/></span>
@@ -119,7 +134,6 @@ const WishList = () => {
                                                                 </td>
                                                             </tr>
                                                         </>
-
                                                 }
                                                 </tbody>
                                             </table>
@@ -130,6 +144,7 @@ const WishList = () => {
                         </div>
                     </div>
                 </div>
+                <EditQuantity show={modalEditQuantity} onHide={() => setModalEditQuantity(false)} itemEditQty={itemEditQty} setItemEditQty={setItemEditQty}/>
             </section>
         </>
     );

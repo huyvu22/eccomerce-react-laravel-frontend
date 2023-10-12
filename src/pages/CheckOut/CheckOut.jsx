@@ -21,10 +21,13 @@ import {useRawSubTotalPrice, useSubTotalPrice} from "../../services/Hooks/useTot
 import {Link, useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/dataHandler";
 import config from "../../configs/Config.json";
-
+import {textLimit} from "../../services/Helpers/string/String";
+import EditQuantity from "../../components/Modal/EditQuantity/EditQuantity";
 
 const CheckOut = () => {
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
+    const valueCoupon = sessionStorage.getItem('couponCode') || '';
+    const discount = sessionStorage.getItem('discountValue') || '';
     const [myCart] = useMyCart();
     const client = useClient();
     const dispatch = useDispatch();
@@ -37,16 +40,21 @@ const CheckOut = () => {
     const [modalAddressShow, setModalAddressShow] = useState(false);
     const [modalNoteShow, setModalNoteShow] = useState(false);
     const [showCoupon, setShowCoupon] = useState(false);
-    const valueCoupon = sessionStorage.getItem('couponCode') || '';
-    const discount = sessionStorage.getItem('discountValue') || '';
+    const [modalEditQuantity, setModalEditQuantity] = useState(false);
+    const [itemEditQty, setItemEditQty] = useState(false);
     const [couponCode, setCouponCode] = useState(valueCoupon);
     const [discountValue, setDiscountValue] = useState(discount);
     const [activeIndex, setActiveIndex] = useState(null);
     const [userInfo, setUserInfo] = useState([]);
     const [fee, setFee] = useState('');
-    // const [phone, setPhone] = useState('');
-    // const [note, setNote] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [termsChecked, setTermsChecked] = useState(true);
+
+    useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+    }, []);
 
     const getShippingFee = async () => {
 
@@ -57,20 +65,6 @@ const CheckOut = () => {
         const formData = {
             'sub_total': rawSubTotal
         }
-        // const res = await fetch('http://buynow.test/api/shipping-fee', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Authorization': `Bearer ${userToken}`,
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(formData)
-        // });
-        //
-        // let data = await res.json();
-        // if (data.status === 'success') {
-        //     setFee(data.data)
-        //     sessionStorage.setItem('shipping_method', data.message)
-        // }
 
         const res = await client.post('shipping-fee', formData, '', userToken)
         if (res.response.ok) {
@@ -92,28 +86,11 @@ const CheckOut = () => {
             console.error('User token not found');
             return;
         }
-        // const res = await fetch('http://buynow.test/api/address', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Authorization': `Bearer ${userToken}`,
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
-        //
-        // let data = await res.json();
-        // if (data.length) {
-        //     setUserInfo(data[0])
-        //     setPhone(data[0].phone)
-        //     setNote(data[0].note)
-        // }
 
         const res = await client.get('address', '', userToken)
         if (res.response.ok) {
             const data = await res.data;
             setUserInfo(data.data[0])
-            // setPhone(data.data[0].phone)
-            // setNote(data.data[0].note)
-
         }
     }
 
@@ -152,14 +129,11 @@ const CheckOut = () => {
         setActiveIndex(index);
     };
 
-    const paymentMethodRef = useRef();
-    const [termsChecked, setTermsChecked] = useState(true);
-
     const handleProceedToCheckout = async () => {
-        console.log(userInfo)
 
-        if (termsChecked && userInfo.phone && userInfo.address) {
-            const selectedPaymentMethod = paymentMethodRef.current;
+        if (termsChecked && userInfo?.phone && userInfo?.address) {
+            // const selectedPaymentMethod = paymentMethodRef.current;
+            console.log(selectedPaymentMethod)
 
             let paymentUrl = '';
             if (selectedPaymentMethod === 'paypal') {
@@ -231,10 +205,10 @@ const CheckOut = () => {
                                         <table>
                                             <thead>
                                             <tr>
-                                                <th>Product</th>
-                                                <th>Name</th>
+                                                <th width="30%">Product</th>
+                                                <th width="50%">Name</th>
                                                 <th>Price</th>
-                                                <th>Quantity</th>
+                                                <th>Qty</th>
                                                 <th>Amount</th>
                                                 <th>Action</th>
                                             </tr>
@@ -244,11 +218,11 @@ const CheckOut = () => {
                                                 myCart?.length ?
                                                     myCart.map((item) => (
                                                         <tr key={item.id}>
-                                                            <td width="30%"><img
+                                                            <td><img
                                                                 src={asset(item.thumb_image)}
                                                                 alt="img"/></td>
-                                                            <td><Link to={`/item/item_details/${item.id}/${item.slug}`}>{item.name}</Link></td>
-                                                            <td>{item.offer_price}$</td>
+                                                            <td width="50%"><Link to={`/item/item_details/${item.id}/${item.slug}`}>{textLimit(item.name)}</Link></td>
+                                                            <td>{formatter.format(item.offer_price)}</td>
                                                             {
                                                                 idItem === item.id ?
                                                                     <td width="15%">
@@ -259,9 +233,13 @@ const CheckOut = () => {
                                                                     :
                                                                     <td width="10%">{item.quantity}</td>
                                                             }
-                                                            <td>{Number((item.offer_price * item.quantity).toFixed(1))}$</td>
+                                                            <td>{formatter.format(item.offer_price * item.quantity)}</td>
                                                             <td>
                                                                 <span onClick={() => setIdItem(item.id)}><FiEdit/></span>
+                                                                <span className="mobile-edit-btn" onClick={() => {
+                                                                    setModalEditQuantity(true);
+                                                                    setItemEditQty(item)
+                                                                }}><FiEdit/></span>
                                                                 <span onClick={() => dispatch(deleteItem(item.id))}><RiDeleteBin6Line/></span>
                                                             </td>
                                                         </tr>
@@ -294,8 +272,8 @@ const CheckOut = () => {
                                     <div className="checkout-detail">
                                         <ul>
                                             <li><span>Sub Total</span><span>{total}</span></li>
-                                            <li><span>Delivery Fee</span><span>${rawSubTotal === 0 ? 0 : fee}</span></li>
-                                            <li><span>Discount</span><span>${discountValue || 0}</span></li>
+                                            <li><span>Delivery Fee</span><span>{rawSubTotal === 0 ? '$0' : formatter.format(+fee)}</span></li>
+                                            <li><span>Discount</span><span>{formatter.format(+discountValue) || 0}</span></li>
                                             <li><span>Grand Total</span><span>{rawSubTotal === 0 ? '$0' : formatter.format(rawSubTotal + fee - discount)}</span></li>
                                         </ul>
                                     </div>
@@ -313,7 +291,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                 <h3>Phone</h3>
-                                                <p>{userInfo.phone ?? '-'}</p>
+                                                <p>{userInfo?.phone ?? '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalPhoneShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -349,7 +327,7 @@ const CheckOut = () => {
                                         <div className="col-md-6 col-lg-4">
                                             <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                 <h3>Note</h3>
-                                                <p>{userInfo.note ?? '-'}</p>
+                                                <p>{userInfo?.note ?? '-'}</p>
                                                 <ul>
                                                     <li onClick={() => setModalNoteShow(true)}>
                                                         <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
@@ -374,31 +352,40 @@ const CheckOut = () => {
                                                 <li>
                                                     <div className="form-check">
                                                         <input type="radio"
-                                                               name="paymentMethod"
+                                                               name="paypalMethod"
                                                                id='paypal'
-                                                               ref={paymentMethodRef}
-                                                               onChange={() => (paymentMethodRef.current = 'paypal')}/>
+                                                            // ref={paymentMethodRef}
+                                                               onChange={(e) => setSelectedPaymentMethod(e.target.id)}
+                                                               checked={selectedPaymentMethod === 'paypal'}
+                                                            // onChange={() => (paymentMethodRef.current = 'paypal')}
+                                                        />
                                                         <label htmlFor="paypal">PayPal</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div className="form-check">
                                                         <input type="radio"
-                                                               name="paymentMethod"
+                                                               name="vnPayMethod"
                                                                id='vnpay'
-                                                               ref={paymentMethodRef}
-                                                               onChange={() => (paymentMethodRef.current = 'vnpay')}/>
+                                                            // ref={paymentMethodRef}
+                                                               onChange={(e) => setSelectedPaymentMethod(e.target.id)}
+                                                               checked={selectedPaymentMethod === 'vnpay'}
+                                                            // onChange={() => (paymentMethodRef.current = 'vnpay')}
+                                                        />
                                                         <label htmlFor="vnpay">VnPay</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div className="form-check">
                                                         <input type="radio"
-                                                               name="paymentMethod"
+                                                               name="codMethod"
                                                                id='cod'
                                                                defaultChecked={true}
-                                                               ref={paymentMethodRef}
-                                                               onChange={() => (paymentMethodRef.current = 'cod')}/>
+                                                            // ref={paymentMethodRef}
+                                                               onChange={(e) => setSelectedPaymentMethod(e.target.id)}
+                                                               checked={selectedPaymentMethod === 'cod'}
+                                                            // onChange={() => (paymentMethodRef.current = 'cod')}
+                                                        />
                                                         <label htmlFor="cod">COD</label>
                                                     </div>
                                                 </li>
@@ -435,6 +422,7 @@ const CheckOut = () => {
                              onHide={() => setModalAddressShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
                     <Note show={modalNoteShow}
                           onHide={() => setModalNoteShow(false)} userInfo={userInfo} setUserInfo={setUserInfo}/>
+                    <EditQuantity show={modalEditQuantity} onHide={() => setModalEditQuantity(false)} itemEditQty={itemEditQty} setItemEditQty={setItemEditQty}/>
                 </div>
             </section>
         </>

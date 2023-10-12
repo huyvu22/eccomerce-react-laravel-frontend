@@ -1,0 +1,121 @@
+.category-sidebar {
+  position: fixed;
+  top: 0px;
+  left: -320px;
+  width: 280px;
+  height: 100vh;
+  z-index: 15;
+  background: #fff;
+  box-shadow: 15px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  transition: all linear .3s;
+
+  .category-header {
+    padding: 15px 18px;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--text-primary);
+
+    .cate-close {
+      position: absolute;
+      right: -18px;
+      top: 14px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      transition: all linear .2s;
+
+      &:hover {
+        background-color: var(--text-primary);
+        color: #fff;
+      }
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .category-list {
+    width: 100%;
+    padding: 0px 15px;
+    overflow-y: scroll;
+    height: calc(100vh - 130px);
+
+    .category-item {
+      width: 100%;
+      border-bottom: 1px solid #ccc;
+
+      .category-link {
+        display: flex;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 12px 15px;
+        text-transform: capitalize;
+        align-items: center;
+        justify-content: flex-start;
+        transition: all linear .3s;
+        position: relative;
+
+        span:first-child {
+          font-size: 25px;
+          margin-right: 15px;
+          display: inline-block;
+        }
+
+        span:last-child {
+          position: absolute;
+          top: 50%;
+          right: 18px;
+          font-size: 20px;
+          font-weight: 900;
+          transform: translateY(-50%);
+          transition: all linear .3s;
+        }
+
+        .active-arrow {
+          transform: translateY(-50%) rotate(90deg) !important;
+        }
+      }
+
+      .dropdown-list {
+        display: none;
+
+        li {
+          span {
+            margin-right: 5px;
+          }
+
+          a {
+            width: 100%;
+            font-size: 15px;
+            line-height: 18px;
+            border-radius: 8px;
+            padding: 10px 15px 13px 5px;
+            background: #fff;
+            position: relative;
+            white-space: nowrap;
+            text-transform: capitalize;
+            //transition: all linear .3s;
+          }
+        }
+      }
+
+      .show-subCategory {
+        display: block
+      }
+
+      .active-cate {
+        background: #ccc;
+        color: var(--text-primary)
+      }
+    }
+  }
+}
+
+
+.active {
+  left: 0;
+}

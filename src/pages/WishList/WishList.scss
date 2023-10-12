@@ -3,8 +3,11 @@
     .account-card {
       margin-bottom: 30px;
       border-radius: 8px;
-      //background: #fff;
       padding: 0 30px 30px;
+
+      @media (max-width: 991px) {
+        padding: 0;
+      }
 
       .account-title {
         margin-bottom: 40px;
@@ -31,6 +34,10 @@
         .table-wrapper {
           width: 100%;
 
+          @media (max-width: 1199px) {
+            overflow-x: scroll;
+          }
+
           table {
             width: 100%;
             border-radius: 5px;
@@ -45,6 +52,10 @@
                   font-size: 17px;
                   padding: 12px 20px;
                   border-right: 1px solid #fff;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:first-child {
                     border-radius: 6px 0 0 6px;
@@ -62,19 +73,59 @@
               tr {
                 border-bottom: 1px solid #ccc;
 
+                td:nth-child(3) {
+                  a {
+                    color: var(--text-primary) !important;
+                  }
+                }
+
+                td:nth-child(4) {
+                  color: red;
+                }
+
+                td:nth-child(6) {
+
+                  .product-add, .product-action {
+                    @media (max-width: 991px) {
+                      display: none;
+                    }
+                  }
+
+                  .mobile-product-add {
+                    display: none;
+
+                    @media (max-width: 991px) {
+                      display: block;
+                    }
+                  }
+
+                }
+
                 td {
                   color: #000;
-                  font-weight: bold;
+                  font-weight: 500;
+
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
                     border-right: 1px solid #ccc;
+
+                    @media (max-width: 575px) {
+                      padding: 5px 10px !important;
+                    }
                   }
 
                   img {
                     width: 50%;
                     height: 80px;
+
+                    @media (max-width: 991px) {
+                      width: 100%;
+                    }
                   }
 
                   text-align: center;

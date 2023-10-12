@@ -1,8 +1,15 @@
 .deals-part {
   .container {
     .section-heading {
-      text-align: center;
-      margin-bottom: 40px;
+      h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        @media (max-width: 767px) {
+          font-size: 28px !important;
+          margin-bottom: 30px;
+        }
+      }
+
     }
   }
 }

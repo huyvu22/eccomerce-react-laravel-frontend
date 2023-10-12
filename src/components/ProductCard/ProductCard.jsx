@@ -13,11 +13,11 @@ import Tippy from '@tippyjs/react';
 import {useDispatch} from "react-redux";
 import {showDetail} from "./ProductCardSlice";
 import {asset} from "../../services/Helpers/Image/image";
-import {roundedNumber} from "../../services/Helpers/Number/Number";
+import {formatter, roundedNumber} from "../../services/Helpers/Number/Number";
 
-const ProductCard = ({item, setModalShow}) => {
+const ProductCard = ({item}) => {
 
-    const {id, product_type, name, slug, thumb_image, isLike, isCompare, price, offer_price, quantity, availability, vendor, rating, updated_at} = item;
+    const {id, product_type, name, slug, thumb_image, isLike, isCompare, price, offer_price, short_description, quantity, availability, vendor, rating, updated_at} = item;
 
     const {addItemToCart, removeItemFromCart, toggleWishlistItem, toggleCompare, likeRef, compareRef} = useAddToCart({
         id,
@@ -83,8 +83,9 @@ const ProductCard = ({item, setModalShow}) => {
                             <h6>{name}</h6>
                         </div>
                         <div className="product-price">
-                            <del>{price}</del>
-                            <span>{offer_price}</span>
+                            <del>{formatter.format(price)}</del>
+                            <span>{formatter.format(offer_price)}</span>
+                            {/*<p>{short_description}</p>*/}
                         </div>
                         {
                             (quantity >= 1)

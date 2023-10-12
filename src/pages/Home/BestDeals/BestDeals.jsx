@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./BestDeals.scss";
 import {FaEye} from "react-icons/fa";
 import ProductCard from "../../../components/ProductCard/ProductCard";
@@ -13,11 +13,17 @@ const BestDeals = (props) => {
     const compareItems = useSelector((state) => state.productCard.compareList);
     const [myCart] = useMyCart();
 
+    useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+    }, []);
+
     if (!data?.length) {
         return null
     }
 
-    const showData = processFetchedData(data, props?.wishList, myCart, compareItems);
+    let showData = processFetchedData(data, props?.wishList, myCart, compareItems);
+    showData = showData.splice(0, 8)
 
     return (
         <section className="deals-part">
@@ -43,7 +49,7 @@ const BestDeals = (props) => {
 
                 <div className="row">
                     <div className="col-12">
-                        <div className="view-all d-flex justify-content-center mt-5">
+                        <div className="view-all d-flex justify-content-center">
                             <Link to="/item/products/deals/" className="btn btn-inline">
                                 <span className="me-2"><FaEye/></span>
                                 <span>view all</span>

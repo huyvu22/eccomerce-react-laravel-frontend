@@ -11,8 +11,11 @@
   top: 40%;
   z-index: 3;
 
-  .items {
+  @media (max-width: 575px) {
+    display: none;
+  }
 
+  .items {
     .item {
       width: 45px;
       height: 45px;

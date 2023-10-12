@@ -45,26 +45,6 @@ const ForgotPass = () => {
 
         if (isValidEmail) {
             setLoading(true)
-            // let res = await fetch("http://buynow.test/api/forgot", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "accept": "application/json"
-            //     },
-            //     body: JSON.stringify({
-            //         "email": formData.email,
-            //     })
-            // })
-            // const data = await res.json();
-            // if (res.ok) {
-            //     setLoading(false)
-            //     toast.success(data.message);
-            //     navigate('/buyer/login');
-            // } else {
-            //     setLoading(false)
-            //     toast.error(data.message);
-            // }
-
             const res = await client.post('forgot', {'email': formData.email});
             const data = await res.data;
             if (res.response.ok) {
@@ -85,8 +65,8 @@ const ForgotPass = () => {
             location.pathname.includes('/buyer/login') ? sessionStorage.setItem('buyer-google-login', 'true') : sessionStorage.setItem('buyer-google-login', 'false');
             window.location.href = data.url;
         }
-
     }
+    
     return (
         <section>
             <div className="user-forgot">

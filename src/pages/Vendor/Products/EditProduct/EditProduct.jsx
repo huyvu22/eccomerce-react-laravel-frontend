@@ -9,12 +9,13 @@ import {useParams} from "react-router-dom";
 import {asset} from "../../../../services/Helpers/Image/image";
 import useClient from "../../../../services/Hooks/useClient";
 import {getCookie} from "../../../../utils/dataHandler";
-import {useRawSubTotalPrice} from "../../../../services/Hooks/useTotalPrice";
+import config from "../../../../configs/Config.json";
 
 const EditProduct = () => {
     const sellerToken = getCookie('seller_access_token');
-    const {id, slug} = useParams();
     const client = useClient();
+    const {id, slug} = useParams();
+    const {SERVER_API} = config;
     const [product, setProduct] = useState([]);
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -37,38 +38,11 @@ const EditProduct = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const getProduct = async () => {
-        // let res = await fetch(`http://buynow.test/api/seller/products/${id}/edit`, {
-        //     method: "GET",
-        //     headers: {
-        //         'Authorization': `Bearer ${sellerToken?.token}`
-        //     },
-        // })
-        //
-        // const response = await res.json();
-        // if (res.ok) {
-        //     setProduct(response?.data);
-        //     setFullDescription(response?.data.full_description);
-        //     setSubcategories(response?.data.category.subCategories);
-        //
-        //     setData({
-        //         name: response?.data.name,
-        //         image: response?.data.image,
-        //         category: response?.data.category.id,
-        //         sub_category: response?.data.subCategory.id,
-        //         sku: response?.data.sku,
-        //         price: response?.data.price,
-        //         offer_price: response?.data.offer_price,
-        //         stock_quantity: response?.data.availability,
-        //         short_description: response?.data.short_description,
-        //         full_description: response?.data.full_description,
-        //         product_type: response?.data.product_type,
-        //         status: response?.data.status,
-        //     });
-        // }
 
-        const res = await client.get(`products/${id}/edit`, '', sellerToken)
+        const res = await client.get(`seller/products/${id}/edit`, '', sellerToken)
         if (res.response.ok) {
-            const dataObj = await res.data;
+            const dataObj = await res.data.data;
+            console.log(dataObj)
             setProduct(dataObj);
             setFullDescription(dataObj.full_description);
             setSubcategories(dataObj.category.subCategories);
@@ -95,15 +69,7 @@ const EditProduct = () => {
     }, []);
 
     const getCategory = async () => {
-        // const res = await fetch('http://buynow.test/api/category')
-        // if (res.ok) {
-        //     const response = await res.json();
-        //     let categoryArr = response.data;
-        //     setCategories(categoryArr);
-        // }
-
         const res = await client.get('category');
-        console.log(res)
         if (res.response.ok) {
             const categoryArr = await res.data.data;
             setCategories(categoryArr);
@@ -116,7 +82,6 @@ const EditProduct = () => {
 
 
     const handleChange = (e) => {
-        // setData({...data, [e.target.name]: e.target.value});
         const {name, value} = e.target;
         setData((prevData) => ({
             ...prevData,
@@ -165,24 +130,21 @@ const EditProduct = () => {
         formData.append("status", updatedData.status);
         formData.append("product_id", product.id);
 
-        // let res = await fetch(`http://buynow.test/api/seller/products`, {
-        //     method: "POST",
-        //     headers: {
-        //         'Authorization': `Bearer ${sellerToken?.token}`,
-        //     },
-        //     body: formData,
-        // })
-        //
-        // const response = await res.json();
-        // if (res.ok) {
-        //     toast(response.message);
-        // } else {
-        //     toast(response.message);
-        // }
+        let res = await fetch(`${SERVER_API}seller/products`, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${sellerToken}`,
+            },
+            body: formData,
+        })
 
-        const res = await client.post('seller/products', formData, '', sellerToken);
-        const data = await res.data;
-        toast(data.message);
+        const response = await res.json();
+        if (res.ok) {
+            toast(response.message);
+        } else {
+            toast(response.message);
+        }
+
     };
 
     useEffect(() => {
@@ -302,7 +264,6 @@ const EditProduct = () => {
                                             wrapperClassName="wrapperClassName"
                                             editorClassName="editorClassName"
                                             onEditorStateChange={onEditorStateChange}
-                                            // contentState={initialEditorState}
                                         />
                                     </div>
                                 </div>
@@ -328,9 +289,9 @@ const EditProduct = () => {
                                             <label>Posting Type:</label>
                                             <select className="form-select" id="product_type" name="product_type" onChange={handleChange}>
                                                 <option value="">-SELECT-</option>
-                                                <option value="best_product" selected={product.product_type === 'best_product'}>BestDeal</option>
+                                                <option value="best_product" selected={product.product_type === 'sale'}>BestDeal</option>
                                                 <option value="featured" selected={product.product_type === 'featured'}>Featured</option>
-                                                <option value="new_arrival" selected={product.product_type === 'new_arrival'}>New Arrival</option>
+                                                <option value="new_arrival" selected={product.product_type === 'new'}>New Arrival</option>
                                             </select>
                                         </div>
 
@@ -356,7 +317,6 @@ const EditProduct = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     );

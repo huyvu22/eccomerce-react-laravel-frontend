@@ -61,7 +61,6 @@ const NavbarTitle = (props) => {
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
             <ModalCompareItems show={modalShow}

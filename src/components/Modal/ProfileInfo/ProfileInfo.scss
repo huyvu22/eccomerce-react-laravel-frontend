@@ -1,4 +1,10 @@
 .modal.show .modal-dialog {
   //transform: none;
   width: 500px;
+  align-items: center;
+
+  @media (max-width: 575px) {
+    width: 96%;
+    align-items: center;
+  }
 }

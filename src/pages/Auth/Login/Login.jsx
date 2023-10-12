@@ -11,7 +11,7 @@ import {generateRandomToken} from "../../../services/Helpers/Number/Number";
 import {getCookie, setCookie} from "../../../utils/dataHandler";
 import logo from "../../../assets/images/logo.png";
 
-const Login = (key, value) => {
+const Login = () => {
     const client = useClient();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({email: "", password: ""});
@@ -23,6 +23,7 @@ const Login = (key, value) => {
     const tokenUserLogin = getCookie('user_access_token');
     const tokenSellerLogin = getCookie('seller_access_token');
     const location = useLocation();
+    const isBuyer = location.pathname.includes('buyer/login');
 
     useEffect(() => {
         if ((tokenUserLogin && location.pathname.includes('buyer/login')) || (tokenSellerLogin && location.pathname.includes('seller/login'))) {
@@ -50,6 +51,7 @@ const Login = (key, value) => {
 
 
     const handleLogin = async () => {
+
         // Validate form
         const isValidEmail = validateEmail(formData.email);
         if (!isValidEmail) {
@@ -140,7 +142,7 @@ const Login = (key, value) => {
                                                     <input
                                                         type="email"
                                                         name="email"
-                                                        className={`form-control ${validEmail === true ? 'valid' : 'invalid'}`}
+                                                        className={`form-control ${validEmail ? 'valid' : 'invalid'}`}
                                                         value={formData.email}
                                                         onChange={handleChange}
                                                         required
@@ -176,12 +178,12 @@ const Login = (key, value) => {
                                         </div>
                                     </form>
                                     <p>
-                                        Forgot Your Password? <a href="/buyer/forgot">Reset Here</a>
+                                        Forgot Your Password? <Link to="/buyer/forgot">Reset Here</Link>
                                     </p>
                                 </div>
                             </div>
                             <div className="register">
-                                <p>Don't Have Any Account? <Link to="/buyer/register">Register Here</Link></p>
+                                <p>Don't Have Any Account? <Link to={isBuyer ? "/buyer/register" : "/seller/register"}>Register Here</Link></p>
                             </div>
                         </div>
                     </div>

@@ -8,6 +8,7 @@ import {BiEdit} from "react-icons/bi";
 import {Link, useParams} from "react-router-dom";
 import useClient from "../../services/Hooks/useClient";
 import {getCookie} from "../../utils/dataHandler";
+import {formatter} from "../../services/Helpers/Number/Number";
 
 
 const OrderDetail = () => {
@@ -34,6 +35,7 @@ const OrderDetail = () => {
     useEffect(() => {
         getOrderDetail();
     }, []);
+
     const handleDivClick = (index) => {
         setActiveIndex(index);
     };
@@ -86,10 +88,10 @@ const OrderDetail = () => {
                                             </div>
                                             <div className="checkout-detail">
                                                 <ul>
-                                                    <li><span>Sub Total</span><span>${order.sub_total}</span></li>
-                                                    <li><span>Delivery Fee</span><span>{order.shipping_method === 'Free Ship' ? '$0' : '$5'}</span></li>
-                                                    <li><span>Discount</span><span>$0</span></li>
-                                                    <li><span>Grand Total</span><span>${order.amount}</span></li>
+                                                    <li><span>Sub Total</span><span>{formatter.format(order.sub_total)}</span></li>
+                                                    <li><span>Delivery Fee</span><span>{order.shipping_method === 'Free Ship' ? '$0' : '$5.00'}</span></li>
+                                                    <li><span>Discount</span><span>{order.discount ? formatter.format(order.discount) : '$0'}</span></li>
+                                                    <li><span>Grand Total</span><span>{formatter.format(order.amount)}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -107,12 +109,6 @@ const OrderDetail = () => {
                                                     <div className={`profile-card contact ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleDivClick(0)}>
                                                         <h3>Phone</h3>
                                                         <p>{orderAddress.phone}</p>
-                                                        <ul>
-                                                            <li>
-                                                                <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
-                                                                    <span><BiEdit/></span></button>
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6 col-lg-4">
@@ -124,24 +120,12 @@ const OrderDetail = () => {
                                                             {orderAddress?.district && ` ${JSON.parse(orderAddress?.district)?.label}`},
                                                             {orderAddress?.province && ` ${JSON.parse(orderAddress?.province)?.label}`}
                                                         </p>
-                                                        <ul>
-                                                            <li>
-                                                                <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
-                                                                    <span><BiEdit/></span></button>
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6 col-lg-4">
                                                     <div className={`profile-card contact ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleDivClick(2)}>
                                                         <h3>Note</h3>
                                                         <p>{orderAddress.note}</p>
-                                                        <ul>
-                                                            <li>
-                                                                <button className="edit icofont-edit" title="Edit This" data-bs-toggle="modal" data-bs-target="#phone-edit">
-                                                                    <span><BiEdit/></span></button>
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>

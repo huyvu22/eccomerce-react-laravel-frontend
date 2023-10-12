@@ -10,6 +10,7 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import TermsAndCondition from "../pages/TermsAndCondition/TermsAndCondition";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 import GoogleCallback from "../pages/Auth/GoogleCallback/GoogleCallback";
+import SellerInfo from "../pages/SellerInfo/SellerInfo";
 
 export const publicRoutes = (
     <>
@@ -23,12 +24,11 @@ export const publicRoutes = (
         <Route path="item/products/latest/" element={<Products/>}/>
         <Route path="item/products/seller/:id/:slug" element={<Products/>}/>
         <Route path="item/item_details/:id/:slug" element={<ProductDetail/>}/>
+        <Route path="seller/profile/:id/:slug" element={<SellerInfo/>}/>
         <Route path="site/faq" element={<FaqQuestion/>}/>
         <Route path="contact-us" element={<Contact/>}/>
         <Route path="about-us" element={<AboutUs/>}/>
         <Route path="terms-and-condition" element={<TermsAndCondition/>}/>
         <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
-        <Route path="404" element={<PageNotFound/>}/>
-
     </>
 );

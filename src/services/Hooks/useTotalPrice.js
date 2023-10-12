@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 export const useSubTotalPrice = () => {
     const [myCart] = useMyCart();
     const [total, setTotal] = useState(0);
-    // let discountCode = sessionStorage.getItem('discountValue') || 0;
 
     useEffect(() => {
         let newTotal = 0;
@@ -23,7 +22,6 @@ export const useSubTotalPrice = () => {
 export const useRawSubTotalPrice = () => {
     const [myCart] = useMyCart();
     const [total, setTotal] = useState(0);
-    // let discountCode = sessionStorage.getItem('discountValue') || 0;
 
     useEffect(() => {
         let newTotal = 0;

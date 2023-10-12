@@ -11,14 +11,16 @@ const useFetchData = (endpoint, attributes = '', currentPage = 1) => {
     const isResetCart = useSelector(
         (state) => state.productCard.isResetCart
     );
+    const keywords = useSelector((state) => state.searchProducts.keywords) ?? null;
 
     const getData = async () => {
         let url = '';
-        if (attributes.includes('search')) {
-            url = `${endpoint}/${attributes}`;
+        if (attributes.includes('?')) {
+            url = `${endpoint}/${attributes}&page=${currentPage}`;
         } else {
             url = `${endpoint}/${attributes}?page=${currentPage}`;
         }
+        
         let res = await client.get(url);
 
         if (res.response.ok === true) {
@@ -38,7 +40,7 @@ const useFetchData = (endpoint, attributes = '', currentPage = 1) => {
         getData();
     }, [currentPage, attributes, isResetCart]);
 
-    return {data, loading, paginate};
+    return {data, loading, paginate, keywords};
 };
 
 export default useFetchData;

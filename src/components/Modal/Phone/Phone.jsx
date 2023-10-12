@@ -74,7 +74,7 @@ const Phone = (props) => {
                 // size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                dialogClassName="modal-phonenumber"
+                dialogClassName="modal-phone-number"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Phone</Modal.Title>

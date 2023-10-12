@@ -10,16 +10,26 @@
       justify-content: space-between;
       align-items: center;
 
+      @media (max-width: 575px) {
+        padding: 0 15px 15px;
+      }
+
       h5 {
         font-weight: 600;
+        @media (max-width: 575px) {
+          font-size: 16px;
+        }
       }
 
       .filter-short {
+        @media (max-width: 575px) {
+          font-size: 14px;
+        }
 
         .form-label {
           display: inline-block;
           font-size: 18px;
-          margin: 0px 8px 0px 0px;
+          margin: 0 8px 0 0;
           color: var(--heading);
         }
       }
@@ -57,6 +67,10 @@
         .table-wrapper {
           width: 100%;
 
+          @media (max-width: 1199px) {
+            overflow-x: scroll;
+          }
+
           table {
             width: 100%;
             border-radius: 5px;
@@ -71,6 +85,9 @@
                   font-size: 17px;
                   padding: 12px 20px;
                   border-right: 1px solid #fff;
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
 
                   &:first-child {
                     border-radius: 6px 0 0 6px;
@@ -89,10 +106,14 @@
                 border-bottom: 1px solid #ccc;
 
                 td {
-                  color: #000;
-                  font-weight: bold;
+                  color: var(--text);
+                  font-weight: 500;
 
-                  a{
+                  @media (max-width: 575px) {
+                    font-size: 14px !important;
+                  }
+
+                  a {
                     color: #0d6efd !important;
                   }
 
@@ -100,6 +121,9 @@
                     text-align: center;
                     padding: 15px 25px;
                     border-right: 1px solid #ccc;
+                    @media (max-width: 575px) {
+                      padding: 5px 15px;
+                    }
                   }
 
 

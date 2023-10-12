@@ -82,7 +82,6 @@ const ProfileInfo = (props) => {
                     toast.error(response.data.shop_name[0])
                 }
 
-
             } catch (error) {
                 console.error('Error storing address:');
             }

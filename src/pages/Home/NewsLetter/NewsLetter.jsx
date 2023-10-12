@@ -13,24 +13,6 @@ const NewsLetter = () => {
         e.preventDefault();
         if (email) {
             setLoading(true)
-            // const res = await fetch(`http://buynow.com/api/newsletter`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'accept': 'application/json'
-            //     },
-            //     body: JSON.stringify({email: email})
-            // });
-            // let data = await res.json();
-            // if (data.status === 'success') {
-            //     setLoading(false)
-            //     setEmail('');
-            //     toast.success(data.message);
-            // } else if (data.status === 'error') {
-            //     setLoading(false)
-            //     toast.error(data.message);
-            // }
-
             const res = await client.post('newsletter', {'email': email})
             if (res.response.ok) {
                 const data = await res.data;
@@ -62,7 +44,9 @@ const NewsLetter = () => {
                     <div className="col-md-5 col-lg-6 col-xl-5">
                         <form className="news-form">
                             <input type="text" placeholder="Enter Your Email Address" onChange={(e) => setEmail(e.target.value)}/>
-                            <button disabled={loading} onClick={(e) => handleSubscribe(e)}><span><MdAlternateEmail size={'1.5em'}/> <span>Subscribe</span>
+                            <button disabled={loading} onClick={(e) => handleSubscribe(e)}><span>
+                                {/*<MdAlternateEmail size={'1.5em'}/> */}
+                                <span>Subscribe</span>
                             </span>{loading && <span className="dots-1">....</span>}
                             </button>
                         </form>

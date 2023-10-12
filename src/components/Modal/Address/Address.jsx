@@ -10,7 +10,7 @@ import {useLocation} from "react-router-dom";
 const Address = (props) => {
     const client = useClient();
     const location = useLocation()
-    const isBuyer = location.pathname.includes('/buyer/my-profile')
+    const isBuyer = getCookie('user_access_token');
     const [isClearable, setIsClearable] = useState(true);
     const [isSearchable, setIsSearchable] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
@@ -204,7 +204,7 @@ const Address = (props) => {
                             </Form>
                         </>
                     }
-                    
+
                     <Form>
                         <Form.Label><b>Address:</b></Form.Label>
                         <Form.Group

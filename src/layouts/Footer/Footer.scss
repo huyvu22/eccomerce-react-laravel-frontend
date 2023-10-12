@@ -1,5 +1,9 @@
 .footer-part {
-  padding-top: 95px;
+  padding-top: 50px;
+
+  @media (max-width: 768px) {
+    padding-top: 0;
+  }
 
   .container {
     .footer-widget {
@@ -16,18 +20,18 @@
 
       .footer-desc {
         margin-bottom: 30px;
+        a{
+          color: var(--link);
+        }
       }
 
       .footer-social {
+        margin-bottom: 0;
+
         li {
           display: inline-block;
           margin-right: 7px;
         }
-      }
-
-      &.contact {
-        margin-left: 30px;
-
       }
 
       .footer-title {
@@ -51,6 +55,10 @@
         font-size: 1.5rem;
         color: #555555;
         font-weight: 600;
+
+        @media (max-width: 991px) {
+          font-size: 1.3rem;
+        }
       }
     }
   }

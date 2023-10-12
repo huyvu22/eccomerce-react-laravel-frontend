@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './NewItems.scss';
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import Slider from "react-slick";
@@ -16,6 +16,11 @@ const NewItems = () => {
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const compareItems = useSelector((state) => state.productCard.compareList);
     const [myCart] = useMyCart();
+
+    useEffect(() => {
+        const element = document.documentElement || document.body;
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+    }, []);
 
     if (!data?.length) {
         return null
@@ -44,6 +49,45 @@ const NewItems = () => {
         autoplaySpeed: 2000,
         prevArrow: <ArrowLeft/>,
         nextArrow: <ArrowRight/>,
+        responsive: [
+            {
+                breakpoint: 1398,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            }
+        ]
     };
 
     return (
@@ -81,7 +125,7 @@ const NewItems = () => {
 
                 <div className="row">
                     <div className="col-12">
-                        <div className="view-all d-flex justify-content-center mt-5">
+                        <div className="view-all d-flex justify-content-center">
                             <Link to="/item/products/latest/" className="btn btn-inline">
                                 <span className="me-2"><FaEye/></span>
                                 <span>view all</span>
