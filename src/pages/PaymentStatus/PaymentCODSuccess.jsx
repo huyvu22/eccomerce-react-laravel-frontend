@@ -7,7 +7,6 @@ import {getCookie} from "../../utils/dataHandler";
 import config from "../../configs/Config.json";
 
 const PaymentCodSuccess = () => {
-    const client = useClient();
     const [loading, setLoading] = useState(false);
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const dispatch = useDispatch();
@@ -19,6 +18,7 @@ const PaymentCodSuccess = () => {
         'shipping_method': sessionStorage.getItem('shipping_method'),
         'order_address': sessionStorage.getItem('order_address'),
         'order_method': sessionStorage.getItem('order_method'),
+        'payment_status': 0,
         'coupon': sessionStorage.getItem('couponCode'),
         'sub-total': sessionStorage.getItem('sub_total'),
         'amount': sessionStorage.getItem('amount'),
@@ -26,15 +26,6 @@ const PaymentCodSuccess = () => {
     })
     const storeOrder = async () => {
         setLoading(true);
-        // const response = await fetch(`http://buynow.com/api/cart-list`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json',
-        //         'accept': 'application/json',
-        //         'Authorization': `Bearer ${userToken}`,
-        //     },
-        //     body: formData
-        // })
 
         const response = await fetch(`${SERVER_API}cart-list`, {
             method: 'POST',
@@ -51,22 +42,17 @@ const PaymentCodSuccess = () => {
             setLoading(false);
             dispatch(resetCart());
             sessionStorage.clear()
-        }
 
-        // const res = client.post('cart-list', formData, '', userToken)
-        // if (res.response.ok) {
-        //     const data = await res.data;
-        //     if (data.status === 'success') {
-        //         setLoading(false);
-        //         dispatch(resetCart());
-        //         sessionStorage.clear();
-        //     }
-        // }
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000)
+        }
     };
 
     useEffect(() => {
         storeOrder()
     }, []);
+
 
     return (
         <>
@@ -78,7 +64,6 @@ const PaymentCodSuccess = () => {
                     :
                     <h1 className="text-center mt-5">Order Successfully</h1>
             }
-
         </>
     );
 };

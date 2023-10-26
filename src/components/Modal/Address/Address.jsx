@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import './Address.scss';
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import Select from 'react-select'
@@ -9,13 +10,12 @@ import {useLocation} from "react-router-dom";
 
 const Address = (props) => {
     const client = useClient();
-    const location = useLocation()
     const isBuyer = getCookie('user_access_token');
-    const [isClearable, setIsClearable] = useState(true);
-    const [isSearchable, setIsSearchable] = useState(true);
-    const [isDisabled, setIsDisabled] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isRtl, setIsRtl] = useState(false);
+    const [isClearable] = useState(true);
+    const [isSearchable] = useState(true);
+    const [isDisabled] = useState(false);
+    const [isLoading] = useState(false);
+    const [isRtl] = useState(false);
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);

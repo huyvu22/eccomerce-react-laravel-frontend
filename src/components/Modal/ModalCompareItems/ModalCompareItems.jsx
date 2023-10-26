@@ -4,7 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import button from "bootstrap/js/src/button";
 import TableItem from "./TableItem/TableItem";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteCompareList} from "../ProductCard/ProductCardSlice";
+import {deleteCompareList} from "../../ProductCard/ProductCardSlice";
+
 
 const ModalCompareItems = (props) => {
 
@@ -16,7 +17,7 @@ const ModalCompareItems = (props) => {
     }
 
     useEffect(() => {
-        if (productsCompare.length < 2) {
+        if (productsCompare?.length < 2) {
             props.setModalShow(false);
         }
     }, [productsCompare]);

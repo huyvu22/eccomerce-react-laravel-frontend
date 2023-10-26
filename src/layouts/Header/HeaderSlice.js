@@ -82,6 +82,7 @@ export const loginSlice = createSlice({
     initialState: {
         isUserAuthenticated: !!getCookie('user_access_token'),
         isSellerAuthenticated: !!getCookie('seller_access_token'),
+        isShowLoginModal: false,
     },
     reducers: {
         login: (state, action) => {
@@ -97,14 +98,14 @@ export const loginSlice = createSlice({
             state.isSellerAuthenticated = false;
             state.isUserAuthenticated = false;
             sessionStorage.removeItem('buyer-google-login');
-        },
+            window.location.reload();
+        }
     },
 });
 export const {showCart, hideCart, showCategory, hideCategory, showMenu, hideMenu} = cartSlice.actions;
 export const {
     onFocus,
     updateKeywords,
-    clearKeywords,
     filterPrice,
     clearFilterPrice,
     filterRating,

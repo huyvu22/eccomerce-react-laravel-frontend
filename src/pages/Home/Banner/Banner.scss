@@ -4,9 +4,9 @@
   .container {
     .banner-category {
       border-radius: 5px;
-      background-color: var(--background);
+      background-color: var(--white);
 
-      @media (max-width: 991px) {
+      @media screen and (max-width: 991px) {
         display: none;
       }
 
@@ -15,7 +15,7 @@
         display: flex;
         justify-content: center;
         gap: 5px;
-        background-color: var(--text-primary);
+        background-color: var(--primary);
         color: #ffffff;
         border-radius: 5px;
         letter-spacing: 0.3px;
@@ -35,6 +35,11 @@
           position: relative;
           cursor: pointer;
           border-top: 1px solid var(--boder);
+
+          @media screen and (max-width: 1199px) {
+            text-overflow: ellipsis;
+            font-size: 14px;
+          }
 
           &:hover {
             background-color: var(--navigation-bg-hover);
@@ -65,19 +70,24 @@
             opacity: 0;
             visibility: hidden;
             top: 0;
-            left: 235px;
+            left: 100%;
             padding: 20px;
             border-radius: 5px;
-            background-color: var(--background);
+            background-color: var(--white);
             box-shadow: 15px 15px 25px 0 rgb(0 0 0 / 8%);
             transition: all linear 0.15s;
 
             p {
               text-transform: capitalize;
-              font-size: 20px !important;
+              font-size: 18px !important;
               font-weight: 600;
               padding-left: 8px;
               text-align: center;
+
+              @media screen and (max-width: 1199px) {
+                text-overflow: ellipsis;
+                font-size: 14px !important;
+              }
             }
 
             .banner-sub-category {
@@ -91,6 +101,11 @@
                   border-top: 1px solid var(--boder);
                   text-align: center;
 
+                  @media screen and (max-width: 1199px) {
+                    text-overflow: ellipsis;
+                    font-size: 14px !important;
+                  }
+
                   &:hover {
                     background-color: var(--navigation-bg-hover);
                     color: var(--text-hover);
@@ -101,6 +116,9 @@
             }
           }
         }
+        span.react-loading-skeleton {
+          margin-bottom: 16px;
+        }
       }
     }
 
@@ -109,7 +127,7 @@
     }
 
     .banner-promo {
-      @media (max-width: 450px) {
+      @media screen and (max-width: 450px) {
         margin-bottom: 20px;
       }
 

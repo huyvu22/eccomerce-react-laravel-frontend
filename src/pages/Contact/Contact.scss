@@ -3,26 +3,26 @@
     .contact-card {
       text-align: center;
       border-radius: 8px;
-      margin: 0px 2.5px 30px;
+      margin: 0 2.5px 30px;
       padding: 60px 15px 55px;
-      background: #fff;
+      background: var(--white);
       height: 300px;
 
 
       &:hover {
-        background: var(--text-primary);
+        background: var(--primary);
 
         span {
           color: var(--text-primary);
-          background: #fff;
+          background: var(--white);
         }
 
         h4 {
-          color: #fff;
+          color: var(--white);
         }
 
         p {
-          color: #fff !important;
+          color: var(--white) !important;
         }
       }
 
@@ -35,8 +35,8 @@
         margin-bottom: 15px;
         text-align: center;
         display: inline-block;
-        color: #fff;
-        background: var(--text-primary);
+        color: var(--white);
+        background: var(--primary);
       }
 
       h4 {
@@ -54,13 +54,13 @@
 
     .contact-map {
       padding: 30px;
-      margin: 0px 2.5px 30px;
+      margin: 0 2.5px 30px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       height: 520px;
 
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 15px;
       }
 
@@ -85,9 +85,9 @@
       border-radius: 8px;
       padding: 30px;
       margin: 0px 2.5px 30px;
-      background: #fff;
+      background: var(--white);
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 15px;
       }
 
@@ -118,7 +118,7 @@
           height: 40px;
 
           &:focus {
-            border-color: var(--text-primary);
+            border-color: var(--primary);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
             + span {
@@ -134,11 +134,11 @@
           transition: border-color 0.3s, box-shadow 0.3s;
 
           &:focus {
-            border-color: var(--text-primary);
+            border-color: var(--primary);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
             + span {
-              color: var(--text-primary);
+              color: var(--primary);
             }
           }
         }
@@ -154,8 +154,8 @@
         letter-spacing: 0.5px;
         text-align: center;
         text-transform: uppercase;
-        color: #fff;
-        background: var(--text-primary);
+        color: var(--white);
+        background: var(--primary);
 
         .dots-1 {
           aspect-ratio: 4;
@@ -170,9 +170,6 @@
           clip-path: inset(0 -34% 0 0)
         }
       }
-
     }
-
-
   }
 }

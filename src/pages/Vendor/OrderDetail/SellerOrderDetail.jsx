@@ -32,15 +32,17 @@ const SellerOrderDetail = () => {
     }
 
     useEffect(() => {
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
         getOrderDetail();
     }, []);
+
     const handleDivClick = (index) => {
         setActiveIndex(index);
     };
 
     const handleOrderTypeChange = async (e) => {
         const res = await client.post(`seller/set-order-status/${id}/${e.target.value}`, '', '', sellerToken);
-        console.log(res)
         if (res.response.ok === true) {
             const orderData = await res.data;
             toast.success(orderData.message)

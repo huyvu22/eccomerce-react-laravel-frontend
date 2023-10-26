@@ -30,6 +30,7 @@ const PaymentPayPalSuccess = () => {
                 'shipping_method': sessionStorage.getItem('shipping_method'),
                 'order_address': sessionStorage.getItem('order_address'),
                 'order_method': sessionStorage.getItem('order_method'),
+                'payment_status': 1,
                 'coupon': sessionStorage.getItem('couponCode'),
                 'sub-total': sessionStorage.getItem('sub_total'),
                 'amount': sessionStorage.getItem('amount'),
@@ -52,9 +53,11 @@ const PaymentPayPalSuccess = () => {
             }
         }
     }
+
     useEffect(() => {
         handlePaymentSuccess()
     }, []);
+
 
     return (
         <>

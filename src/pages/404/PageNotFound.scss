@@ -1,0 +1,21 @@
+.page_404 {
+  background: var(--white);
+
+  .container {
+    .page-not-found {
+      padding: 100px 0;
+      max-width: 700px;
+
+      .img-fluid {
+        display: block;
+        margin: 0 auto;
+      }
+
+      a {
+        background: var(--white) !important;
+        color: var(--text-primary) !important;
+        border: none !important;
+      }
+    }
+  }
+}

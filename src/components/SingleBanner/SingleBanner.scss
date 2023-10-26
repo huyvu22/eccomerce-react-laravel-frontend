@@ -7,7 +7,7 @@
   z-index: 1;
   margin-bottom: 50px;
 
-  @media (max-width: 991px) {
+  @media screen and (max-width: 991px) {
     padding: 50px;
   }
 
@@ -26,30 +26,30 @@
     h2 {
       font-size: 38px;
       margin-bottom: 15px;
-      color: #fff !important;
+      color: var(--white) !important;
 
-      @media (max-width: 767px) {
-        font-size: 32px !important;
+      @media screen and (max-width: 767px) {
+        font-size: 31px !important;
         margin-bottom: 12px;
       }
     }
-
 
     .breadcrumb {
       display: flex;
       justify-content: center;
       font-size: 18px;
+      text-transform: capitalize;
 
-      @media (max-width: 767px) {
+      @media screen and (max-width: 767px) {
         font-size: 16px !important;
       }
 
       span {
         padding-right: 10px;
-        color: #fff;
+        color: var(--white);
 
         a {
-          color: #fff;
+          color: var(--white);
 
           &:hover {
             color: var(--text-hover);

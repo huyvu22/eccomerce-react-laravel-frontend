@@ -3,17 +3,17 @@
     .orderlist {
       margin-bottom: 30px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       padding: 30px 30px;
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 0 15px 15px;
       }
 
       .orderlist-body {
         .table-scroll {
           width: 100%;
-          @media (max-width: 1199px) {
+          @media screen and (max-width: 1199px) {
             overflow-x: scroll;
           }
 
@@ -22,17 +22,17 @@
 
             thead {
               tr {
-                background: var(--text-primary);
+                background: var(--primary);
                 text-align: center;
 
 
                 th {
-                  color: #fff;
+                  color: var(--white);
                   font-size: 17px;
                   padding: 12px 20px;
-                  border-right: 1px solid #fff;
+                  border-right: 1px solid var(--white);
 
-                  @media (max-width: 575px) {
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
@@ -50,26 +50,26 @@
 
             tbody {
               tr {
-                border: 1px solid #ccc;
+                border: 1px solid var(--gray-chalk);
 
                 td:nth-child(3) {
-                  color: red;
+                  color: var(--red);
                 }
 
                 td {
                   color: var(--text);
                   text-align: center;
-                  
-                  @media (max-width: 575px) {
+
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
-                    border: 1px solid #ccc;
+                    border: 1px solid var(--gray-chalk);
 
-                    @media (max-width: 575px) {
+                    @media screen and (max-width: 575px) {
                       padding: 5px 15px;
                     }
                   }
@@ -78,7 +78,7 @@
                     color: #0d6efc !important;
 
                     &:hover {
-                      color: var(--text-primary) !important;
+                      color: var(--text-hover) !important;
                     }
 
                     i {
@@ -90,26 +90,26 @@
                     display: inline-block;
                     font-size: 20px;
                     margin-right: 5px;
-                    background: #f5f5f5;
+                    background: var(--chalk);
                     padding: 5px 7px;
                     cursor: pointer;
                     border-radius: 5px;
 
                     &:first-child {
-                      color: green;
+                      color: var(--green);
 
                       &:hover {
-                        background: green;
-                        color: #fff;
+                        background: var(--green);
+                        color: var(--white);
                       }
                     }
 
                     &:last-child {
-                      color: red;
+                      color: var(--red);
 
                       &:hover {
-                        background: red;
-                        color: #fff;
+                        background: var(--red);
+                        color: var(--white);
                       }
                     }
 

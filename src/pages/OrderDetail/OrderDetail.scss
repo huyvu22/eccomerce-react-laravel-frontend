@@ -3,17 +3,17 @@
     .account-card {
       margin-bottom: 30px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       padding: 0 30px 30px;
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 0 15px 15px !important;
       }
 
       .account-title {
         margin-bottom: 40px;
         padding: 18px 0;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid var(--gray-chalk);
         position: relative;
 
         &:before {
@@ -34,7 +34,7 @@
 
         .table-wrapper {
           width: 100%;
-          @media (max-width: 1199px) {
+          @media screen and (max-width: 1199px) {
             overflow-x: scroll;
           }
 
@@ -44,16 +44,16 @@
 
             thead {
               tr {
-                background: var(--text-primary);
+                background: var(--primary);
                 text-align: center;
 
                 th {
-                  color: #fff;
+                  color: var(--white);
                   font-size: 17px;
                   padding: 12px 20px;
-                  border-right: 1px solid #fff;
+                  border-right: 1px solid var(--white);
 
-                  @media (max-width: 575px) {
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
@@ -71,7 +71,7 @@
 
             tbody {
               tr {
-                border-bottom: 1px solid #ccc;
+                border-bottom: 1px solid var(--gray-chalk);
 
                 td:nth-child(2) {
                   a {
@@ -84,19 +84,19 @@
                 }
 
                 td {
-                  color: #000;
+                  color: var(--black);
                   font-weight: bold;
 
-                  @media (max-width: 575px) {
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
-                    border-right: 1px solid #ccc;
+                    border-right: 1px solid var(--gray-chalk);
 
-                    @media (max-width: 575px) {
+                    @media screen and (max-width: 575px) {
                       padding: 0 !important;
                     }
                   }
@@ -105,7 +105,7 @@
                     width: 50%;
                     height: 80px;
 
-                    @media (max-width: 575px) {
+                    @media screen and (max-width: 575px) {
                       width: 100%;
                     }
                   }
@@ -116,26 +116,26 @@
                     display: inline-block;
                     font-size: 20px;
                     margin-right: 5px;
-                    background: #f5f5f5;
+                    background: var(--chalk);
                     padding: 5px 7px;
                     cursor: pointer;
                     border-radius: 5px;
 
                     &:first-child {
-                      color: green;
+                      color: var(--green);
 
                       &:hover {
-                        background: green;
-                        color: #fff;
+                        background: var(--green);
+                        color: var(--white);
                       }
                     }
 
                     &:last-child {
-                      color: red;
+                      color: var(--red);
 
                       &:hover {
-                        background: red;
-                        color: #fff;
+                        background: var(--red);
+                        color: var(--white);
                       }
                     }
 
@@ -151,7 +151,7 @@
           width: 600px;
           margin: 20px auto 5px;
 
-          @media (max-width: 767px) {
+          @media screen and (max-width: 767px) {
             width: 100% !important;
           }
 
@@ -190,7 +190,7 @@
           padding: 25px;
           border-radius: 8px;
           cursor: pointer;
-          border: 1px solid #fff;
+          border: 1px solid var(--white);
           margin-bottom: 25px;
 
           &:hover ul {
@@ -225,12 +225,12 @@
                 border-radius: 6px;
                 text-align: center;
                 display: inline-block;
-                background: #fff;
+                background: var(--white);
                 text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);;
 
                 &:hover {
                   background: green;
-                  color: #fff;
+                  color: var(--white);
                 }
               }
             }

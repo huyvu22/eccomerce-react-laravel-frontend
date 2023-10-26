@@ -7,7 +7,7 @@
         height: 325px !important;
         border-radius: 6px;
 
-        @media (max-width: 450px) {
+        @media screen and (max-width: 450px) {
           width: fit-content;
         }
       }
@@ -21,11 +21,7 @@
       padding: 54px 54px;
       width: 500px;
 
-      //@media (max-width: 575px){
-      //  padding: 30px 30px;
-      //}
-
-      @media (max-width: 450px) {
+      @media screen and (max-width: 450px) {
         width: 300px;
         padding: 10px;
       }
@@ -37,11 +33,10 @@
         color: #39404A;
         font-weight: 500;
 
-        @media (max-width: 450px) {
+        @media screen and (max-width: 450px) {
           font-size: 30px !important;
           line-height: 44px;
         }
-
       }
 
       a {
@@ -49,7 +44,6 @@
           margin-right: 4px;
         }
       }
-
     }
   }
 }

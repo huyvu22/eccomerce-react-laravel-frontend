@@ -1,5 +1,5 @@
 {
-  "SERVER": "http://buynow.com/",
-  "SERVER_API": "http://buynow.com/api/",
+  "SERVER": "http://buynow.vn/",
+  "SERVER_API": "http://buynow.vn/api/",
   "LIMIT_ITEM": 6
 }

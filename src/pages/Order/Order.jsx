@@ -23,8 +23,11 @@ const Order = () => {
     }
 
     useEffect(() => {
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
         getAllOrders();
     }, []);
+
     return (
         <>
             <SingleBanner name="My Order"/>

@@ -1,19 +1,19 @@
 .menu-sidebar {
   position: fixed;
-  top: 0px;
+  top: 0;
   left: -320px;
   width: 280px;
   height: 100vh;
   z-index: 15;
   background: #fff;
-  box-shadow: 15px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 15px 0 25px 0 rgba(0, 0, 0, 0.15);
   transition: all linear .3s;
 
   .menu-header {
     padding: 15px 18px;
     position: relative;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid var(--gray-chalk);
 
     .menu-close {
       position: absolute;
@@ -45,10 +45,11 @@
       width: 100%;
       padding-bottom: 10px;
       padding-left: 15px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid var(--gray-chalk);
 
       .nav-link {
         width: 100%;
+
         font-weight: 500;
         padding: 12px 15px;
         border-radius: 8px;
@@ -86,16 +87,20 @@
       }
 
       .active-menu {
-        background: #ccc;
+        background: var(--gray-chalk);
         color: var(--text-primary)
+      }
+
+      a{
+        display: block !important;
       }
     }
 
     .nav-info-group {
-      padding: 5px 0px;
+      padding: 5px 0;
       margin-top: 15px;
       margin-bottom: 25px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid var(--gray-chalk);
 
       .nav-info {
         margin-bottom: 10px;

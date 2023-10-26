@@ -1,8 +1,6 @@
 import './NewsLetter.scss';
-import React, {useEffect, useState} from 'react';
-import {MdAlternateEmail} from "react-icons/md";
+import React, {useState} from 'react';
 import {toast} from "react-toastify";
-import {AiOutlineLoading3Quarters} from "react-icons/ai";
 import useClient from "../../../services/Hooks/useClient";
 
 const NewsLetter = () => {
@@ -14,9 +12,8 @@ const NewsLetter = () => {
         if (email) {
             setLoading(true)
             const res = await client.post('newsletter', {'email': email})
+            const data = await res.data;
             if (res.response.ok) {
-                const data = await res.data;
-                console.log(data)
                 if (data.status === 'success') {
                     setLoading(false)
                     setEmail('');
@@ -25,6 +22,9 @@ const NewsLetter = () => {
                     setLoading(false)
                     toast.error(data.message);
                 }
+            } else {
+                setLoading(false)
+                toast.error(data.message);
             }
         } else {
             toast.error('Please provide a valid email')

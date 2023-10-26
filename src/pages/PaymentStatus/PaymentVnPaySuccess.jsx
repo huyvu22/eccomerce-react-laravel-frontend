@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../utils/dataHandler";
 import {useDispatch} from "react-redux";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import {resetCart} from "../../components/ProductCard/ProductCardSlice";
 import {toast} from "react-toastify";
-import useClient from "../../services/Hooks/useClient";
 
 const PaymentVnPaySuccess = () => {
-    const navigate = useNavigate();
-    const client = useClient();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
@@ -25,6 +22,7 @@ const PaymentVnPaySuccess = () => {
                 'shipping_method': sessionStorage.getItem('shipping_method'),
                 'order_address': sessionStorage.getItem('order_address'),
                 'order_method': sessionStorage.getItem('order_method'),
+                'payment_status': 1,
                 'coupon': sessionStorage.getItem('couponCode'),
                 'sub-total': sessionStorage.getItem('sub_total'),
                 'amount': sessionStorage.getItem('amount'),
@@ -48,26 +46,20 @@ const PaymentVnPaySuccess = () => {
                 toast('Payment successful')
                 setCheckPaymentSuccess(true)
             }
-
-            // const res = await client.post('cart-list', formData, '', userToken);
-            // const cartData = await res.data;
-            // if (cartData.status === 'success') {
-            //     setLoading(false);
-            //     dispatch(resetCart());
-            //     toast('Payment successful')
-            //     setCheckPaymentSuccess(true)
-            // }
+        } else {
+            toast('Something went wrong. Please try again later')
         }
     }
+
     useEffect(() => {
         if (!checkPaymentSuccess) {
             handlePaymentSuccess()
-        } else {
             setTimeout(() => {
-                navigate('/')
+                window.location.reload();
             }, 2000)
         }
     }, []);
+
     return (
         <>
             {loading ?

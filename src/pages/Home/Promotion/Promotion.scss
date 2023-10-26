@@ -1,6 +1,4 @@
-
 .promo-part {
-  //margin-bottom: 115px;
 
   .container {
     .promo-content {
@@ -26,14 +24,14 @@
 
       h3 {
         font-size: 24px;
-        color: #fff;
+        color: var(--white);
         text-transform: capitalize;
         font-weight: 600;
       }
 
       h2 {
         margin-bottom: 25px;
-        color: #fff !important;
+        color: var(--white) !important;
       }
 
     }

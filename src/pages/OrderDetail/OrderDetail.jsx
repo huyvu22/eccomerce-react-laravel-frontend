@@ -43,7 +43,7 @@ const OrderDetail = () => {
         <>
             <SingleBanner name="Order Details"/>
             {
-                loading === true ?
+                loading ?
                     <div className="loading">
                         <h3>Loading...</h3>
                     </div>
@@ -65,7 +65,7 @@ const OrderDetail = () => {
                                                         <th>Name</th>
                                                         <th>Price</th>
                                                         <th>Shipment</th>
-                                                        <th>Action</th>
+                                                        {/*<th>Action</th>*/}
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -77,9 +77,9 @@ const OrderDetail = () => {
                                                                 <td><Link to={`/item/item_details/${item.id}/${item.slug}`}>{item.name}</Link></td>
                                                                 <td>${item.price} x {item.quantity} = ${item.price * item.quantity}</td>
                                                                 <td>{order.order_status}</td>
-                                                                <td>
-                                                                    <span><RiDeleteBin6Line/></span>
-                                                                </td>
+                                                                {/*<td>*/}
+                                                                {/*    <span><RiDeleteBin6Line/></span>*/}
+                                                                {/*</td>*/}
                                                             </tr>
                                                         ))
                                                     }

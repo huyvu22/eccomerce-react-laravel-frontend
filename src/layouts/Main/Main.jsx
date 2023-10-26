@@ -1,12 +1,13 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import './Main.scss';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import '../../assets/styles/scss/styles.scss'
+import '../../assets/styles/scss/styles.scss';
+import 'react-loading-skeleton/dist/skeleton.css'
 import Header from '../Header/Header'
 import Footer from "../Footer/Footer";
 import ScrollButton from "../../components/ScrollButton/ScrollButton";
 import {useDispatch, useSelector} from 'react-redux';
-import {clearKeywords, hideCart, hideCategory, hideMenu, onFocus, updateKeywords} from "../Header/HeaderSlice";
+import {hideCart, hideCategory, hideMenu, onFocus, updateKeywords} from "../Header/HeaderSlice";
 import RouteCore from "../../services/Routes/RouteCore";
 import CartSideBar from "../../components/CartSideBar/CartSideBar";
 import Social from "../../components/Social/Social";
@@ -16,6 +17,8 @@ import Register from "../../pages/Auth/Register/Register";
 import ForgotPass from "../../pages/Auth/Forgot/ForgotPass";
 import CategorySideBar from "../../components/CategorySideBar/CategorySideBar";
 import MenuMobile from "../../components/MenuMobile/MenuMobile";
+import ModalLogin from "../../components/Modal/ModalLogin/ModalLogin";
+import {hideModalLogin} from "../../components/Modal/ModalLogin/ModalLoginSlice";
 
 function Main() {
     const dispatch = useDispatch();
@@ -26,7 +29,7 @@ function Main() {
     const isShowMenu = useSelector((state) => state.cartItems.isShowMenu);
     const isFocus = useSelector((state) => state.searchProducts.inputSearchFocus);
     const [showBackDrop, setShowBackDrop] = useState(false);
-    
+    const isShowModalLogin = useSelector((state) => state.modalLogin.isShow)
 
     useEffect(() => {
         setShowBackDrop(isShow);
@@ -43,6 +46,7 @@ function Main() {
     useEffect(() => {
         setShowBackDrop(isShowMenu)
     }, [isShowMenu]);
+
 
     useEffect(() => {
         window.scrollTo(0, 400);
@@ -64,7 +68,8 @@ function Main() {
         <>
             <div className="back-drop" style={{display: `${showBackDrop ? 'block' : 'none'}`}} onClick={handleClose}></div>
             <Routes>
-                <Route path="/*" element={<MainLayout formRef={formRef} searchRef={searchRef} handleClose={handleClose}/>}/>
+                <Route path="/*" element={<MainLayout formRef={formRef} searchRef={searchRef} handleClose={handleClose}
+                                                      isShowModalLogin={isShowModalLogin}/>}/>
                 <Route path="buyer/login" element={<LoginLayout/>}/>
                 <Route path="buyer/register" element={<RegisterLayout/>}/>
                 <Route path="buyer/forgot" element={<ForgotPasswordLayout/>}/>
@@ -75,7 +80,8 @@ function Main() {
     )
 }
 
-function MainLayout({formRef, searchRef, handleClose}) {
+function MainLayout({formRef, searchRef, handleClose, isShowModalLogin}) {
+    const dispatch = useDispatch();
     return (
         <>
             <Header formRef={formRef} searchRef={searchRef} handleClose={handleClose}/>
@@ -85,6 +91,8 @@ function MainLayout({formRef, searchRef, handleClose}) {
             <CategorySideBar/>
             <MenuMobile/>
             <ScrollButton/>
+            <ModalLogin show={isShowModalLogin}
+                        onHide={() => dispatch(hideModalLogin())}/>
             <Footer/>
         </>
     );

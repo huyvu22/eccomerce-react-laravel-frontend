@@ -1,6 +1,7 @@
 import React from 'react';
 import {FaShoppingCart} from "react-icons/fa";
 import './Promotion.scss'
+import {Link} from "react-router-dom";
 
 const Promotion = () => {
     return (
@@ -11,10 +12,10 @@ const Promotion = () => {
                         <div className="promo-content">
                             <h3>starts with $500</h3>
                             <h2>Office Pantry Set</h2>
-                            <a href="#" className="btn btn-inline">
+                            <Link to="/products/category/office-table" className="btn btn-inline">
                                 <span className="me-2 mt-2"><FaShoppingCart/></span>
                                 <span>Shop now</span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

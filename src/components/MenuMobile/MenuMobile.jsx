@@ -55,7 +55,6 @@ const MenuMobile = () => {
 
     const handleLogout = async () => {
         const res = await client.post('logout', '', '', userToken);
-        console.log(res)
         if (res.response.ok) {
             const data = await res.data;
             if (data.status === "success") {
@@ -149,11 +148,11 @@ const MenuMobile = () => {
                 <div className="nav-info-group">
                     <div className="nav-info">
                         <span><BsFillPhoneFill/></span>
-                        <p><small>call us</small> <br/><span>+91-9876543210</span></p>
+                        <p><small>call us</small> <br/><span>+84-943603844</span></p>
                     </div>
                     <div className="nav-info">
                         <span><MdOutlineAlternateEmail/></span>
-                        <p><small>email us</small> <br/><span>sales@yourcompany.com</span></p>
+                        <p><small>email us</small> <br/><span>ecommerce@gmail.com</span></p>
                     </div>
                 </div>
                 <div className="nav-footer">

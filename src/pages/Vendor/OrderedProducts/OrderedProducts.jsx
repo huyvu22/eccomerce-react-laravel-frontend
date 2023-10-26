@@ -24,7 +24,10 @@ const OrderedProducts = () => {
             setOrderProduct(orderData)
         }
     }
+
     useEffect(() => {
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
         getAllOrdered();
     }, []);
 

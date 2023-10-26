@@ -23,7 +23,7 @@ const Home = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const element = document.documentElement || document.body;
+        const element = document.body;
         element.scrollIntoView({behavior: "smooth", block: "start"});
     }, []);
 
@@ -34,11 +34,14 @@ const Home = () => {
     }, [location.pathname, dispatch]);
 
     const getUserWishList = async () => {
-        const res = await client.get('wishlist', '', userToken);
-        if (res.response.ok === true) {
-            const dataObj = await res.data;
-            setWishList(dataObj.data)
+        if (userToken) {
+            const res = await client.get('wishlist', '', userToken);
+            if (res.response.ok === true) {
+                const dataObj = await res.data;
+                setWishList(dataObj.data)
+            }
         }
+
     }
 
     useEffect(() => {

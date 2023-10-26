@@ -10,21 +10,13 @@ import {Link} from "react-router-dom";
 import {processFetchedData} from "../../../utils/dataHandler";
 import {useSelector} from "react-redux";
 import useMyCart from "../../../services/Hooks/useMyCart";
+import Skeleton from "react-loading-skeleton";
 
 const NewItems = () => {
     const {data, loading} = useFetchData("products", "product-type/new_arrival");
     const favoriteItems = useSelector((state) => state.productCard.wishList);
     const compareItems = useSelector((state) => state.productCard.compareList);
     const [myCart] = useMyCart();
-
-    useEffect(() => {
-        const element = document.documentElement || document.body;
-        element.scrollIntoView({behavior: "smooth", block: "start"});
-    }, []);
-
-    if (!data?.length) {
-        return null
-    }
 
     const showData = processFetchedData(data, favoriteItems, myCart, compareItems);
 
@@ -91,23 +83,43 @@ const NewItems = () => {
     };
 
     return (
-        <section className="new-item-part">
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <div className="section-heading">
-                            <h2>collected new items</h2>
+        <>
+            {
+                !showData?.length ?
+                    <section className="new-item-part">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col">
+                                    <div className="section-heading">
+                                        <h2>collected new items</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="section-items">
+                                        <div className="wrapper">
+                                            {[...Array(6).keys()].map((index) => (
+                                                <div className="product-card" key={index}>
+                                                    <Skeleton height={200} width={170}/>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                {
-                    loading === true
-                        ?
-                        <div className="loading">
-                            <h3>Loading...</h3>
-                        </div>
-                        :
-                        <>
+                    </section> :
+                    <section className="new-item-part">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col">
+                                    <div className="section-heading">
+                                        <h2>collected new items</h2>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="row">
                                 <div className="col">
                                     <div className="section-items">
@@ -120,21 +132,21 @@ const NewItems = () => {
 
                                 </div>
                             </div>
-                        </>
-                }
-
-                <div className="row">
-                    <div className="col-12">
-                        <div className="view-all d-flex justify-content-center">
-                            <Link to="/item/products/latest/" className="btn btn-inline">
-                                <span className="me-2"><FaEye/></span>
-                                <span>view all</span>
-                            </Link>
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="view-all d-flex justify-content-center">
+                                        <Link to="/item/products/latest/" className="btn btn-inline">
+                                            <span className="me-2"><FaEye/></span>
+                                            <span>view all</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </section>
+            }
+        </>
+
     );
 };
 

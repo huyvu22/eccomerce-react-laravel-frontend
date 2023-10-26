@@ -1,10 +1,8 @@
 .modal.show .modal-dialog {
-  //transform: none;
   width: 500px;
-  align-items: center;
 
-  @media (max-width: 575px) {
-    width: 96%;
+  @media screen and (max-width: 575px) {
+    width: 96% !important;
     align-items: center;
   }
 }

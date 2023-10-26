@@ -100,13 +100,6 @@ const ListProducts = () => {
             confirmButtonText: 'Yes'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // let res = await fetch(`http://buynow.test/api/seller/products/${product.id}`, {
-                //     method: "DELETE",
-                //     headers: {
-                //         'Authorization': `Bearer ${sellerToken}`,
-                //     },
-                // })
-                // const response = await res.json();
 
                 const res = await client.delete(`seller/products/${product.id}`, '', sellerToken);
                 const response = res.data;
@@ -124,6 +117,8 @@ const ListProducts = () => {
         })
     }
     const handlePage = (page) => {
+        const elementToScroll = document.querySelector(".content-reverse");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
         setCurrentPage(page);
     }
 
@@ -143,6 +138,7 @@ const ListProducts = () => {
                                     <div className="orderlist">
                                         <div className="orderlist-head">
                                             <h5>Total products: {paginate?.total}</h5>
+                                            <Link to='/item/products/add' className="btn btn-inline">+ Add Product</Link>
                                         </div>
                                         <div className="orderlist-body">
                                             <div className="row">

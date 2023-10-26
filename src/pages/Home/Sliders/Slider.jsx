@@ -13,14 +13,16 @@ import {FaShoppingCart} from "react-icons/fa";
 import {asset} from "../../../services/Helpers/Image/image";
 import useClient from "../../../services/Hooks/useClient";
 
-const Slider = () => {
+const Slider = ({setLoading}) => {
     const [sliders, setSliders] = useState([]);
     const client = useClient();
     const getSlider = async () => {
+        setLoading(true);
         const res = await client.get('sliders');
         if (res.response.ok) {
             const data = await res.data.data;
             setSliders(data);
+            setLoading(false);
         }
 
     }
@@ -28,6 +30,7 @@ const Slider = () => {
         getSlider();
     }, []);
 
+    
     useEffect(() => {
         AOS.init({
             duration: 100000
@@ -65,10 +68,10 @@ const Slider = () => {
                             modules={[Autoplay, Pagination, Navigation]}
                         >
                             <div className="swiper-wrapper">
-                                {sliders.length > 0 && sliders.map((slider, index) => (
-                                    <div className="row" key={index}>
+                                {sliders?.length > 0 && sliders.map((slider, index) => (
+                                    <div className="row" key={`${slider.id}_${index}`}>
                                         <div className="col-md-6 col-lg-6">
-                                            <SwiperSlide>
+                                            <SwiperSlide key={`${slider.id}_${index}`}>
                                                 <div className="swiper-slide">
                                                     <span><img src={asset(slider.banner)} alt="img"/></span>
                                                     <div className="banner-content">
@@ -83,8 +86,6 @@ const Slider = () => {
                                         </div>
                                     </div>
                                 ))}
-
-
                             </div>
                             <div className="custom-swiper-button-next" style={{cursor: 'pointer'}}>
                                 <span className="bi-chevron-right"/>

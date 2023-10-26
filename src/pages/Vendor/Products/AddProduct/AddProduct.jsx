@@ -60,9 +60,9 @@ const AddProduct = () => {
 
     const handleCategoryChange = (event) => {
         setData({...data, [event.target.name]: event.target.value});
-        const selectedCategoryId = (event.target.value);
+        const selectedCategoryId = event.target.value;
 
-        const selectedCategoryData = categories.find(category => category.id === selectedCategoryId);
+        const selectedCategoryData = categories.find(item => item.category.id === +selectedCategoryId);
         if (selectedCategoryData) {
             setSubcategories(selectedCategoryData.subCategory);
         } else {
@@ -135,8 +135,8 @@ const AddProduct = () => {
                                                 <option value="0">-SELECT-</option>
                                                 {
                                                     categories.length &&
-                                                    categories.map(({id, category, subCategory}) => (
-                                                        <option value={id} key={id}>{category.name}</option>
+                                                    categories.map(({category, subCategory}) => (
+                                                        <option value={category.id} key={category.name}>{category.name}</option>
                                                     ))
                                                 }
                                             </select>

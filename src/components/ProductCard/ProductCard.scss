@@ -1,19 +1,18 @@
 .col {
-  @media (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     padding: 0 4px;
   }
 
   .product-card {
     width: 100%;
-    //margin-bottom: 25px;
     padding: 15px 18px;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--white);
     overflow: hidden;
-    border: 1px solid #fff;
+    border: 1px solid var(--white);
     position: relative;
 
-    @media (max-width: 575px) {
+    @media screen and (max-width: 575px) {
       padding: 8px;
       margin-bottom: 10px;
 
@@ -30,20 +29,17 @@
 
     }
 
-    @media (max-width: 450px) {
-      //height: 300px;
-    }
 
     &:hover {
       transition: linear 0.2s;
-      border: 1px solid var(--text-primary);
+      border: 1px solid var(--primary);
       box-shadow: 0 8px 15px 0 rgb(0 0 0 / 10%);
 
       .product-content {
         .product-add {
           transition: linear 0.2s;
-          background-color: var(--text-primary);
-          color: #fff;
+          background-color: var(--primary);
+          color: var(--white);
         }
       }
 
@@ -62,11 +58,27 @@
       position: relative;
 
       .grid-image {
-        height: 233px;
+        height: 270px;
         display: block;
         position: relative;
         width: 100%;
         overflow: hidden;
+
+        @media screen and (max-width: 1200px) {
+          height: 180px;
+        }
+
+        @media screen and (max-width: 575px) {
+          height: 175px;
+        }
+
+        @media screen and (max-width: 415px) {
+          height: 185px;
+        }
+
+        @media screen and (max-width: 376px) {
+          height: 170px;
+        }
 
         .product-label {
           display: flex;
@@ -74,46 +86,50 @@
           position: absolute;
           top: 0;
           left: 0;
-          background: red;
+          background: var(--red);
           border-radius: 5px;
 
           label {
             padding: 0 7px;
             display: inline-block;
-            color: #fff;
+            color: var(--white);
             font-size: 14px;
             text-transform: capitalize;
           }
         }
 
         .red {
-          background: red;
+          background: var(--red);
         }
 
         .purple {
-          background: purple;
+          background: var(--purple);
         }
 
         .green {
-          background: green;
+          background: var(--green);
         }
 
 
         .product-like {
           position: absolute;
           right: 0;
-          color: #ccc;
+          color: var(--gray-chalk);
           font-size: 18px;
           cursor: pointer;
 
           &:hover {
-            color: var(--text-primary);
+            color: var(--text-hover);
           }
         }
 
         .compare {
           @extend .product-like;
           right: 30px;
+
+          @media screen and (max-width: 995px) {
+            display: none;
+          }
         }
 
         .quick-preview {
@@ -128,17 +144,14 @@
             border: 1px solid #3b5998;
             padding: 7px 15px;
             background-color: #3b5998;
-            color: #fff;
+            color: var(--white);
 
             &:hover {
-              background-color: #07779a;
+              background-color: var(--text-hover);
             }
           }
         }
 
-        @media (max-width: 450px) {
-          max-height: 130px;
-        }
       }
     }
 
@@ -155,7 +168,7 @@
         span {
           padding-right: 5px;
           font-size: 14px;
-          color: #777;
+          color: var(--gray);
         }
       }
 
@@ -169,7 +182,7 @@
         }
 
         span {
-          color: #000;
+          color: var(--black);
           font-weight: 600;
         }
       }
@@ -192,8 +205,8 @@
         .action-input {
           width: 70%;
           height: 36px;
-          background: var(--text-primary);
-          color: #fff;
+          background: var(--primary);
+          color: var(--white);
           font-size: 16px;
         }
       }

@@ -52,8 +52,8 @@ const CheckOut = () => {
     const [termsChecked, setTermsChecked] = useState(true);
 
     useEffect(() => {
-        const element = document.documentElement || document.body;
-        element.scrollIntoView({behavior: "smooth", block: "start"});
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
     }, []);
 
     const getShippingFee = async () => {
@@ -132,8 +132,6 @@ const CheckOut = () => {
     const handleProceedToCheckout = async () => {
 
         if (termsChecked && userInfo?.phone && userInfo?.address) {
-            // const selectedPaymentMethod = paymentMethodRef.current;
-            console.log(selectedPaymentMethod)
 
             let paymentUrl = '';
             if (selectedPaymentMethod === 'paypal') {
@@ -354,10 +352,8 @@ const CheckOut = () => {
                                                         <input type="radio"
                                                                name="paypalMethod"
                                                                id='paypal'
-                                                            // ref={paymentMethodRef}
                                                                onChange={(e) => setSelectedPaymentMethod(e.target.id)}
                                                                checked={selectedPaymentMethod === 'paypal'}
-                                                            // onChange={() => (paymentMethodRef.current = 'paypal')}
                                                         />
                                                         <label htmlFor="paypal">PayPal</label>
                                                     </div>
@@ -367,10 +363,8 @@ const CheckOut = () => {
                                                         <input type="radio"
                                                                name="vnPayMethod"
                                                                id='vnpay'
-                                                            // ref={paymentMethodRef}
                                                                onChange={(e) => setSelectedPaymentMethod(e.target.id)}
                                                                checked={selectedPaymentMethod === 'vnpay'}
-                                                            // onChange={() => (paymentMethodRef.current = 'vnpay')}
                                                         />
                                                         <label htmlFor="vnpay">VnPay</label>
                                                     </div>
@@ -381,10 +375,8 @@ const CheckOut = () => {
                                                                name="codMethod"
                                                                id='cod'
                                                                defaultChecked={true}
-                                                            // ref={paymentMethodRef}
                                                                onChange={(e) => setSelectedPaymentMethod(e.target.id)}
                                                                checked={selectedPaymentMethod === 'cod'}
-                                                            // onChange={() => (paymentMethodRef.current = 'cod')}
                                                         />
                                                         <label htmlFor="cod">COD</label>
                                                     </div>

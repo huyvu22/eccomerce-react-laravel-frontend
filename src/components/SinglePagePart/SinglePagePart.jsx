@@ -32,12 +32,18 @@ const SinglePagePart = ({attributes}) => {
     const showData = processFetchedData(data, favoriteItems, myCart, compareItems);
 
     useEffect(() => {
-        window.scrollTo(0, 400);
-    }, [])
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, [attributes]);
 
     const handlePage = (page) => {
         setCurrentPage(page);
-        window.scrollTo(0, 400);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     const handleInputChange = (e) => {
@@ -63,6 +69,7 @@ const SinglePagePart = ({attributes}) => {
     }
 
     const handleFilterByRating = (e, rating) => {
+
         const isChecked = e.target.checked;
         if (isChecked) {
             setSelectedRating(rating);
@@ -71,6 +78,9 @@ const SinglePagePart = ({attributes}) => {
             setSelectedRating(null);
             dispatch(clearFilterRating(''))
         }
+
+        const elementToScroll = document.querySelector(".col-lg-9");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
     }
     const handleClearFilter = () => {
         setSelectedRating(null);
@@ -221,7 +231,7 @@ const SinglePagePart = ({attributes}) => {
                                         {data?.length ?
                                             showData?.map((item) => <ProductCard key={item.id} item={item}/>)
                                             :
-                                            <h4 style={{margin: '0 auto'}}>PRODUCT NOT FOUND</h4>
+                                            <h4 className="not-found" style={{margin: '0 auto'}}>PRODUCT NOT FOUND</h4>
                                         }
                                     </div>
                                     <hr/>

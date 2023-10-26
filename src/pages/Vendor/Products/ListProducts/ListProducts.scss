@@ -3,14 +3,14 @@
     .orderlist {
       margin-bottom: 20px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       padding: 30px 30px;
 
-      @media (max-width: 991px) {
+      @media screen and (max-width: 991px) {
         padding: 0 20px 20px;
       }
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 0 15px 15px;
       }
 
@@ -18,9 +18,22 @@
         padding: 10px 0;
         align-items: center;
         cursor: pointer;
+        display: flex;
+        justify-content: space-between;
 
         h5 {
           font-weight: 600 !important;
+        }
+
+        a {
+          background: var(--white) !important;
+          color: var(--text-primary) !important;
+          padding: 10px 15px !important;
+          border: none !important;
+
+          &:hover {
+            color: var(--link) !important;
+          }
         }
       }
 
@@ -28,7 +41,7 @@
         .table-scroll {
           width: 100%;
 
-          @media (max-width: 1199px) {
+          @media screen and (max-width: 1199px) {
             overflow-x: scroll;
           }
 
@@ -37,17 +50,18 @@
 
             thead {
               tr {
-                background: var(--text-primary);
+                background: var(--primary);
                 text-align: center;
 
                 th {
-                  color: #fff;
+                  color: var(--white);;
                   font-size: 17px;
                   padding: 12px 20px;
-                  border-right: 1px solid #fff;
-                  @media (max-width: 575px) {
+                  border-right: 1px solid var(--white);;
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
+
                   &:first-child {
                     border-radius: 6px 0 0 0;
                   }
@@ -67,8 +81,8 @@
                   padding: 12px 20px;
                   text-align: center;
                   border: 1px solid #e8e8e8;
-                  background: #f5f5f5;
-                  @media (max-width: 575px) {
+                  background: var(--chalk);
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                     padding: 5px;
                   }
@@ -89,19 +103,19 @@
                     width: auto;
                     height: 100px;
 
-                    @media (max-width: 991px) {
+                    @media screen and (max-width: 991px) {
                       width: 100%;
                     }
                   }
 
                   a {
                     .edit {
-                      background: #fff !important;;
-                      color: green !important;
+                      background: var(--white) !important;
+                      color: var(--green) !important;
 
                       &:hover {
-                        background: green !important;
-                        color: #fff !important;
+                        background: var(--green) !important;
+                        color: var(--white) !important;
                       }
                     }
                   }
@@ -110,30 +124,28 @@
                     display: inline-block;
                     font-size: 20px;
                     margin-right: 5px;
-                    background: #f5f5f5;
+                    background: var(--chalk);
                     padding: 5px 7px;
                     cursor: pointer;
                     border-radius: 5px;
 
                     &:first-child {
-                      color: green;
+                      color: var(--green);
 
                       &:hover {
-                        background: green;
-                        color: #fff;
+                        background: var(--green);
+                        color: var(--white);;
                       }
                     }
 
                     &:last-child {
-                      color: red;
+                      color: var(--red);
 
                       &:hover {
-                        background: red;
-                        color: #fff;
+                        background: var(--red);
+                        color: var(--white);;
                       }
                     }
-
-
                   }
                 }
               }
@@ -157,7 +169,7 @@
           height: 40px;
           line-height: 40px;
           text-align: center;
-          background: #fff;
+          background: var(--white);;
           border-radius: 50%;
           cursor: pointer;
 
@@ -165,18 +177,18 @@
             font-size: 22px;
 
             &:hover {
-              color: var(--icon-color-hover);
+              color: var(--white);
             }
           }
 
           &:hover {
-            background: var(--text-primary);
-            color: var(--icon-color-hover);
+            background: var(--primary);
+            color: var(--white);
           }
 
           &.active {
-            background: var(--text-primary);
-            color: var(--icon-color-hover);
+            background: var(--primary);
+            color: var(--white);
           }
         }
 

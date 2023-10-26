@@ -10,6 +10,7 @@ import {MdKeyboardArrowRight} from "react-icons/md";
 import {BiMinus} from "react-icons/bi";
 import {IoMdList} from "react-icons/io";
 import {Link} from "react-router-dom";
+import {textLimit} from "../../services/Helpers/string/String";
 
 const CategorySideBar = () => {
     const isShowCate = useSelector((state) => state.cartItems.isShowCate);
@@ -61,7 +62,7 @@ const CategorySideBar = () => {
                                 }}
                             >
                                 <span><FaArrowRight/></span>
-                                {category.name}
+                                {textLimit(category.name, 16)}
                                 <span className={clsx('', showSubCategory === category.id && 'active-arrow')}><MdKeyboardArrowRight/></span>
                             </a>
                             <ul

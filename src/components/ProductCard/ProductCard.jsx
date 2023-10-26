@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ProductCard.scss'
 import {BsFillSuitHeartFill} from "react-icons/bs";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
@@ -16,7 +16,6 @@ import {asset} from "../../services/Helpers/Image/image";
 import {formatter, roundedNumber} from "../../services/Helpers/Number/Number";
 
 const ProductCard = ({item}) => {
-
     const {id, product_type, name, slug, thumb_image, isLike, isCompare, price, offer_price, short_description, quantity, availability, vendor, rating, updated_at} = item;
 
     const {addItemToCart, removeItemFromCart, toggleWishlistItem, toggleCompare, likeRef, compareRef} = useAddToCart({
@@ -28,6 +27,7 @@ const ProductCard = ({item}) => {
         offer_price,
         isLike,
         isCompare,
+        short_description,
         quantity,
         vendor,
         availability,

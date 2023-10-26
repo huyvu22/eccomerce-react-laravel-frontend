@@ -201,36 +201,34 @@ const Header = ({searchRef, formRef, handleClose}) => {
 
                             <div className={clsx("search-suggestion", suggestionSearch.length === 0 && "not-found")} ref={searchRef}>
                                 {suggestionSearch?.length ? (
-                                    <>
-                                        <PerfectScrollbar>
-                                            {suggestionSearch.map((item) => (
-                                                <div
-                                                    className="search-suggestion-item"
-                                                    key={item.id}
-                                                    onClick={(e) => handleClickItem(e, item)}
-                                                >
-                                                    <table>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="">
-                                                                    <img src={asset(item.thumb_image)} alt="img"/>
-                                                                </a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="">{item.name}</a>
-                                                                <br/>
-                                                                <p>
-                                                                    Price: {item.offer_price}$ <del> {item.price}$</del>
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            ))}
-                                        </PerfectScrollbar>
-                                    </>
+                                    <PerfectScrollbar>
+                                        {suggestionSearch.map((item) => (
+                                            <div
+                                                className="search-suggestion-item"
+                                                key={item.id}
+                                                onClick={(e) => handleClickItem(e, item)}
+                                            >
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="">
+                                                                <img src={asset(item.thumb_image)} alt="img"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="">{item.name}</a>
+                                                            <br/>
+                                                            <p>
+                                                                Price: {item.offer_price}$ <del> {item.price}$</del>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ))}
+                                    </PerfectScrollbar>
                                 ) : (
                                     <div className="search-suggestion-item">
                                         <h5>Not Found Product</h5>

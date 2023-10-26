@@ -38,8 +38,8 @@ const Contact = () => {
     }
 
     useEffect(() => {
-        const element = document.documentElement || document.body;
-        element.scrollIntoView({behavior: "smooth", block: "start"});
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
         getContact();
     }, []);
 

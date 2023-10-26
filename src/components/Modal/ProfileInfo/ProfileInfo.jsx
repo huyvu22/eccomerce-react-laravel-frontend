@@ -14,8 +14,7 @@ const ProfileInfo = (props) => {
     const {userInfo, setUserInfo} = props;
     const {SERVER_API} = config;
     const client = useClient();
-    const location = useLocation();
-    const isBuyer = location.pathname.includes('/buyer/my-profile')
+    const isBuyer = getCookie('user_access_token');
 
     const handleStoreProfileInfo = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
@@ -38,7 +37,7 @@ const ProfileInfo = (props) => {
                     const data = await res.data;
                     if (data.status === 'success') {
                         setUserInfo(data.data)
-                        toast('Address stored successfully');
+                        toast('Updated successfully');
                     }
                 }
 
@@ -56,14 +55,6 @@ const ProfileInfo = (props) => {
             formData.append("description", userInfo?.description);
 
             try {
-                // const res = await client.post('seller/address', formData, '', userToken)
-                // if (res.response.ok) {
-                //     const data = await res.data;
-                //     if (data.status === 'success') {
-                //         setUserInfo(data.data)
-                //         toast('Address stored successfully');
-                //     }
-                // }
 
                 let res = await fetch(`${SERVER_API}seller/address`, {
                     method: "POST",
@@ -73,7 +64,6 @@ const ProfileInfo = (props) => {
                     body: formData,
                 })
                 const response = await res.json();
-                console.log(response)
 
                 if (response.status === 'success') {
                     toast('Address stored successfully');
@@ -86,8 +76,6 @@ const ProfileInfo = (props) => {
                 console.error('Error storing address:');
             }
         }
-
-
     }
 
     return (

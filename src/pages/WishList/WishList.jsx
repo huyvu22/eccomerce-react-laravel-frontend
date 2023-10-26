@@ -27,8 +27,8 @@ const WishList = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const element = document.documentElement || document.body;
-        element.scrollIntoView({behavior: "smooth", block: "start"});
+        const elementToScroll = document.querySelector(".single-banner");
+        elementToScroll.scrollIntoView({behavior: "smooth", block: "start"});
     }, []);
 
     const handleAddItem = (product) => {
@@ -108,7 +108,7 @@ const WishList = () => {
                                                                                 ?
                                                                                 <ProductActions quantity={cartItem.quantity} item={cartItem}/>
                                                                                 :
-                                                                                <button className="product-add" onClick={() => handleAddItem(item)}>
+                                                                                <button className="product-add-wishlist" onClick={() => handleAddItem(item)}>
                                                                                     <span>Add to cart</span>
                                                                                 </button>
                                                                         }

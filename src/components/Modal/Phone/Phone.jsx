@@ -11,8 +11,7 @@ const Phone = (props) => {
     const [editPhone, setEditPhone] = useState('');
     const {userInfo, setUserInfo} = props;
     const client = useClient();
-    const location = useLocation();
-    const isBuyer = location.pathname.includes('/buyer/my-profile')
+    const isBuyer = getCookie('user_access_token');
 
     const handleStorePhone = async () => {
         const userToken = getCookie('user_access_token') || getCookie('seller_access_token');

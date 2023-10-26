@@ -42,7 +42,6 @@ const EditProduct = () => {
         const res = await client.get(`seller/products/${id}/edit`, '', sellerToken)
         if (res.response.ok) {
             const dataObj = await res.data.data;
-            console.log(dataObj)
             setProduct(dataObj);
             setFullDescription(dataObj.full_description);
             setSubcategories(dataObj.category.subCategories);
@@ -97,8 +96,9 @@ const EditProduct = () => {
 
     const handleCategoryChange = (event) => {
         setData({...data, [event.target.name]: event.target.value});
-        const selectedCategoryId = (event.target.value);
-        const selectedCategoryData = categories.find(category => category.id === selectedCategoryId);
+        const selectedCategoryId = event.target.value;
+
+        const selectedCategoryData = categories.find(item => item.category.id === +selectedCategoryId);
         if (selectedCategoryData) {
             setSubcategories(selectedCategoryData.subCategory);
         } else {
@@ -180,8 +180,8 @@ const EditProduct = () => {
                                                 <option value="0">-SELECT-</option>
                                                 {
                                                     categories.length &&
-                                                    categories.map(({id, category, subCategory}) => (
-                                                        <option value={id} key={id} selected={product?.category?.name === category?.name}>{category.name}</option>
+                                                    categories.map(({category, subCategory}) => (
+                                                        <option value={category.id} key={category.id} selected={product?.category?.name === category?.name}>{category.name}</option>
                                                     ))
                                                 }
                                             </select>

@@ -7,13 +7,13 @@
   width: 40px;
   z-index: 3;
   cursor: pointer;
-  background-color: var(--text-primary);
+  background-color: var(--primary);
   border-radius: 8px;
   animation: move 2s infinite;
 
   span {
     line-height: 40px;
-    color: #fff;
+    color: var(--white);
     animation: move 1s infinite;
   }
 

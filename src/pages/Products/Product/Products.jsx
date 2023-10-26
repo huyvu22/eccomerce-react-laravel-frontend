@@ -37,19 +37,16 @@ const Products = () => {
 
     if (isCategory) {
         attributes = searchParam ? `category/${slug}?${searchParam}` : `category/${slug}`;
-        pageName = slug;
-        name = slug;
+        pageName = slug.replace('-', ' ');
+        name = slug.replace('-', ' ');
 
     } else if (isSubCategory) {
         attributes = searchParam ? `sub-category/${slug}?${searchParam}` : `sub-category/${slug}`;
-        pageName = slug;
-        name = slug;
+        pageName = slug.replace('-', ' ');
+        name = slug.replace('-', ' ');
 
     } else if (isSearch) {
-        attributes = `search/${keyword}`;
-        if (priceSpread.length) {
-            attributes += `?${searchParam}`
-        }
+        attributes = searchParam ? `search/${keyword}?${searchParam}` : `search/${keyword}`;
         pageName = 'Search Result';
         name = 'Search Result';
 
@@ -69,10 +66,9 @@ const Products = () => {
         name = 'New Arrival';
     } else if (isSellerProduct) {
         attributes = searchParam ? `vendor-products/${id}?${searchParam}` : `vendor-products/${id}`;
-        pageName = slug;
-        name = slug;
+        pageName = slug.replace('-', ' ');
+        name = slug.replace('-', ' ');
     }
-    
 
     return (
         <>

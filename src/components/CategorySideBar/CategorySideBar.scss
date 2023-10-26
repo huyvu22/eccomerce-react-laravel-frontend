@@ -1,12 +1,12 @@
 .category-sidebar {
   position: fixed;
-  top: 0px;
+  top: 0;
   left: -320px;
   width: 280px;
   height: 100vh;
   z-index: 15;
-  background: #fff;
-  box-shadow: 15px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  background: var(--white);
+  box-shadow: 15px 0 25px 0 rgba(0, 0, 0, 0.15);
   transition: all linear .3s;
 
   .category-header {
@@ -29,7 +29,7 @@
 
       &:hover {
         background-color: var(--text-primary);
-        color: #fff;
+        color: var(--icon-color-hover);
       }
 
       span {
@@ -46,7 +46,7 @@
 
     .category-item {
       width: 100%;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid var(--gray-chalk);
 
       .category-link {
         display: flex;
@@ -94,11 +94,10 @@
             line-height: 18px;
             border-radius: 8px;
             padding: 10px 15px 13px 5px;
-            background: #fff;
+            background: var(--white);
             position: relative;
             white-space: nowrap;
             text-transform: capitalize;
-            //transition: all linear .3s;
           }
         }
       }

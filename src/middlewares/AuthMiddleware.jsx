@@ -14,18 +14,6 @@ export default function AuthMiddleware() {
 
     const isLoggedIn = async () => {
         try {
-            // const res = await fetch('http://buynow.com/api/check-token', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${userToken}`
-            //     }
-            // });
-            //
-            // const data = await res.json();
-            // if (data.valid === true) {
-            //     return data.valid;
-            // }
 
             const res = await client.post('check-token', '', '', userToken);
             const resData = await res.data;
@@ -42,18 +30,6 @@ export default function AuthMiddleware() {
     const isRememberLogin = async () => {
         const rememberToken = getCookie('remember_token');
         try {
-            // const res = await fetch(`http://buynow.com/api/check-remember?remember_token=${rememberToken}`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     }
-            // });
-            //
-            // const data = await res.json();
-            // if (data.valid === true) {
-            //     return data.valid;
-            // }
-
             const res = await client.post(`check-remember?remember_token=${rememberToken}`, '', '', userToken);
             const resData = await res.data;
             if (res.response.ok) {
@@ -83,19 +59,10 @@ export default function AuthMiddleware() {
         checkLogin();
     }, []);
 
-
-    // if (loggedIn && (location.pathname === '/buyer/login')) {
-    //     return <Navigate to="/"/>;
-    // }
-    //
-    // if (isLoading) {
-    //     return null;
-    // }
-    //
-    // return <Outlet/>;
-
     if (isLoading) {
-        return null;
+        return <div className="loading">
+            <h3>Loading...</h3>
+        </div>;
     }
 
     return loggedIn ? <Outlet/> : <Navigate to="/buyer/login"/>;

@@ -1,0 +1,69 @@
+.modal.show .modal-dialog {
+  width: 800px !important;
+
+  .img-thumbnail {
+    padding: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    max-width: 100%;
+    height: 200px;
+  }
+
+  .on {
+    color: var(--orange);
+  }
+
+  .off {
+    color: var(--gray-chalk);
+  }
+
+  del {
+    color: var(--red);
+  }
+
+  .action-td {
+    width: 100px;
+  }
+
+  .product-add {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background-color: #07779a;
+    color: var(--white);
+    margin-bottom: 0 !important;
+
+    span {
+      margin-right: 5px;
+    }
+
+    &:hover {
+      background-color: #08617a;
+      color: var(--white);
+    }
+  }
+
+  .product-action {
+    .action-input {
+      width: 100% !important;
+      height: 36px !important;
+      background: var(--primary) !important;
+      color: #fff;
+      font-size: 16px;
+    }
+
+  }
+
+  .product-remove {
+    @extend .product-add;
+    background-color: #dc3545;
+    color: #fff;
+    margin-top: 6px;
+
+    &:hover {
+      background-color: #bb2d3b;
+      color: var(--white);
+    }
+  }
+}

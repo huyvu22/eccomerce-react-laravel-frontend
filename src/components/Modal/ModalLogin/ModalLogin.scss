@@ -1,0 +1,20 @@
+.modal-dialog-centered {
+  margin-top: 35vh;
+
+  .modal-content {
+    .action {
+      a:first-child {
+        &:hover {
+          background: var(--primary) !important;
+          color: var(--white) !important;
+        }
+      }
+
+      a:last-child {
+        background: var(--white) !important;
+        color: var(--primary) !important;
+      }
+    }
+  }
+}
+

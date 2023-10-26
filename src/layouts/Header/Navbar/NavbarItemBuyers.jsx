@@ -17,9 +17,8 @@ const NavbarItemBuyers = () => {
     );
     const client = useClient();
     const handleLogout = async () => {
-        
+
         const res = await client.post('logout', '', '', userToken);
-        console.log(res)
         if (res.response.ok) {
             const data = await res.data;
             if (data.status === "success") {

@@ -1,7 +1,7 @@
 .footer-part {
   padding-top: 50px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-top: 0;
   }
 
@@ -56,7 +56,7 @@
         color: #555555;
         font-weight: 600;
 
-        @media (max-width: 991px) {
+        @media screen and (max-width: 991px) {
           font-size: 1.3rem;
         }
       }

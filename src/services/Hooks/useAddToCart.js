@@ -13,6 +13,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import useClient from "./useClient";
 import {getCookie} from "../../utils/dataHandler";
+import {showModalLogin} from "../../components/Modal/ModalLogin/ModalLoginSlice";
 
 const useAddToCart = ({
                           id, name, slug,
@@ -32,7 +33,6 @@ const useAddToCart = ({
     const compareRef = useRef();
     const [count, setCount] = useState(0);
     const authenticated = useSelector(state => state.loginUser.isUserAuthenticated);
-    const navigate = useNavigate();
     const client = useClient();
     const userToken = getCookie('user_access_token') || getCookie('seller_access_token');
 
@@ -91,7 +91,8 @@ const useAddToCart = ({
 
             }
         } else {
-            navigate('buyer/login');
+            // navigate('buyer/login');
+            dispatch(showModalLogin())
         }
 
     };

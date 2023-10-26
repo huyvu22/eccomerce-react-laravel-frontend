@@ -6,7 +6,7 @@
 
   .login-form {
     margin: 30px 0 20px 0;
-    background: #fff;
+    background: var(--white);
     padding: 20px;
     border-radius: 5px;
 
@@ -36,13 +36,13 @@
           color: #777;
 
           &.invalid {
-            border: 1px solid red;
+            border: 1px solid var(--red);
           }
         }
 
         .feedback {
-          span{
-            color: red;
+          span {
+            color: var(--red);
           }
         }
       }

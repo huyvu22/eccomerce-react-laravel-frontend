@@ -1,13 +1,13 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import button from "bootstrap/js/src/button";
 import {FaShoppingBasket} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import {useSelector, useDispatch} from "react-redux";
-import {addItem, removeFromCompare} from "../../ProductCard/ProductCardSlice";
-import ProductActions from "../../ProductActions/ProductActions";
-import useMyCart from "../../../services/Hooks/useMyCart";
-import {asset} from "../../../services/Helpers/Image/image";
 import {BsFillStarFill} from "react-icons/bs";
+import {addItem, removeFromCompare} from "../../../ProductCard/ProductCardSlice";
+import ProductActions from "../../../ProductActions/ProductActions";
+import useMyCart from "../../../../services/Hooks/useMyCart";
+import {asset} from "../../../../services/Helpers/Image/image";
 
 const TableItem = (props) => {
     const productsCompare = useSelector((state) => state.productCard.compareList);

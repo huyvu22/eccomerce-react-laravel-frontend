@@ -4,9 +4,9 @@ import NavbarItemAbout from "./NavbarItemAbout";
 import NavbarItemBuyers from "./NavbarItemBuyers";
 import NavbarItemVendor from "./NavbarItemVendor";
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
-import ModalCompareItems from "../../../components/ModalCompareItems/ModalCompareItems";
 import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
+import ModalCompareItems from "../../../components/Modal/ModalCompareItems/ModalCompareItems";
 
 const NavbarTitle = (props) => {
     const [hover, setHover] = useState(false);
@@ -23,24 +23,24 @@ const NavbarTitle = (props) => {
                                 <li className="navbar-item">
                                     <Link to="/">Home</Link></li>
                                 <li className="navbar-item dropdown-mega-menu">
-                                    <Link to="javascript:void(0)"
+                                    <Link to="/" onClick={(event) => event.preventDefault()}
                                           onMouseEnter={() => setHover(true)}
                                           onMouseLeave={() => setHover(false)}> Category</Link>
                                     <NavbarItemsCategory hover={hover}/>
                                     <span><MdOutlineKeyboardArrowDown size={"1.2em"}/></span>
                                 </li>
                                 <li className="navbar-item">
-                                    <Link to="/"> About Us</Link>
+                                    <Link to="/" onClick={(event) => event.preventDefault()}> About Us</Link>
                                     <span><MdOutlineKeyboardArrowDown size={"1.2em"}/></span>
                                     <NavbarItemAbout/>
                                 </li>
                                 <li className="navbar-item">
-                                    <Link to="/"> Buyers</Link>
+                                    <Link to="/" onClick={(event) => event.preventDefault()}> Buyers</Link>
                                     <span><MdOutlineKeyboardArrowDown size={"1.2em"}/></span>
                                     <NavbarItemBuyers/>
                                 </li>
                                 <li className="navbar-item">
-                                    <Link to="/"> Vendor</Link>
+                                    <Link to="/" onClick={(event) => event.preventDefault()}> Vendor</Link>
                                     <span><MdOutlineKeyboardArrowDown size={"1.2em"}/></span>
                                     <NavbarItemVendor {...props}/>
                                 </li>

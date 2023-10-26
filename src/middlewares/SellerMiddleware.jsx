@@ -10,19 +10,6 @@ export default function SellerMiddleware() {
     const [isLoading, setIsLoading] = useState(true);
     const isLoggedIn = async () => {
         try {
-            // const res = await fetch('http://buynow.com/api/check-token', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${sellerToken}`
-            //     }
-            // });
-            //
-            // const data = await res.json();
-            // if (data.valid === true) {
-            //     return data.valid;
-            // }
-
             const res = await client.post('check-token', '', '', sellerToken);
             const resData = await res.data;
             if (res.response.ok) {
@@ -47,7 +34,9 @@ export default function SellerMiddleware() {
 
 
     if (isLoading) {
-        return null;
+        return <div className="loading">
+            <h3>Loading...</h3>
+        </div>;
     }
 
     return loggedIn ? <Outlet/> : <Navigate to="/seller/login"/>;

@@ -8,7 +8,7 @@ import {login, logout} from "../../../layouts/Header/HeaderSlice";
 import {resetCart} from "../../../components/ProductCard/ProductCardSlice";
 import useClient from "../../../services/Hooks/useClient";
 import {generateRandomToken} from "../../../services/Helpers/Number/Number";
-import {getCookie, setCookie} from "../../../utils/dataHandler";
+import {deleteCookie, getCookie, setCookie} from "../../../utils/dataHandler";
 import logo from "../../../assets/images/logo.png";
 
 const Login = () => {
@@ -46,6 +46,9 @@ const Login = () => {
         if ((tokenUserLogin && location.pathname.includes('/seller/login')) || (tokenSellerLogin && location.pathname.includes('/buyer/login'))) {
             dispatch(logout());
             dispatch(resetCart());
+            deleteCookie('user_access_token');
+            deleteCookie('seller_access_token');
+            deleteCookie('remember_token');
         }
     }
 
@@ -72,7 +75,6 @@ const Login = () => {
 
         // Call Api
         if (isValidEmail && formData?.password) {
-            console.log(formData)
             let res = await client.post('login', formData)
             if (rememberMe) {
                 let rememberMeToken = generateRandomToken(32);

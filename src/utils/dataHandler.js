@@ -1,4 +1,5 @@
-import _ from 'lodash'; // Import lodash library
+import _ from 'lodash';
+
 export const handleFavoriteItems = (data, favoriteItems) => {
     favoriteItems.forEach((favoriteItem) => {
         data?.forEach((item) => {

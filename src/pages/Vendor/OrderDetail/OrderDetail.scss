@@ -3,18 +3,18 @@
     .account-card {
       margin-bottom: 30px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       padding: 0 30px 30px;
 
       .account-title {
         margin-bottom: 40px;
         padding: 18px 0;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid var(--gray-chalk);
         position: relative;
         display: flex;
         justify-content: space-between;
 
-        @media (max-width: 575px) {
+        @media screen and (max-width: 575px) {
           font-size: 14px;
         }
 
@@ -22,14 +22,14 @@
           content: '';
           height: 3px;
           width: 50px;
-          background-color: var(--text-primary);
+          background-color: var(--primary);
           position: absolute;
           bottom: -2px;
         }
 
         h5 {
           font-weight: 600;
-          @media (max-width: 575px) {
+          @media screen and (max-width: 575px) {
             font-size: 18px;
           }
         }
@@ -47,15 +47,15 @@
 
             thead {
               tr {
-                background: var(--text-primary);
+                background: var(--primary);
                 text-align: center;
 
                 th {
-                  color: #fff;
+                  color: var(--white);
                   font-size: 17px;
                   padding: 12px 20px;
-                  border-right: 1px solid #fff;
-                  @media (max-width: 575px) {
+                  border-right: 1px solid var(--white);
+                  @media screen and (max-width: 575px) {
                     padding: 0 15px 15px;
                   }
 
@@ -73,20 +73,20 @@
 
             tbody {
               tr {
-                border-bottom: 1px solid #ccc;
+                border-bottom: 1px solid var(--gray-chalk);
 
                 td {
                   color: var(--text);
                   font-weight: 500;
 
-                  @media (max-width: 575px) {
+                  @media screen and (max-width: 575px) {
                     padding: 0 15px 15px;
                   }
 
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
-                    border-right: 1px solid #ccc;
+                    border-right: 1px solid var(--gray-chalk);
                   }
 
                   img {
@@ -106,20 +106,20 @@
                     border-radius: 5px;
 
                     &:first-child {
-                      color: green;
+                      color: var(--green);
 
                       &:hover {
-                        background: green;
-                        color: #fff;
+                        background: var(--green);
+                        color: var(--white);
                       }
                     }
 
                     &:last-child {
-                      color: red;
+                      color: var(--red);
 
                       &:hover {
-                        background: red;
-                        color: #fff;
+                        background: var(--red);
+                        color: var(--white);
                       }
                     }
 
@@ -150,19 +150,19 @@
             padding: 3px;
             border-radius: 8px;
             margin-bottom: 18px;
-            box-shadow: 0px 7px 13px 0px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
             display: flex;
             position: relative;
-            border: 1px solid #ccc;
+            border: 1px solid var(--gray-chalk);
 
             &:focus-within {
-              border-color: var(--text-primary);
+              border-color: var(--primary);
             }
 
             input {
               width: 100%;
               border-radius: 5px;
-              background: #fff;
+              background: var(--white);
               height: 40px;
               padding: 5px 10px 0;
 
@@ -170,9 +170,9 @@
 
             button {
               border-radius: 5px;
-              background: var(--text-primary);
+              background: var(--primary);
               height: 38px;
-              color: #fff;
+              color: var(--white);
               padding: 5px 25px;
               position: absolute;
               right: 4px;
@@ -185,12 +185,12 @@
           width: 600px;
           margin: 20px auto 5px;
 
-          @media (max-width: 575px) {
+          @media screen and (max-width: 575px) {
             font-size: 16px;
           }
 
           ul {
-            border-top: 2px solid var(--text-primary);
+            border-top: 2px solid var(--primary);
             padding-left: 0;
 
             li {
@@ -224,7 +224,7 @@
           padding: 25px;
           border-radius: 8px;
           cursor: pointer;
-          border: 1px solid #fff;
+          border: 1px solid var(--white);
 
           &:hover ul {
             opacity: 1;
@@ -233,7 +233,7 @@
 
           &.active {
             background: #ddffd5;
-            border: 1px solid var(--text-primary);
+            border: 1px solid var(--primary);
           }
 
           ul {
@@ -248,7 +248,7 @@
 
 
             li {
-              margin: 5px 0px;
+              margin: 5px 0;
 
               .edit {
                 width: 30px;
@@ -257,12 +257,12 @@
                 border-radius: 6px;
                 text-align: center;
                 display: inline-block;
-                background: #fff;
+                background: var(--white);
                 text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);;
 
                 &:hover {
-                  background: green;
-                  color: #fff;
+                  background: var(--green);
+                  color: var(--white);
                 }
               }
             }
@@ -295,8 +295,8 @@
                 margin-right: 10px;
 
                 &:checked {
-                  background-color: var(--text-primary);
-                  border-color: var(--text-primary);
+                  background-color: var(--primary);
+                  border-color: var(--primary);
                 }
               }
 
@@ -304,12 +304,8 @@
                 font-size: 16px;
               }
             }
-
           }
-
         }
-
-
       }
     }
   }

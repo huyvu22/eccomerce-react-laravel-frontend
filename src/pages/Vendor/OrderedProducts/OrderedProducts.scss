@@ -4,25 +4,25 @@
       padding: 20px 25px;
       margin-bottom: 30px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--white);
       border: 1px solid #e8e8e8;
       display: flex;
       justify-content: space-between;
       align-items: center;
 
-      @media (max-width: 575px) {
+      @media screen and (max-width: 575px) {
         padding: 0 15px 15px;
       }
 
       h5 {
         font-weight: 600;
-        @media (max-width: 575px) {
+        @media screen and (max-width: 575px) {
           font-size: 16px;
         }
       }
 
       .filter-short {
-        @media (max-width: 575px) {
+        @media screen and (max-width: 575px) {
           font-size: 14px;
         }
 
@@ -33,7 +33,6 @@
           color: var(--heading);
         }
       }
-
     }
 
     .account-card {
@@ -45,14 +44,14 @@
       .account-title {
         margin-bottom: 40px;
         padding: 18px 0;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid var(--gray-chalk);
         position: relative;
 
         &:before {
           content: '';
           height: 3px;
           width: 50px;
-          background-color: var(--text-primary);
+          background-color: var(--primary);
           position: absolute;
           bottom: -2px;
         }
@@ -67,7 +66,7 @@
         .table-wrapper {
           width: 100%;
 
-          @media (max-width: 1199px) {
+          @media screen and (max-width: 1199px) {
             overflow-x: scroll;
           }
 
@@ -77,15 +76,15 @@
 
             thead {
               tr {
-                background: var(--text-primary);
+                background: var(--primary);
                 text-align: center;
 
                 th {
-                  color: #fff;
+                  color: var(--white);
                   font-size: 17px;
                   padding: 12px 20px;
-                  border-right: 1px solid #fff;
-                  @media (max-width: 575px) {
+                  border-right: 1px solid var(--white);
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
@@ -97,19 +96,18 @@
                     border-radius: 0 6px 6px 0;
                   }
                 }
-
               }
             }
 
             tbody {
               tr {
-                border-bottom: 1px solid #ccc;
+                border-bottom: 1px solid var(--gray-chalk);
 
                 td {
                   color: var(--text);
                   font-weight: 500;
 
-                  @media (max-width: 575px) {
+                  @media screen and (max-width: 575px) {
                     font-size: 14px !important;
                   }
 
@@ -120,19 +118,16 @@
                   &:not(:last-child) {
                     text-align: center;
                     padding: 15px 25px;
-                    border-right: 1px solid #ccc;
-                    @media (max-width: 575px) {
+                    border-right: 1px solid var(--gray-chalk);
+                    @media screen and (max-width: 575px) {
                       padding: 5px 15px;
                     }
                   }
-
-
                 }
               }
             }
           }
         }
-
       }
     }
   }

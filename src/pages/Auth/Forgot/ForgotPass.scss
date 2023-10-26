@@ -6,7 +6,7 @@
 
   .login-form {
     margin: 30px 0 20px 0;
-    background: #fff;
+    background: var(--white);
     padding: 20px;
     border-radius: 5px;
 
@@ -33,22 +33,20 @@
           height: 45px;
           font-size: 16px;
           padding-left: 15px;
-          color: #777;
+          color: var(--gray);
 
           &.invalid {
-            border: 1px solid red;
+            border: 1px solid var(--red);
           }
-          //&.valid {
-          //  border: 1px solid green;
-          //}
         }
 
         .feedback {
-          span{
-            color: red;
+          span {
+            color: var(--red);
           }
         }
       }
+
       .form-btn {
         .dots-1 {
           aspect-ratio: 4;
@@ -56,7 +54,12 @@
           animation: d1 1s steps(4) infinite;
         }
       }
-      @keyframes d1 {to{clip-path: inset(0 -34% 0 0)}}
+
+      @keyframes d1 {
+        to {
+          clip-path: inset(0 -34% 0 0)
+        }
+      }
 
     }
   }
