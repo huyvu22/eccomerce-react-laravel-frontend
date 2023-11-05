@@ -237,15 +237,6 @@ const Header = ({searchRef, formRef, handleClose}) => {
                             </div>
                         </form>
                         <div className="header-widget-group">
-                            {
-                                userToken &&
-                                <div className="home-cart">
-                                    <Tippy content={<span style={{fontSize: "12px"}}>Thông báo</span>}>
-                                        <span><MdNotifications size={"1.2em"}/></span>
-                                    </Tippy>
-                                    <span>0</span>
-                                </div>
-                            }
 
                             <div className="home-cart heart-icon">
                                 <span><BsFillSuitHeartFill size={"1em"}/></span>

@@ -1,0 +1,92 @@
+.withdraw-part {
+  .container {
+    .orderlist-filter {
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @media screen and (max-width: 545px) {
+        flex-direction: column;
+      }
+
+      .filter-short {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .form-btn {
+          width: 100%;
+          padding: 10px;
+          font-size: 14px;
+          font-weight: 400;
+          border-radius: 6px;
+          letter-spacing: 0.5px;
+          text-align: center;
+          text-transform: uppercase;
+          color: var(--white);
+          background: var(--primary);
+        }
+      }
+
+    }
+
+    .account-card {
+      @media screen and (max-width: 991px) {
+        padding: 0 15px 15px;
+      }
+
+      .account-content {
+        .table-scroll {
+          @media screen and (max-width: 1199px) {
+            overflow-x: scroll;
+          }
+          table {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            background: var(--chalk);
+
+            thead tr {
+              background: var(--primary);
+
+              th {
+                font-size: 17px;
+                font-weight: 500;
+                white-space: nowrap;
+                text-align: center;
+                text-transform: capitalize;
+                padding: 12px 20px;
+                color: var(--white);
+                border-right: 1px solid var(--border);
+              }
+            }
+
+
+            thead tr th:first-child {
+              border-radius: 6px 0px 0px 6px;
+            }
+
+            tbody {
+              tr {
+                border-bottom: 1px solid var(--border);
+
+                td {
+                  padding: 12px 20px;
+                  text-align: center;
+                  border-right: 1px solid var(--border);
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

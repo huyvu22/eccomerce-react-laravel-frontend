@@ -30,7 +30,6 @@ import ModalLogin from "../../../components/Modal/ModalLogin/ModalLogin";
 import config from "../../../configs/Config.json";
 import Skeleton from 'react-loading-skeleton'
 
-
 const ProductDetail = () => {
     const {id, slug} = useParams();
     const [myCart] = useMyCart()

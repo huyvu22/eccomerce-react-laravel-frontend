@@ -23,21 +23,6 @@ const AboutMe = (props) => {
         };
 
         try {
-            // const response = await fetch('http://buynow.test/api/address', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${userToken}`
-            //     },
-            //     body: JSON.stringify(formData)
-            // });
-            //
-            // const data = await response.json();
-            // if (data.status === 'success') {
-            //     setNote(editNote)
-            //     toast('Address stored successfully');
-            // }
-
             const res = await client.post('seller/address', formData, '', userToken)
             if (res.response.ok) {
                 const data = await res.data;

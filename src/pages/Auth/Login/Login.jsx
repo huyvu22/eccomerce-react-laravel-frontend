@@ -13,8 +13,9 @@ import logo from "../../../assets/images/logo.png";
 
 const Login = () => {
     const client = useClient();
+    const location = useLocation();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({email: "", password: ""});
+    const [formData, setFormData] = useState({email: location.pathname.includes('buyer/login') ? "nam@gmail.com" : "seller2@gmail.com", password: "12345678"});
     const [token, setToken] = useState(false);
     const [validEmail, setValidEmail] = useState(true);
     const [validPassword, setValidPassword] = useState(true);
@@ -22,7 +23,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const tokenUserLogin = getCookie('user_access_token');
     const tokenSellerLogin = getCookie('seller_access_token');
-    const location = useLocation();
     const isBuyer = location.pathname.includes('buyer/login');
 
     useEffect(() => {
@@ -51,7 +51,6 @@ const Login = () => {
             deleteCookie('remember_token');
         }
     }
-
 
     const handleLogin = async () => {
 
@@ -148,6 +147,7 @@ const Login = () => {
                                                         value={formData.email}
                                                         onChange={handleChange}
                                                         required
+                                                        defaultValue="nam@gmail.com"
                                                     />
                                                     {!validEmail && <div className='feedback'><span>Please provide a valid email. </span></div>}
                                                 </div>

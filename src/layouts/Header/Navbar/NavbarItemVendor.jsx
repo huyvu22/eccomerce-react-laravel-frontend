@@ -59,6 +59,9 @@ const NavbarItemVendor = () => {
             <li>
                 <Link to="seller/ordered_products">Ordered Products</Link>
             </li>
+            <li>
+                <Link to="seller/withdraw">Withdraw</Link>
+            </li>
             {(isSellerAuthenticated === true) && (
                 <li onClick={handleLogout}>
                     <Link to="">Logout</Link>

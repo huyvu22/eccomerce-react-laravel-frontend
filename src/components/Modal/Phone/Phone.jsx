@@ -5,7 +5,6 @@ import {Button, Form} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {getCookie} from "../../../utils/dataHandler";
 import useClient from "../../../services/Hooks/useClient";
-import {useLocation} from "react-router-dom";
 
 const Phone = (props) => {
     const [editPhone, setEditPhone] = useState('');

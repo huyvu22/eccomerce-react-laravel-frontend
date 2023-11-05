@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './FeaturedItems.scss';
 import {FaEye} from "react-icons/fa";
 import useFetchData from "../../../services/Hooks/useFetchData";
